@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2015", //Ở đây nếu để ESNext thì sẽ build ra bản mới nhất mà ver TS hổ trợ. Nẹn để es thấp cho các trình duyệt cũ
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext", //Kiểu build ra . Xem document để xem thêm các kiểu khác
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": "." // Khi import thì sẽ tìm từ folder đang chứa file config ở level 1
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
