@@ -9,7 +9,7 @@ export default function RegisterLayout({ children }: Props) {
   return (
     <div>
       <HeaderRegister />
-      RegisterLayout {children}
+      {children}
       <Footer></Footer>
     </div>
   )
