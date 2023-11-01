@@ -1,12 +1,15 @@
 // chỉ import type từ react-hook-form
 import type { RegisterOptions, UseFormGetValues } from 'react-hook-form'
+//import để dùng yup
+import * as yup from 'yup'
 
 // type rule được tạo bằng index signature
 type Rules = { [key in 'email' | 'password' | 'confirm_password']?: RegisterOptions }
 
 // Để lấy được value từ password và so sánh với confirmpass word thì hàm getRule nhận vào đối số là function getValues của hook form
 // getValues có type và generic được bê y xì từ hook form
-const getRule = (getValues?: UseFormGetValues<any>): Rules => ({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getRule = (getValues?: UseFormGetValues<any>): Rules => ({
   email: {
     required: {
       value: true,
@@ -61,4 +64,25 @@ const getRule = (getValues?: UseFormGetValues<any>): Rules => ({
   }
 })
 
-export default getRule
+export const schema = yup.object({
+  email: yup
+    .string()
+    .required('Vui lòng nhập email')
+    .email('Email không đúng định dạng')
+    .min(5, 'Email tối thiểu 5 kí tự')
+    .max(160, 'Email tối đa 160 kí tự'),
+  password: yup
+    .string()
+    .required('Vui lòng nhập password')
+    .min(5, 'password tối thiểu 5 kí tự')
+    .max(160, 'password tối đa 160 kí tự'),
+  confirm_password: yup
+    .string()
+    .required('Vui lòng nhập lại password')
+    .min(5, 'password tối thiểu 5 kí tự')
+    .max(160, 'password tối đa 160 kí tự')
+    .oneOf([yup.ref('password')], 'Nhập lại Password không khớp')
+})
+
+export type RegisterFormSchema = yup.InferType<typeof schema>
+export type LoginFormSchema = Omit<RegisterFormSchema, 'confirm_password'>
