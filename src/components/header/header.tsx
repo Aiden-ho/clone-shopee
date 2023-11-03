@@ -1,6 +1,41 @@
 import { Link } from 'react-router-dom'
+import {
+  useFloating,
+  useHover,
+  useInteractions,
+  FloatingPortal,
+  arrow,
+  FloatingArrow,
+  offset,
+  shift,
+  safePolygon
+} from '@floating-ui/react'
+import { useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 
 export default function Header() {
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const arrowRef = useRef<SVGAElement>(null)
+  const { x, y, refs, floatingStyles, context, strategy, middlewareData } = useFloating<HTMLElement>({
+    open: isOpen,
+    onOpenChange: setIsOpen,
+    middleware: [
+      shift(),
+      arrow({
+        element: arrowRef
+      }),
+      offset(10)
+    ]
+  })
+
+  const hover = useHover(context, {
+    handleClose: safePolygon({
+      buffer: 15 //px
+    })
+  })
+
+  const { getReferenceProps, getFloatingProps } = useInteractions([hover])
+
   return (
     <header>
       <div className='py-2 bg-[linear-gradient(-180deg,#f53d2d,#f63)]'>
@@ -65,18 +100,49 @@ export default function Header() {
                 </div>
               </div>
             </div>
-            <div className='col-span-1 flex flex-row-reverse gap-5'>
-              <div className='text-white hover:text-gray-200 text-sm cursor-pointer flex items-center gap-1'>
-                <div className='w-5 h-5 flex-shrink-0'>
-                  <img
-                    src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png'
-                    alt='avatar'
-                    className='w-full h-full rounded'
+            <div className='col-span-1 flex justify-end gap-5'>
+              {/*Notice*/}
+              <div className='text-white hover:text-gray-200 text-sm cursor-pointer flex items-center  gap-1'>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  strokeWidth={1.5}
+                  stroke='currentColor'
+                  className='w-5 h-5'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    d='M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0'
                   />
-                </div>
-                <span>Kiet_Ho</span>
+                </svg>
+                <span>Thông báo</span>
               </div>
+              {/*Help*/}
               <div className='text-white hover:text-gray-200 text-sm cursor-pointer flex items-center gap-1'>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  strokeWidth={1.5}
+                  stroke='currentColor'
+                  className='w-5 h-5'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    d='M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z'
+                  />
+                </svg>
+                <span>Hỗ trợ</span>
+              </div>
+              {/*Language*/}
+              <div
+                className='text-white hover:text-gray-200 text-sm cursor-pointer flex items-center gap-1'
+                ref={refs.setReference}
+                {...getReferenceProps()}
+              >
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
@@ -103,39 +169,16 @@ export default function Header() {
                   <path strokeLinecap='round' strokeLinejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' />
                 </svg>
               </div>
+              {/*User info*/}
               <div className='text-white hover:text-gray-200 text-sm cursor-pointer flex items-center gap-1'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  strokeWidth={1.5}
-                  stroke='currentColor'
-                  className='w-5 h-5'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    d='M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z'
+                <div className='w-5 h-5 flex-shrink-0'>
+                  <img
+                    src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png'
+                    alt='avatar'
+                    className='w-full h-full rounded'
                   />
-                </svg>
-                <span>Hỗ trợ</span>
-              </div>
-              <div className='text-white hover:text-gray-200 text-sm cursor-pointer flex items-center  gap-1'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  strokeWidth={1.5}
-                  stroke='currentColor'
-                  className='w-5 h-5'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    d='M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0'
-                  />
-                </svg>
-                <span>Thông báo</span>
+                </div>
+                <span>Kiet_Ho</span>
               </div>
             </div>
           </div>
@@ -196,6 +239,31 @@ export default function Header() {
           </div>
         </div>
       </div>
+      {isOpen && (
+        <FloatingPortal>
+          <AnimatePresence>
+            <motion.div
+              style={{
+                position: strategy,
+                top: y ?? 0,
+                left: x ?? 0,
+                transformOrigin: `${middlewareData.arrow?.x}px top`
+              }}
+              initial={{ opacity: 0, transform: 'scale(0)' }}
+              animate={{ opacity: 1, transform: 'scale(1)' }}
+              exit={{ opacity: 0, transform: 'scale(0)' }}
+              transition={{ duration: 0.2 }}
+              ref={refs.setFloating}
+              {...getFloatingProps()}
+              className='flex flex-col bg-white min-w-[7rem] text-sm rounded-sm border border-gray-200 border- shadow-sm'
+            >
+              <button className='text-gray-800 hover:text-orange p-2 text-center'>Tiếng Việt</button>
+              <button className='text-gray-800 hover:text-orange p-2 text-center'>Tiếng Anh</button>
+              <FloatingArrow ref={arrowRef} context={context} width={16} className='fill-white off' />
+            </motion.div>
+          </AnimatePresence>
+        </FloatingPortal>
+      )}
     </header>
   )
 }
