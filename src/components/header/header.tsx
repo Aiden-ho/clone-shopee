@@ -15,8 +15,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const arrowRef = useRef<SVGAElement>(null)
-  const { x, y, refs, floatingStyles, context, strategy, middlewareData } = useFloating<HTMLElement>({
+  const arrowRef = useRef(null)
+  const { x, y, refs, context, strategy, middlewareData } = useFloating<HTMLElement>({
     open: isOpen,
     onOpenChange: setIsOpen,
     middleware: [

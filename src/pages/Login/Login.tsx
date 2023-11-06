@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { LoginFormSchema, schema } from 'src/utils/RegisterValidateRule'
-import Input from 'src/components/input'
+import Input from 'src/components/Input'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
 import { isUnprocessableEntityError } from 'src/utils/axiosErrorChecker'
