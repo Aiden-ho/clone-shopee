@@ -1,41 +1,7 @@
 import { Link } from 'react-router-dom'
-import {
-  useFloating,
-  useHover,
-  useInteractions,
-  FloatingPortal,
-  arrow,
-  FloatingArrow,
-  offset,
-  shift,
-  safePolygon
-} from '@floating-ui/react'
-import { useRef, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import Popover from '../Popover'
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState<boolean>(false)
-  const arrowRef = useRef(null)
-  const { x, y, refs, context, strategy, middlewareData } = useFloating<HTMLElement>({
-    open: isOpen,
-    onOpenChange: setIsOpen,
-    middleware: [
-      shift(),
-      arrow({
-        element: arrowRef
-      }),
-      offset(10)
-    ]
-  })
-
-  const hover = useHover(context, {
-    handleClose: safePolygon({
-      buffer: 15 //px
-    })
-  })
-
-  const { getReferenceProps, getFloatingProps } = useInteractions([hover])
-
   return (
     <header>
       <div className='py-2 bg-[linear-gradient(-180deg,#f53d2d,#f63)]'>
@@ -138,10 +104,15 @@ export default function Header() {
                 <span>Hỗ trợ</span>
               </div>
               {/*Language*/}
-              <div
+              <Popover
                 className='text-white hover:text-gray-200 text-sm cursor-pointer flex items-center gap-1'
-                ref={refs.setReference}
-                {...getReferenceProps()}
+                placement='bottom-end'
+                renderPopover={
+                  <div className='flex flex-col bg-white min-w-[10rem] text-sm'>
+                    <button className='text-gray-800 hover:text-orange p-3 text-left'>Tiếng Việt</button>
+                    <button className='text-gray-800 hover:text-orange p-3 text-left'>English</button>
+                  </div>
+                }
               >
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
@@ -168,9 +139,25 @@ export default function Header() {
                 >
                   <path strokeLinecap='round' strokeLinejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' />
                 </svg>
-              </div>
+              </Popover>
               {/*User info*/}
-              <div className='text-white hover:text-gray-200 text-sm cursor-pointer flex items-center gap-1'>
+              <Popover
+                className='text-white hover:text-gray-200 text-sm cursor-pointer flex items-center gap-1'
+                placement='bottom-end'
+                renderPopover={
+                  <div className='flex flex-col bg-white min-w-[7rem] text-sm'>
+                    <Link className='text-gray-800 hover:text-teal-400 hover:bg-gray-50 p-3 text-left' to='/'>
+                      Tài Khoản Của Tôi
+                    </Link>
+                    <Link className='text-gray-800 hover:text-teal-400 hover:bg-gray-50 p-3 text-left' to='/'>
+                      Đơn Mua
+                    </Link>
+                    <button className='text-gray-800 hover:text-teal-400 hover:bg-gray-50 p-3 text-left'>
+                      Đăng xuất
+                    </button>
+                  </div>
+                }
+              >
                 <div className='w-5 h-5 flex-shrink-0'>
                   <img
                     src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png'
@@ -179,10 +166,11 @@ export default function Header() {
                   />
                 </div>
                 <span>Kiet_Ho</span>
-              </div>
+              </Popover>
             </div>
           </div>
           <div className='grid grid-cols-12 gap-4 mt-6 items-end'>
+            {/* logo */}
             <div className='col-span-2'>
               <Link to='/'>
                 <svg viewBox='0 0 192 65' className='h-8 lg:h-12 fill-white'>
@@ -192,7 +180,8 @@ export default function Header() {
                 </svg>
               </Link>
             </div>
-            <div className='col-span-8'>
+            {/* search */}
+            <div className='col-span-8 flex flex-col'>
               <form className='bg-white flex items-center justify-between p-1 rounded-sm'>
                 <input
                   type='text'
@@ -218,52 +207,72 @@ export default function Header() {
                 </button>
               </form>
             </div>
+            {/* cart */}
             <div className='col-span-1'>
-              <Link to='/' className='text-white float-right'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  strokeWidth={1.5}
-                  stroke='currentColor'
-                  className='w-8 h-8'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    d='M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z'
-                  />
-                </svg>
-              </Link>
+              <Popover
+                className='text-white float-right'
+                placement='bottom-end'
+                renderPopover={
+                  <div className='text-sm max-w-[25rem] bg-white text-gray-600'>
+                    <div className='text-gray-300 pl-3 pb-1 pt-2 capitalize'>Sản Phẩm Mới thêm</div>
+                    <div className='flex flex-col'>
+                      {/* items */}
+                      {[...Array(4)].map((_, index) => (
+                        <div key={index} className='flex flex-row p-3 hover:bg-gray-50 cursor-context-menu'>
+                          <div className='flex-shrink-0'>
+                            <img
+                              src='https://down-vn.img.susercontent.com/file/107493cdc4c3ccd61b40a1b10f5e336e_tn'
+                              alt='tu'
+                              className='w-10 h-10 object-cover'
+                            />
+                          </div>
+                          <div className='flex-grow truncate mx-2 pr-8'>
+                            Tủ Nhựa Đựng Đồ Đa Năng Có Thể Di Chuyển Tiện Lợi
+                          </div>
+                          <div className='text-orange flex-shrink-0'>₫580.000</div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className='flex justify-between p-3 items-center'>
+                      <div className='text-xs capitalize'>10 Thêm hàng vào giỏ</div>
+                      <Link to='/' className='bg-orange hover:bg-opacity-90 capitalize px-4 py-2 rounded-sm text-white'>
+                        Xem Giỏ Hàng
+                      </Link>
+                    </div>
+                  </div>
+                }
+              >
+                <Link to='/'>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    strokeWidth={1.5}
+                    stroke='currentColor'
+                    className='w-8 h-8'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      d='M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z'
+                    />
+                  </svg>
+                </Link>
+              </Popover>
+            </div>
+          </div>
+          <div className='grid grid-cols-12 gap-4 text-xs text-gray-100 mt-2'>
+            <div className='col-span-8 col-start-3 cursor-pointer flex flex-row gap-4 capitalize tracking-wider'>
+              <span>Nồi chiên không dầu</span>
+              <span>Phông nền chụp ảnh</span>
+              <span>Đèn làm việc</span>
+              <span>Dầu gội</span>
+              <span>Đồng hồ</span>
+              <span>Kệ sách</span>
             </div>
           </div>
         </div>
       </div>
-      {isOpen && (
-        <FloatingPortal>
-          <AnimatePresence>
-            <motion.div
-              style={{
-                position: strategy,
-                top: y ?? 0,
-                left: x ?? 0,
-                transformOrigin: `${middlewareData.arrow?.x}px top`
-              }}
-              initial={{ opacity: 0, transform: 'scale(0)' }}
-              animate={{ opacity: 1, transform: 'scale(1)' }}
-              exit={{ opacity: 0, transform: 'scale(0)' }}
-              transition={{ duration: 0.2 }}
-              ref={refs.setFloating}
-              {...getFloatingProps()}
-              className='flex flex-col bg-white min-w-[7rem] text-sm rounded-sm border border-gray-200 border- shadow-sm'
-            >
-              <button className='text-gray-800 hover:text-orange p-2 text-center'>Tiếng Việt</button>
-              <button className='text-gray-800 hover:text-orange p-2 text-center'>Tiếng Anh</button>
-              <FloatingArrow ref={arrowRef} context={context} width={16} className='fill-white off' />
-            </motion.div>
-          </AnimatePresence>
-        </FloatingPortal>
-      )}
     </header>
   )
 }
