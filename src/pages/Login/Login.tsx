@@ -1,16 +1,22 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { LoginFormSchema, schema } from 'src/utils/RegisterValidateRule'
 import Input from 'src/components/Input'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
 import { isUnprocessableEntityError } from 'src/utils/axiosErrorChecker'
-import { ResponseApi } from 'src/types/Util.type'
+import { ErrorRespone } from 'src/types/Util.type'
 import { loginApi } from 'src/apis/auth.api'
+import { useContext } from 'react'
+import { AppContext } from 'src/context/app.context'
+import Button from 'src/components/Button'
+import path from 'src/constants/path.constants'
 
 type FormData = LoginFormSchema
 
 export default function Login() {
+  const { setIsAuthenticated, setProfile } = useContext(AppContext)
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -22,11 +28,13 @@ export default function Login() {
 
   const loginMutation = useMutation({
     mutationFn: (body: FormData) => loginApi(body),
-    onSuccess: (data) => {
-      console.log(data)
+    onSuccess: (res) => {
+      setProfile(res.data.data.user)
+      setIsAuthenticated(true)
+      navigate(path.home)
     },
     onError: (error) => {
-      if (isUnprocessableEntityError<ResponseApi<FormData>>(error)) {
+      if (isUnprocessableEntityError<ErrorRespone<FormData>>(error)) {
         const errorFrom = error.response?.data.data
 
         if (errorFrom) {
@@ -74,15 +82,19 @@ export default function Login() {
               />
               {/* button */}
               <div className='mt-3'>
-                <button className='w-full text-center py-4 px-2 uppercase bg-orange text-white text-sm hover:bg-red-500'>
+                <Button
+                  isLoading={loginMutation.isPending}
+                  disabled={loginMutation.isPending}
+                  className='w-full text-center py-4 px-2 uppercase bg-orange text-white text-sm hover:bg-red-500 flex justify-center items-center align-middle'
+                >
                   Đăng nhập
-                </button>
+                </Button>
               </div>
               {/* to register */}
               <div className='mt-8'>
                 <div className='flex items-center justify-center gap-1'>
                   <span className='text-neutral-300'>Bạn chưa có tài khoản?</span>
-                  <Link className='text-orange' to='/register'>
+                  <Link className='text-orange' to={path.register}>
                     Đăng ký
                   </Link>
                 </div>

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { omit } from 'lodash'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -7,11 +7,17 @@ import { schema, RegisterFormSchema } from 'src/utils/RegisterValidateRule'
 import Input from 'src/components/Input'
 import { registerApi } from 'src/apis/auth.api'
 import { isUnprocessableEntityError } from 'src/utils/axiosErrorChecker'
-import { ResponseApi } from 'src/types/Util.type'
+import { ErrorRespone } from 'src/types/Util.type'
+import { useContext } from 'react'
+import { AppContext } from 'src/context/app.context'
+import Button from 'src/components/Button'
+import path from 'src/constants/path.constants'
 
 type FormData = RegisterFormSchema
 
 export default function Register() {
+  const { setIsAuthenticated, setProfile } = useContext(AppContext)
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -23,11 +29,13 @@ export default function Register() {
 
   const registerMutation = useMutation({
     mutationFn: (body: Omit<FormData, 'confirm_password'>) => registerApi(body),
-    onSuccess: (data) => {
-      console.log(data)
+    onSuccess: (res) => {
+      setProfile(res.data.data.user)
+      setIsAuthenticated(false)
+      navigate(path.home)
     },
     onError: (error) => {
-      if (isUnprocessableEntityError<ResponseApi<Omit<FormData, 'confirm_password'>>>(error)) {
+      if (isUnprocessableEntityError<ErrorRespone<Omit<FormData, 'confirm_password'>>>(error)) {
         const errorFrom = error.response?.data.data
 
         if (errorFrom) {
@@ -87,15 +95,19 @@ export default function Register() {
 
               {/* button */}
               <div className='mt-3'>
-                <button className='w-full text-center py-4 px-2 uppercase bg-orange text-white text-sm hover:bg-red-500'>
+                <Button
+                  isLoading={registerMutation.isPending}
+                  disabled={registerMutation.isPending}
+                  className='w-full text-center py-4 px-2 uppercase bg-orange text-white text-sm hover:bg-red-500 flex justify-center items-center align-middle'
+                >
                   Đăng ký
-                </button>
+                </Button>
               </div>
               {/* to login */}
               <div className='mt-8'>
                 <div className='flex items-center justify-center gap-1'>
                   <span className='text-neutral-300'>Bạn đã có tài khoản?</span>
-                  <Link className='text-orange' to='/login'>
+                  <Link className='text-orange' to={path.login}>
                     Đăng nhập
                   </Link>
                 </div>

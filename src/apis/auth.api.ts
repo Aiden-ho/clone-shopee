@@ -8,3 +8,7 @@ export const registerApi = (body: { email: string; password: string }) => {
 export const loginApi = (body: { email: string; password: string }) => {
   return http.post<AuthResponse>('/login', body)
 }
+
+export const logoutApi = () => {
+  return http.post<AuthResponse>('/logout')
+}

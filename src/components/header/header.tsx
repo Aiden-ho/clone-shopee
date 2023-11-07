@@ -1,7 +1,25 @@
 import { Link } from 'react-router-dom'
 import Popover from '../Popover'
+import { useMutation } from '@tanstack/react-query'
+import { logoutApi } from 'src/apis/auth.api'
+import { AppContext } from 'src/context/app.context'
+import { useContext } from 'react'
+import path from 'src/constants/path.constants'
 
 export default function Header() {
+  const { isAuthenticated, setIsAuthenticated, setProfile, profile } = useContext(AppContext)
+  const LogoutMutation = useMutation({
+    mutationFn: logoutApi,
+    onSuccess: () => {
+      setIsAuthenticated(false)
+      setProfile(null)
+    }
+  })
+
+  const handleLogOut = () => {
+    LogoutMutation.mutate()
+  }
+
   return (
     <header>
       <div className='py-2 bg-[linear-gradient(-180deg,#f53d2d,#f63)]'>
@@ -141,32 +159,47 @@ export default function Header() {
                 </svg>
               </Popover>
               {/*User info*/}
-              <Popover
-                className='text-white hover:text-gray-200 text-sm cursor-pointer flex items-center gap-1'
-                placement='bottom-end'
-                renderPopover={
-                  <div className='flex flex-col bg-white min-w-[7rem] text-sm'>
-                    <Link className='text-gray-800 hover:text-teal-400 hover:bg-gray-50 p-3 text-left' to='/'>
-                      Tài Khoản Của Tôi
-                    </Link>
-                    <Link className='text-gray-800 hover:text-teal-400 hover:bg-gray-50 p-3 text-left' to='/'>
-                      Đơn Mua
-                    </Link>
-                    <button className='text-gray-800 hover:text-teal-400 hover:bg-gray-50 p-3 text-left'>
-                      Đăng xuất
-                    </button>
+              {isAuthenticated ? (
+                <Popover
+                  className='text-white hover:text-gray-200 text-sm cursor-pointer flex items-center gap-1'
+                  placement='bottom-end'
+                  renderPopover={
+                    <div className='flex flex-col bg-white min-w-[7rem] text-sm'>
+                      <Link className='text-gray-800 hover:text-teal-400 hover:bg-gray-50 p-3 text-left' to='/'>
+                        Tài Khoản Của Tôi
+                      </Link>
+                      <Link className='text-gray-800 hover:text-teal-400 hover:bg-gray-50 p-3 text-left' to='/'>
+                        Đơn Mua
+                      </Link>
+                      <button
+                        onClick={handleLogOut}
+                        className='text-gray-800 hover:text-teal-400 hover:bg-gray-50 p-3 text-left'
+                      >
+                        Đăng xuất
+                      </button>
+                    </div>
+                  }
+                >
+                  <div className='w-5 h-5 flex-shrink-0'>
+                    <img
+                      src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png'
+                      alt='avatar'
+                      className='w-full h-full rounded'
+                    />
                   </div>
-                }
-              >
-                <div className='w-5 h-5 flex-shrink-0'>
-                  <img
-                    src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png'
-                    alt='avatar'
-                    className='w-full h-full rounded'
-                  />
+                  <span>{profile?.email}</span>
+                </Popover>
+              ) : (
+                <div className='text-white text-sm cursor-pointer flex items-center gap-3'>
+                  <Link className='hover:text-gray-200' to={path.register}>
+                    Đăng ký
+                  </Link>
+                  <span className='border-l-2 border-white border-opacity-80 w-1 h-3'></span>
+                  <Link className='hover:text-gray-200' to={path.login}>
+                    Đăng nhập
+                  </Link>
                 </div>
-                <span>Kiet_Ho</span>
-              </Popover>
+              )}
             </div>
           </div>
           <div className='grid grid-cols-12 gap-4 mt-6 items-end'>
