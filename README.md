@@ -1,11 +1,33 @@
 # Shopee Clone Project
 
-- Welcome to my side poject !
+This project was created with the purpose of helping me review and apply new knowledge of REACTJS to real problems.
 
-- This project was created with the purpose of helping me review and apply new knowledge of reactjs to real problems.
+> [!NOTE]  
+> This project hasn't finished yet, but I still update it regularly.
 
-## Description
+## Tech Stack
 
-- This project uses React and typescript working in Vite with HMR and some ESLint rules.
+- ViteJS
+- ReactJS
+- React Query
+- Typescript
+- TailwindCSS
 
-- This project haven't finished yet, but I still update it everyday.
+## Features
+
+- Register
+- Login/Logout
+- Product list
+- Sort product
+- (updateting...)
+
+## Install Dependencies
+
+```bash
+yarn install
+```
+## Start Project
+
+```bash
+yarn dev
+```
