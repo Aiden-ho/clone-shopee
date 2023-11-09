@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
 import { isUnprocessableEntityError } from 'src/utils/axiosErrorChecker'
 import { ErrorRespone } from 'src/types/Util.type'
-import { loginApi } from 'src/apis/auth.api'
+import AuthApi from 'src/apis/auth.api'
 import { useContext } from 'react'
 import { AppContext } from 'src/context/app.context'
 import Button from 'src/components/Button'
@@ -27,7 +27,7 @@ export default function Login() {
   })
 
   const loginMutation = useMutation({
-    mutationFn: (body: FormData) => loginApi(body),
+    mutationFn: (body: FormData) => AuthApi.loginApi(body),
     onSuccess: (res) => {
       setProfile(res.data.data.user)
       setIsAuthenticated(true)

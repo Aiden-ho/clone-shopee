@@ -9,10 +9,8 @@ export default function SortProduct() {
           <Button className='bg-white rounded-sm shadow-sm px-5 h-9'>Phổ Biến</Button>
           <Button className='bg-white rounded-sm shadow-sm px-5 h-9'>Mới Nhất</Button>
           <Button className='bg-orange text-white rounded-sm shadow-sm px-5 h-9'>Bán chạy</Button>
-          <select className='bg-white text-sm rounded-sm block px-5 h-9 outline-none'>
-            <option selected disabled>
-              Giá
-            </option>
+          <select defaultValue='' className='bg-white text-sm rounded-sm block px-5 h-9 outline-none'>
+            <option value=''>Giá</option>
             <option value='US'>Giá: Thấp đến cao</option>
             <option value='CA'>Giá: Cao đến thấp</option>
           </select>
