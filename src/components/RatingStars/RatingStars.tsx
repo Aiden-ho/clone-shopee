@@ -9,7 +9,6 @@ export default function RatingStars({ rating }: RatingStarsProps) {
     if (order <= rating) {
       return '100%'
     } else if (order > rating && order - rating < 1) {
-      console.log(rating - Math.floor(rating))
       return (rating - Math.floor(rating)) * 100 + '%'
     } else if (order > rating && order - rating > 1) {
       return '0%'
