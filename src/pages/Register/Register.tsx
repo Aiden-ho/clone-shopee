@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { omit } from 'lodash'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
-import { schema, RegisterFormSchema } from 'src/utils/RegisterValidateRule'
+import { registerSchema, type RegisterFormDataType } from 'src/utils/ValidateRule'
 import Input from 'src/components/Input'
 import AuthApi from 'src/apis/auth.api'
 import { isUnprocessableEntityError } from 'src/utils/axiosErrorChecker'
@@ -13,7 +13,7 @@ import { AppContext } from 'src/context/app.context'
 import Button from 'src/components/Button'
 import path from 'src/constants/path.constants'
 
-type FormData = RegisterFormSchema
+type FormData = RegisterFormDataType
 
 export default function Register() {
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
@@ -24,7 +24,7 @@ export default function Register() {
     formState: { errors },
     setError
   } = useForm<FormData>({
-    resolver: yupResolver(schema)
+    resolver: yupResolver(registerSchema)
   })
 
   const registerMutation = useMutation({

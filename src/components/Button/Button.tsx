@@ -2,10 +2,11 @@ import React, { ButtonHTMLAttributes } from 'react'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean
+  classChild?: string
 }
 
 export default function Button(props: ButtonProps) {
-  const { type, className, isLoading, disabled, children, ...rest } = props
+  const { type, className, isLoading, disabled, children, classChild, ...rest } = props
   const newClassName = disabled ? className + 'cursor-not-allowed' : className
 
   return (
@@ -29,7 +30,7 @@ export default function Button(props: ButtonProps) {
           />
         </svg>
       )}
-      <span>{children}</span>
+      <span className={classChild}>{children}</span>
     </button>
   )
 }

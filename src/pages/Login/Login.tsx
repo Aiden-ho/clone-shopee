@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { LoginFormSchema, schema } from 'src/utils/RegisterValidateRule'
+import { loginSchema, type LoginFormDataType } from 'src/utils/ValidateRule'
 import Input from 'src/components/Input'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
@@ -12,7 +12,7 @@ import { AppContext } from 'src/context/app.context'
 import Button from 'src/components/Button'
 import path from 'src/constants/path.constants'
 
-type FormData = LoginFormSchema
+type FormData = LoginFormDataType
 
 export default function Login() {
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
@@ -23,7 +23,7 @@ export default function Login() {
     formState: { errors },
     setError
   } = useForm<FormData>({
-    resolver: yupResolver(schema.omit(['confirm_password']))
+    resolver: yupResolver(loginSchema)
   })
 
   const loginMutation = useMutation({
