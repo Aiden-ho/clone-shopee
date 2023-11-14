@@ -1,6 +1,6 @@
 import { Link, createSearchParams } from 'react-router-dom'
 import path from 'src/constants/path.constants'
-import { QueryConfig } from '../ProductList'
+import { QueryConfig } from '../../ProductList'
 import classNames from 'classnames'
 
 interface RatingStarsFilterProps {

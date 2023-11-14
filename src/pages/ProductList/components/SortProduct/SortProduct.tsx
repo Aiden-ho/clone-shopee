@@ -1,5 +1,5 @@
 import Button from 'src/components/Button'
-import { QueryConfig } from '../ProductList'
+import { QueryConfig } from '../../ProductList'
 import { orderBy, sortBy } from 'src/constants/product'
 import { ProductParams } from 'src/types/Product.type'
 import classNames from 'classnames'
