@@ -7,7 +7,7 @@ const ProductApi = {
   getProducts: (params: ProductParams) => {
     return http.get<SuccessRespone<ProductList>>(url, { params })
   },
-  getProductDetail: (id: number) => {
+  getProductDetail: (id: string) => {
     return http.get<SuccessRespone<Product>>(`${url}/${id}`)
   }
 }

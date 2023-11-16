@@ -1,13 +1,18 @@
+import { Link } from 'react-router-dom'
 import RatingStars from 'src/components/RatingStars'
+import path from 'src/constants/path.constants'
 import { Product as ProductType } from 'src/types/Product.type'
-import { convertToCompactNum, formatCurrency } from 'src/utils/utils'
+import { convertToCompactNum, formatCurrency, generateNameId } from 'src/utils/utils'
 
 interface ProdctProps {
   product: ProductType
 }
 export default function Product({ product }: ProdctProps) {
   return (
-    <div className='bg-white rounded-sm shadow-md cursor-pointer hover:translate-y-[-.0625rem] duration-100 transition-transform'>
+    <Link
+      to={`${path.home}${generateNameId({ name: product.name, id: product._id })}`}
+      className='bg-white rounded-sm shadow-md cursor-pointer hover:translate-y-[-.0625rem] duration-100 transition-transform'
+    >
       <div className='w-full pt-[100%] relative'>
         <img src={product.image} alt={product.name} className='top-0 left-0 absolute w-full h-full' />
       </div>
@@ -31,6 +36,6 @@ export default function Product({ product }: ProdctProps) {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }

@@ -14,6 +14,7 @@ export interface Product {
     __v: number
   }
   image: string
+  description: string
   createdAt: string
   updatedAt: string
 }

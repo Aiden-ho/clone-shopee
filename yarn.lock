@@ -566,6 +566,13 @@
   dependencies:
     "@babel/types" "^7.20.7"
 
+"@types/dompurify@^3.0.5":
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/@types/dompurify/-/dompurify-3.0.5.tgz#02069a2fcb89a163bacf1a788f73cb415dd75cb7"
+  integrity sha512-1Wg0g3BtQF7sSb27fJQAKck1HECM6zV1EB66j8JH9i3LCjYabJa0FSdiSgsD5K/RbrsR0SiraKacLB+T8ZVYAg==
+  dependencies:
+    "@types/trusted-types" "*"
+
 "@types/json-schema@^7.0.12":
   version "7.0.14"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.14.tgz#74a97a5573980802f32c8e47b663530ab3b6b7d1"
@@ -618,6 +625,11 @@
   version "7.5.4"
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.4.tgz#0a41252ad431c473158b22f9bfb9a63df7541cff"
   integrity sha512-MMzuxN3GdFwskAnb6fz0orFvhfqi752yjaXylr0Rp4oDg5H0Zn1IuyRhDVvYOwAXoJirx2xuS16I3WjxnAIHiQ==
+
+"@types/trusted-types@*":
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/@types/trusted-types/-/trusted-types-2.0.6.tgz#d12451beaeb9c3838f12024580dc500b7e88b0ad"
+  integrity sha512-HYtNooPvUY9WAVRBr4u+4Qa9fYD1ze2IUlAD3HoA6oehn1taGwBx3Oa52U4mTslTS+GAExKpaFu39Y5xUEwfjg==
 
 "@typescript-eslint/eslint-plugin@^6.9.0":
   version "6.9.0"
@@ -1213,6 +1225,11 @@ doctrine@^3.0.0:
   integrity sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==
   dependencies:
     esutils "^2.0.2"
+
+dompurify@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.0.6.tgz#925ebd576d54a9531b5d76f0a5bef32548351dae"
+  integrity sha512-ilkD8YEnnGh1zJ240uJsW7AzE+2qpbOUYjacomn3AvJ6J4JhKGSZ2nh4wUIXPZrEPppaCLx5jFe8T89Rk8tQ7w==
 
 electron-to-chromium@^1.4.535:
   version "1.4.566"

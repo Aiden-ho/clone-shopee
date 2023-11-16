@@ -1,13 +1,14 @@
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
+import { useContext } from 'react'
+import { AppContext } from './context/app.context'
+import path from './constants/path.constants'
 import ProductList from './pages/ProductList'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import RegisterLayout from './layouts/RegisterLayout'
 import MainLayout from './layouts/MainLayout'
 import Profile from './pages/Profile'
-import { useContext } from 'react'
-import { AppContext } from './context/app.context'
-import path from './constants/path.constants'
+import ProductDetail from './pages/ProductDetail'
 
 // protect user's route
 function ProtectedRoute() {
@@ -29,6 +30,15 @@ export default function useRouterHook() {
       element: (
         <MainLayout>
           <ProductList />
+        </MainLayout>
+      )
+    },
+    {
+      path: path.productDetail,
+      index: true,
+      element: (
+        <MainLayout>
+          <ProductDetail />
         </MainLayout>
       )
     },
