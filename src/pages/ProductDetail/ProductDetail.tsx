@@ -5,8 +5,10 @@ import { useParams } from 'react-router-dom'
 import ProductApi from 'src/apis/product.api'
 import Button from 'src/components/Button'
 import InputNumber from 'src/components/InputNumber'
+import Product from 'src/components/Product'
 import RatingStars from 'src/components/RatingStars'
-import { Product } from 'src/types/Product.type'
+import { QueryConfig } from 'src/hooks/useQueryConfig'
+import { Product as ProductType } from 'src/types/Product.type'
 import { convertToCompactNum, formatCurrency, getIdFromNameId, rateSale } from 'src/utils/utils'
 
 const rangeSlide = 5
@@ -18,15 +20,14 @@ export default function ProductDetail() {
     queryKey: ['product', id],
     queryFn: () => ProductApi.getProductDetail(id as string)
   })
+
   const product = productData?.data.data
   const [rangeIndexSlide, setRangeIndexSlide] = useState<number[]>([0, rangeSlide])
   const [activeImage, setActiveImage] = useState<string>('')
-
   const currentSlideImages = useMemo(
     () => (product && product.images ? product.images.slice(...rangeIndexSlide) : []),
     [product, rangeIndexSlide]
   )
-
   const activeImgRef = useRef<HTMLImageElement>(null)
 
   useEffect(() => {
@@ -35,12 +36,24 @@ export default function ProductDetail() {
     }
   }, [product])
 
+  const queryConfig: Pick<QueryConfig, 'page' | 'limit' | 'category'> = {
+    limit: '20',
+    page: '1',
+    category: product?.category._id
+  }
+  const { data: productListData } = useQuery({
+    queryKey: ['products', queryConfig],
+    queryFn: () => ProductApi.getProducts(queryConfig),
+    enabled: Boolean(product),
+    staleTime: 3 * 60 * 1000
+  })
+
   const handleChangeActiveImage = (src: string) => {
     setActiveImage(src)
   }
 
   const handleNextButtonSlide = () => {
-    if (rangeIndexSlide[1] < (product as Product).images.length) {
+    if (rangeIndexSlide[1] < (product as ProductType).images.length) {
       setRangeIndexSlide((prev) => [prev[0] + 1, prev[1] + 1])
     }
   }
@@ -253,6 +266,18 @@ export default function ProductDetail() {
               }}
             ></div>
           </div>
+          {productListData && (
+            <div className='mt-4 container px-0'>
+              <div className=' flex items-center rounded-sm py-3 text-lg uppercase text-gray-600'>
+                Có thể bạn cũng thích
+              </div>
+              <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3'>
+                {productListData.data.data.products.map((product) => (
+                  <Product key={product._id} product={product} />
+                ))}
+              </div>
+            </div>
+          )}
         </Fragment>
       )}
     </div>
