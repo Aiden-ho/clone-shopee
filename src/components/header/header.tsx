@@ -1,12 +1,22 @@
-import { Link } from 'react-router-dom'
+import { Link, createSearchParams, useNavigate } from 'react-router-dom'
 import Popover from '../Popover'
 import { useMutation } from '@tanstack/react-query'
 import AuthApi from 'src/apis/auth.api'
 import { AppContext } from 'src/context/app.context'
-import { useContext } from 'react'
+import { useContext, useRef, useState } from 'react'
 import path from 'src/constants/path.constants'
+import useQueryConfig from 'src/hooks/useQueryConfig'
+import { useForm } from 'react-hook-form'
+import { ProductSearchFormDataType, productSearchSchema } from 'src/utils/ValidateRule'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { omit } from 'lodash'
+import { beautySearchString } from 'src/utils/utils'
+import { HandleSearchHistory, getSearchHistoryToLS, setSearchHistoryToLS } from 'src/utils/search'
+
+type formData = ProductSearchFormDataType
 
 export default function Header() {
+  const [historySearch, setHistorySearch] = useState<string[]>(getSearchHistoryToLS())
   const { isAuthenticated, setIsAuthenticated, setProfile, profile } = useContext(AppContext)
   const LogoutMutation = useMutation({
     mutationFn: AuthApi.logoutApi,
@@ -15,6 +25,53 @@ export default function Header() {
       setProfile(null)
     }
   })
+  const queryConfig = useQueryConfig()
+  const navigate = useNavigate()
+  const btnSubmitSearchRef = useRef<HTMLButtonElement>(null)
+
+  const { register, handleSubmit, setValue } = useForm<formData>({
+    defaultValues: {
+      product_name: ''
+    },
+    resolver: yupResolver<formData>(productSearchSchema)
+  })
+
+  const handleSubmitSearch = handleSubmit((data) => {
+    const keyword = beautySearchString(data.product_name)
+    //set value search input
+    setValue('product_name', keyword, {
+      shouldValidate: true,
+      shouldDirty: true
+    })
+    // set history search
+    const history = HandleSearchHistory(keyword, historySearch)
+    setSearchHistoryToLS(history)
+    setHistorySearch(history)
+    //navigate
+    navigate({
+      pathname: path.home,
+      search: createSearchParams(
+        omit({ ...queryConfig, page: '1', name: keyword }, [
+          'category',
+          'price_min',
+          'price_max',
+          'rating_filter',
+          'order',
+          'sort_by'
+        ])
+      ).toString()
+    })
+  })
+
+  const handleOnClickHistorySearch = (keyword: string) => {
+    setValue('product_name', keyword, {
+      shouldValidate: true,
+      shouldDirty: true
+    })
+    if (btnSubmitSearchRef.current) {
+      btnSubmitSearchRef.current.click()
+    }
+  }
 
   const handleLogOut = () => {
     LogoutMutation.mutate()
@@ -215,14 +272,17 @@ export default function Header() {
             </div>
             {/* search */}
             <div className='col-span-8 flex flex-col'>
-              <form className='bg-white flex items-center justify-between p-1 rounded-sm'>
+              <form className='bg-white flex items-center justify-between p-1 rounded-sm' onSubmit={handleSubmitSearch}>
                 <input
                   type='text'
-                  name='search'
                   placeholder='CƠ HỘI TRÚNG 111 IPHONE'
                   className='border-none outline-none bg-transparent text-sm text-black flex-shrink-0 flex-grow  px-3'
+                  {...register('product_name')}
                 />
-                <button className='bg-orange hover:bg-opacity-90 text-white rounded-sm px-6 py-2'>
+                <button
+                  className='bg-orange hover:bg-opacity-90 text-white rounded-sm px-6 py-2'
+                  ref={btnSubmitSearchRef}
+                >
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     fill='none'
@@ -294,14 +354,19 @@ export default function Header() {
               </Popover>
             </div>
           </div>
-          <div className='grid grid-cols-12 gap-4 text-xs text-gray-100 mt-2'>
-            <div className='col-span-8 col-start-3 cursor-pointer flex flex-row gap-4 capitalize tracking-wider'>
-              <span>Nồi chiên không dầu</span>
-              <span>Phông nền chụp ảnh</span>
-              <span>Đèn làm việc</span>
-              <span>Dầu gội</span>
-              <span>Đồng hồ</span>
-              <span>Kệ sách</span>
+          <div className='grid grid-cols-12 gap-4 text-xs text-gray-100 mt-2 min-h-[1rem]'>
+            <div className='col-span-8 col-start-3 flex flex-row gap-4'>
+              {historySearch &&
+                historySearch.reverse().map((item) => (
+                  <span
+                    aria-hidden='true'
+                    onClick={() => handleOnClickHistorySearch(item)}
+                    key={item}
+                    className=' cursor-pointer  capitalize tracking-wider '
+                  >
+                    {item}
+                  </span>
+                ))}
             </div>
           </div>
         </div>

@@ -102,7 +102,8 @@ export const schema = yup.object({
     name: 'price_not_allowed',
     message: 'Giá không phù hợp',
     test: testPriceMinMax
-  })
+  }),
+  product_name: yup.string().trim().required('Vui lòng nhập tên sản phẩm')
 })
 
 //Type from shcema
@@ -110,8 +111,10 @@ type YupSchema = yup.InferType<typeof schema>
 export type RegisterFormDataType = Pick<YupSchema, 'email' | 'password' | 'confirm_password'>
 export type LoginFormDataType = Pick<YupSchema, 'email' | 'password'>
 export type PriceRangeFormDataType = Pick<YupSchema, 'price_min' | 'price_max'>
+export type ProductSearchFormDataType = Pick<YupSchema, 'product_name'>
 
 //Schema
 export const registerSchema = schema.pick(['email', 'password', 'confirm_password'])
 export const loginSchema = schema.pick(['email', 'password'])
 export const priceRangeSchema = schema.pick(['price_min', 'price_max'])
+export const productSearchSchema = schema.pick(['product_name'])

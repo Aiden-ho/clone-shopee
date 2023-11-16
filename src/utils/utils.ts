@@ -23,11 +23,16 @@ export const removeSpecialCharacter = (str: string) =>
 
 //Tạo NameId để làm url thân thiện hơn
 export const generateNameId = ({ name, id }: { name: string; id: string }) => {
-  return removeSpecialCharacter(name).replace(/\s/g, '-') + `-i.${id}`
+  return removeSpecialCharacter(name).replace(/\s/g, '-') + `-i-${id}`
 }
 
 // Lấy id từ nameID
 export const getIdFromNameId = (nameId: string) => {
-  const arr = nameId.split('-i.')
+  const arr = nameId.split('-i-')
   return arr[1]
+}
+
+export const beautySearchString = (search: string) => {
+  const beauty_string = removeSpecialCharacter(search).replace(/ +(?= )/g, '')
+  return beauty_string.toLowerCase()
 }
