@@ -157,7 +157,7 @@ export default function AsideFilter(props: AsideFilterProps) {
                 <InputNumber
                   className='grow'
                   type='text'
-                  clasNameInput='p-1 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm'
+                  classNameInput='p-1 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm'
                   classNameError='hidden'
                   placeholder='₫ TỪ'
                   onChange={(event) => {
@@ -178,7 +178,7 @@ export default function AsideFilter(props: AsideFilterProps) {
               render={({ field }) => (
                 <InputNumber
                   className='grow'
-                  clasNameInput='p-1 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm appearance-none'
+                  classNameInput='p-1 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm appearance-none'
                   classNameError='hidden'
                   placeholder='₫ ĐẾN'
                   onChange={(event) => {

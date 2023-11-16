@@ -6,7 +6,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   register?: UseFormRegister<any>
   errorMessage?: string
   rule?: RegisterOptions
-  clasNameInput?: string
+  classNameInput?: string
   classNameError?: string
 }
 
@@ -16,14 +16,14 @@ export default function Input({
   register,
   errorMessage,
   rule,
-  clasNameInput = 'p-2 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm',
+  classNameInput = 'p-2 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm',
   classNameError = 'mt-1 text-red-600 min-h-[1rem] text-xs',
   ...rest
 }: InputProps) {
   const registerRusult = register && name ? { ...register(name, rule) } : {}
   return (
     <div className={className}>
-      <input className={clasNameInput} {...registerRusult} {...rest} />
+      <input className={classNameInput} {...registerRusult} {...rest} />
       <div className={classNameError}>{errorMessage}</div>
     </div>
   )
