@@ -1,12 +1,15 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'react-toastify'
 import DOMPurify from 'dompurify'
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import ProductApi from 'src/apis/product.api'
+import purchasesApi from 'src/apis/purchases.api'
 import Button from 'src/components/Button'
 import Product from 'src/components/Product'
 import QuantityController from 'src/components/QuantityController'
 import RatingStars from 'src/components/RatingStars'
+import { purchaseStatusConst } from 'src/constants/purchase.constants'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
 import { Product as ProductType } from 'src/types/Product.type'
 import { convertToCompactNum, formatCurrency, getIdFromNameId, rateSale } from 'src/utils/utils'
@@ -31,7 +34,7 @@ export default function ProductDetail() {
     [product, rangeIndexSlide]
   )
   const activeImgRef = useRef<HTMLImageElement>(null)
-
+  const queryClient = useQueryClient()
   useEffect(() => {
     if (product && product.images.length > 0) {
       setActiveImage(product.images[0])
@@ -49,6 +52,19 @@ export default function ProductDetail() {
     enabled: Boolean(product),
     staleTime: 3 * 60 * 1000
   })
+
+  const addToCartMutation = useMutation({
+    mutationFn: (body: { product_id: string; buy_count: number }) => purchasesApi.addToCart(body),
+    onSuccess: (data) => {
+      toast.success(data.data.message)
+      queryClient.invalidateQueries({ queryKey: ['purchases', { status: purchaseStatusConst.inCart }] })
+    }
+  })
+
+  const handleAddToCart = (product_id: string) => {
+    const buy_count = Number(quantity)
+    addToCartMutation.mutate({ product_id, buy_count })
+  }
 
   const handleChangeActiveImage = (src: string) => {
     setActiveImage(src)
@@ -216,6 +232,7 @@ export default function ProductDetail() {
                   <Button
                     className='border border-orange bg-orange/10 rounded-sm px-5 py-3 shadow-sm'
                     classChild='flex items-center gap-2'
+                    onClick={() => handleAddToCart(product._id)}
                   >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'

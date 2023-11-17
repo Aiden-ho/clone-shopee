@@ -1,17 +1,20 @@
 import { Link, createSearchParams, useNavigate } from 'react-router-dom'
-import Popover from '../Popover'
-import { useMutation } from '@tanstack/react-query'
-import AuthApi from 'src/apis/auth.api'
-import { AppContext } from 'src/context/app.context'
-import { useContext, useRef, useState } from 'react'
-import path from 'src/constants/path.constants'
-import useQueryConfig from 'src/hooks/useQueryConfig'
-import { useForm } from 'react-hook-form'
-import { ProductSearchFormDataType, productSearchSchema } from 'src/utils/ValidateRule'
+
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { omit } from 'lodash'
-import { beautySearchString } from 'src/utils/utils'
+import useQueryConfig from 'src/hooks/useQueryConfig'
+import { useForm } from 'react-hook-form'
+import { Fragment, useContext, useRef, useState } from 'react'
+import AuthApi from 'src/apis/auth.api'
+import { AppContext } from 'src/context/app.context'
+import path from 'src/constants/path.constants'
+import Popover from '../Popover'
+import { ProductSearchFormDataType, productSearchSchema } from 'src/utils/ValidateRule'
+import { beautySearchString, formatCurrency } from 'src/utils/utils'
 import { HandleSearchHistory, getSearchHistoryToLS, setSearchHistoryToLS } from 'src/utils/search'
+import purchasesApi from 'src/apis/purchases.api'
+import { purchaseStatusConst } from 'src/constants/purchase.constants'
 
 type formData = ProductSearchFormDataType
 
@@ -34,6 +37,11 @@ export default function Header() {
       product_name: ''
     },
     resolver: yupResolver<formData>(productSearchSchema)
+  })
+
+  const { data: purchasesData } = useQuery({
+    queryKey: ['purchases', { status: purchaseStatusConst.inCart }],
+    queryFn: () => purchasesApi.getPurchases({ status: purchaseStatusConst.inCart })
   })
 
   const handleSubmitSearch = handleSubmit((data) => {
@@ -75,6 +83,54 @@ export default function Header() {
 
   const handleLogOut = () => {
     LogoutMutation.mutate()
+  }
+
+  const renderItemInMiniCart = () => {
+    const quantityShowInMiniCart = 5
+
+    if (purchasesData) {
+      const purchases = purchasesData.data.data
+      const restQuantity = purchases.length - quantityShowInMiniCart
+
+      return (
+        <Fragment>
+          <div className='text-gray-300 pl-3 pb-1 pt-2 capitalize'>Sản Phẩm Mới thêm</div>
+          <div className='flex flex-col'>
+            {/* items */}
+            {purchases.slice(0, quantityShowInMiniCart).map((item, index) => {
+              if (index >= quantityShowInMiniCart) return
+              const product = item.product
+              return (
+                <div key={index} className='flex flex-row p-3 hover:bg-gray-50 cursor-context-menu text-gray-600'>
+                  <div className='flex-shrink-0'>
+                    <img src={product.image} alt={product.name} className='w-10 h-10 object-cover' />
+                  </div>
+                  <div className='flex-grow truncate mx-2 pr-8'>{product.name}</div>
+                  <div className='text-orange flex-shrink-0'>₫{formatCurrency(product.price)}</div>
+                </div>
+              )
+            })}
+          </div>
+          <div className='flex justify-between p-3 items-center'>
+            <div className='text-xs capitalize'>{restQuantity > 0 ? `${restQuantity} thêm hàng vào giỏ` : ''}</div>
+            <Link to='/' className='bg-orange hover:bg-opacity-90 capitalize px-4 py-2 rounded-sm text-white'>
+              Xem Giỏ Hàng
+            </Link>
+          </div>
+        </Fragment>
+      )
+    } else {
+      return (
+        <div className='flex flex-col items-center justify-center w-[25rem] h-[300px]'>
+          <img
+            className='w-24 h-24'
+            src='https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/9bdd8040b334d31946f49e36beaf32db.png'
+            alt='empty cart'
+          />
+          <span className='text-gray-500'>Thêm hàng vào giỏ</span>
+        </div>
+      )
+    }
   }
 
   return (
@@ -303,36 +359,10 @@ export default function Header() {
             {/* cart */}
             <div className='col-span-1'>
               <Popover
-                className='text-white float-right'
+                className='text-white float-right relative'
                 placement='bottom-end'
                 renderPopover={
-                  <div className='text-sm max-w-[25rem] bg-white text-gray-600'>
-                    <div className='text-gray-300 pl-3 pb-1 pt-2 capitalize'>Sản Phẩm Mới thêm</div>
-                    <div className='flex flex-col'>
-                      {/* items */}
-                      {[...Array(4)].map((_, index) => (
-                        <div key={index} className='flex flex-row p-3 hover:bg-gray-50 cursor-context-menu'>
-                          <div className='flex-shrink-0'>
-                            <img
-                              src='https://down-vn.img.susercontent.com/file/107493cdc4c3ccd61b40a1b10f5e336e_tn'
-                              alt='tu'
-                              className='w-10 h-10 object-cover'
-                            />
-                          </div>
-                          <div className='flex-grow truncate mx-2 pr-8'>
-                            Tủ Nhựa Đựng Đồ Đa Năng Có Thể Di Chuyển Tiện Lợi
-                          </div>
-                          <div className='text-orange flex-shrink-0'>₫580.000</div>
-                        </div>
-                      ))}
-                    </div>
-                    <div className='flex justify-between p-3 items-center'>
-                      <div className='text-xs capitalize'>10 Thêm hàng vào giỏ</div>
-                      <Link to='/' className='bg-orange hover:bg-opacity-90 capitalize px-4 py-2 rounded-sm text-white'>
-                        Xem Giỏ Hàng
-                      </Link>
-                    </div>
-                  </div>
+                  <div className='text-sm max-w-[25rem] bg-white text-gray-600'>{renderItemInMiniCart()}</div>
                 }
               >
                 <Link to='/'>
@@ -351,6 +381,11 @@ export default function Header() {
                     />
                   </svg>
                 </Link>
+                {purchasesData && purchasesData.data.data.length > 0 && (
+                  <div className='absolute bg-white text-sx text-orange px-[8px] rounded-lg bottom-[80%] left-[66%]'>
+                    {purchasesData.data.data.length}
+                  </div>
+                )}
               </Popover>
             </div>
           </div>
