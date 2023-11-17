@@ -4,7 +4,6 @@ import classNames from 'classnames'
 import { omit } from 'lodash'
 import Button from 'src/components/Button'
 import { Category } from 'src/types/Category.type'
-import { QueryConfig } from '../../ProductList'
 import path from 'src/constants/path.constants'
 import InputNumber from 'src/components/InputNumber'
 import { priceRangeSchema, type PriceRangeFormDataType } from 'src/utils/ValidateRule'
@@ -12,6 +11,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import RatingStarsfilter from '../RatingStarsFilter'
 import { NoUndefinedFiled } from 'src/types/Util.type'
 import { ObjectSchema } from 'yup'
+import { QueryConfig } from 'src/hooks/useQueryConfig'
+import { useEffect } from 'react'
 
 interface AsideFilterProps {
   categories: Category[]
@@ -37,6 +38,12 @@ export default function AsideFilter(props: AsideFilterProps) {
     resolver: yupResolver<FormData>(priceRangeSchema as ObjectSchema<FormData>)
   })
 
+  useEffect(() => {
+    if (!queryConfig.price_max && !queryConfig.price_min) {
+      reset()
+    }
+  }, [queryConfig, reset])
+
   const navigate = useNavigate()
 
   const handleOnSubmit = handleSubmit((data) => {
@@ -52,7 +59,6 @@ export default function AsideFilter(props: AsideFilterProps) {
   })
 
   const removeAllFilter = () => {
-    reset()
     navigate({
       pathname: path.home,
       search: createSearchParams(
