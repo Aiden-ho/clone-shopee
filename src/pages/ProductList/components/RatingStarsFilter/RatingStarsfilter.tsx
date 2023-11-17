@@ -1,7 +1,7 @@
 import { Link, createSearchParams } from 'react-router-dom'
 import path from 'src/constants/path.constants'
-import { QueryConfig } from '../../ProductList'
 import classNames from 'classnames'
+import { QueryConfig } from 'src/hooks/useQueryConfig'
 
 interface RatingStarsFilterProps {
   queryConfig: QueryConfig
