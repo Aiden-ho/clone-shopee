@@ -4,8 +4,8 @@ import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import ProductApi from 'src/apis/product.api'
 import Button from 'src/components/Button'
-import InputNumber from 'src/components/InputNumber'
 import Product from 'src/components/Product'
+import QuantityController from 'src/components/QuantityController'
 import RatingStars from 'src/components/RatingStars'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
 import { Product as ProductType } from 'src/types/Product.type'
@@ -14,6 +14,8 @@ import { convertToCompactNum, formatCurrency, getIdFromNameId, rateSale } from '
 const rangeSlide = 5
 
 export default function ProductDetail() {
+  // chỉ có 1 input nên dùng state thay vì form hook
+  const [quantity, setQuantity] = useState<string>('1')
   const { nameId } = useParams()
   const id = getIdFromNameId(nameId as string)
   const { data: productData } = useQuery({
@@ -62,6 +64,10 @@ export default function ProductDetail() {
     if (rangeIndexSlide[0] > 0) {
       setRangeIndexSlide((prev) => [prev[0] - 1, prev[1] - 1])
     }
+  }
+
+  const handleQuatity = (value: string) => {
+    setQuantity(value)
   }
 
   const handleZoomInActiveImg = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -195,37 +201,14 @@ export default function ProductDetail() {
                 <div className='mt-8 flex items-center'>
                   <span className='capitalize text-gray-500 text-sm w-24'>Số lượng</span>
                   <div className='flex items-center gap-4'>
-                    <form className='flex'>
-                      <Button className='border w-8 h-8 flex items-center justify-center rounded-sm border-gray-300'>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          fill='none'
-                          viewBox='0 0 24 24'
-                          strokeWidth={1.5}
-                          stroke='currentColor'
-                          className='w-4 h-4'
-                        >
-                          <path strokeLinecap='round' strokeLinejoin='round' d='M12 6v12m6-6H6' />
-                        </svg>
-                      </Button>
-                      <InputNumber
-                        value={1}
-                        classNameInput='h-8 w-12 px-4 border-y border-gray-300 text-center'
-                        classNameError='hidden'
-                      />
-                      <Button className='border w-8 h-8 flex items-center justify-center rounded-sm border-gray-300'>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          fill='none'
-                          viewBox='0 0 24 24'
-                          strokeWidth={1.5}
-                          stroke='currentColor'
-                          className='w-4 h-4'
-                        >
-                          <path strokeLinecap='round' strokeLinejoin='round' d='M18 12H6' />
-                        </svg>
-                      </Button>
-                    </form>
+                    <QuantityController
+                      onDecrease={handleQuatity}
+                      onIncrease={handleQuatity}
+                      onType={handleQuatity}
+                      onOutFocus={handleQuatity}
+                      value={quantity}
+                      max={product.quantity}
+                    />
                     <span className='text-sm text-gray-500'>{product.quantity} sản phẩm có sẵn</span>
                   </div>
                 </div>
