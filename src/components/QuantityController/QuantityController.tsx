@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Button from '../Button'
 import InputNumber, { InputNumberProps } from '../InputNumber'
 
@@ -20,21 +21,20 @@ export default function QuantityController({
   onOutFocus,
   ...rest
 }: QuantityControllerProps) {
-  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   let _value = Number(event.target.value)
-
-  //   onType && onType(_value)
-  // }
+  //local state giúp handleChange vẫn hoạt động đúng dù ko nhận vào prop input
+  // Nếu value ko được truyền vào thì input sẽ lấy giá tri6 từ local stage
+  const [localValue, setLocalValue] = useState<string>((value as string) || '1')
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target
-    if ((/^\d+$/.test(value) || value === '') && onType) {
-      onType(value)
+    const _value = event.target.value
+    if (/^\d+$/.test(_value) || _value === '') {
+      onType && onType(_value)
+      setLocalValue(_value.toString())
     }
   }
 
   const handleBlur = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let _value = Number(event.target.value)
+    let _value = Number(event.target.value || localValue)
     if (max !== undefined && _value > max) {
       _value = max
     } else if (_value < 1) {
@@ -42,21 +42,24 @@ export default function QuantityController({
     }
 
     onOutFocus && onOutFocus(_value.toString())
+    setLocalValue(_value.toString())
   }
 
   const hanldeOnIncrease = () => {
-    let _value = Number(value) + 1
+    let _value = Number(value || localValue) + 1
     if (max !== undefined && _value > max) {
       _value = max
     }
     onIncrease && onIncrease(_value.toString())
+    setLocalValue(_value.toString())
   }
   const hanldeOnDecrease = () => {
-    let _value = Number(value) - 1
+    let _value = Number(value || localValue) - 1
     if (_value < 1) {
       _value = 1
     }
     onDecrease && onDecrease(_value.toString())
+    setLocalValue(_value.toString())
   }
 
   const turnOfSubmit = (e: React.FormEvent<HTMLFormElement>) => e.preventDefault()
@@ -83,7 +86,7 @@ export default function QuantityController({
         classNameError='hidden'
         onChange={handleChange}
         onBlur={handleBlur}
-        value={value}
+        value={value || localValue}
         {...rest}
       />
       <Button
