@@ -176,7 +176,19 @@ export default function AsideFilter(props: AsideFilterProps) {
                 />
               )}
             />
-
+            {/* <InputV2
+              name='price_min'
+              control={control}
+              className='grow'
+              type='number'
+              classNameInput='p-1 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm'
+              classNameError='hidden'
+              placeholder='₫ TỪ'
+              onChange={() => {
+                //trigger validate lại max nếu sửa min
+                trigger('price_max')
+              }}
+            /> */}
             <div className='h-[1px] bg-gray-400 mt-3 w-2 flex-shrink-0'></div>
             <Controller
               control={control}
