@@ -19,6 +19,9 @@ This project was created with the purpose of helping me review and apply new kno
 - Login/Logout
 - Product list
 - Sort product
+- Search product
+- Product detail
+- Add to cart
 - (updateting...)
 
 ## Install Dependencies
