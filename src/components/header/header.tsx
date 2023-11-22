@@ -1,6 +1,5 @@
 import { Link, createSearchParams, useNavigate } from 'react-router-dom'
-
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { omit } from 'lodash'
 import useQueryConfig from 'src/hooks/useQueryConfig'
@@ -26,9 +25,11 @@ export default function Header() {
     onSuccess: () => {
       setIsAuthenticated(false)
       setProfile(null)
+      queryClient.removeQueries({ queryKey: ['purchases', { status: purchaseStatusConst.inCart }] })
     }
   })
   const queryConfig = useQueryConfig()
+  const queryClient = useQueryClient()
   const navigate = useNavigate()
   const btnSubmitSearchRef = useRef<HTMLButtonElement>(null)
 
@@ -41,7 +42,8 @@ export default function Header() {
 
   const { data: purchasesData } = useQuery({
     queryKey: ['purchases', { status: purchaseStatusConst.inCart }],
-    queryFn: () => purchasesApi.getPurchases({ status: purchaseStatusConst.inCart })
+    queryFn: () => purchasesApi.getPurchases({ status: purchaseStatusConst.inCart }),
+    enabled: isAuthenticated
   })
 
   const handleSubmitSearch = handleSubmit((data) => {
