@@ -9,6 +9,7 @@ import RegisterLayout from './layouts/RegisterLayout'
 import MainLayout from './layouts/MainLayout'
 import Profile from './pages/Profile'
 import ProductDetail from './pages/ProductDetail'
+import Cart from './pages/Cart'
 
 // protect user's route
 function ProtectedRoute() {
@@ -35,7 +36,6 @@ export default function useRouterHook() {
     },
     {
       path: path.productDetail,
-      index: true,
       element: (
         <MainLayout>
           <ProductDetail />
@@ -48,10 +48,17 @@ export default function useRouterHook() {
       children: [
         {
           path: path.profile,
-          index: true,
           element: (
             <MainLayout>
               <Profile />
+            </MainLayout>
+          )
+        },
+        {
+          path: path.cart,
+          element: (
+            <MainLayout>
+              <Cart />
             </MainLayout>
           )
         }

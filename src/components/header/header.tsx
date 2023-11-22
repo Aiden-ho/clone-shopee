@@ -115,7 +115,7 @@ export default function Header() {
           </div>
           <div className='flex justify-between p-3 items-center'>
             <div className='text-xs capitalize'>{restQuantity > 0 ? `${restQuantity} thêm hàng vào giỏ` : ''}</div>
-            <Link to='/' className='bg-orange hover:bg-opacity-90 capitalize px-4 py-2 rounded-sm text-white'>
+            <Link to={path.cart} className='bg-orange hover:bg-opacity-90 capitalize px-4 py-2 rounded-sm text-white'>
               Xem Giỏ Hàng
             </Link>
           </div>

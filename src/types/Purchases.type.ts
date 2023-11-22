@@ -18,3 +18,7 @@ export interface Purchases {
   updatedAt: string
   __v: number
 }
+
+export interface DeletePurchase {
+  deleted_count: number
+}
