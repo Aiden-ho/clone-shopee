@@ -1,5 +1,7 @@
+import { uniq } from 'lodash'
+
 export const getSearchHistoryToLS = () => {
-  const result = localStorage.getItem('searchcurrentHistory')
+  const result = localStorage.getItem('searchHistory')
   return result ? JSON.parse(result) : []
 }
 
@@ -7,19 +9,16 @@ export const setSearchHistoryToLS = (currentHistory: string[]) => {
   localStorage.setItem('searchHistory', JSON.stringify(currentHistory))
 }
 
-const handleUniqueValue = (array: string[], keyWord: string) => {
-  const index = array.indexOf(keyWord)
-  if (index > -1) {
-    array.splice(index, 1)
-  }
-
-  return array
+const handleUniqueValue = (array: string[]) => {
+  const reversedArray = array.reverse()
+  return uniq(reversedArray)
 }
 
 export const HandleSearchHistory = (keyWord: string, currentHistory: string[]) => {
+  console.log(currentHistory)
   if (currentHistory.length > 0) {
-    currentHistory = handleUniqueValue(currentHistory, keyWord)
     currentHistory.push(keyWord)
+    currentHistory = handleUniqueValue(currentHistory)
     if (currentHistory.length > 5) {
       currentHistory.shift()
     }
