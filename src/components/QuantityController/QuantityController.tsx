@@ -19,6 +19,7 @@ export default function QuantityController({
   classNameWraper,
   value,
   onOutFocus,
+  disabled,
   ...rest
 }: QuantityControllerProps) {
   //local state giúp handleChange vẫn hoạt động đúng dù ko nhận vào prop input
@@ -69,6 +70,7 @@ export default function QuantityController({
       <Button
         className='border w-8 h-8 flex items-center justify-center rounded-sm border-gray-300'
         onClick={hanldeOnDecrease}
+        disabled={disabled}
       >
         <svg
           xmlns='http://www.w3.org/2000/svg'
@@ -87,11 +89,13 @@ export default function QuantityController({
         onChange={handleChange}
         onBlur={handleBlur}
         value={value || localValue}
+        disabled={disabled}
         {...rest}
       />
       <Button
         className='border w-8 h-8 flex items-center justify-center rounded-sm border-gray-300'
         onClick={hanldeOnIncrease}
+        disabled={disabled}
       >
         <svg
           xmlns='http://www.w3.org/2000/svg'

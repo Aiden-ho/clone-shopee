@@ -10,6 +10,7 @@ import MainLayout from './layouts/MainLayout'
 import Profile from './pages/Profile'
 import ProductDetail from './pages/ProductDetail'
 import Cart from './pages/Cart'
+import CartLayout from './layouts/CartLayout'
 
 // protect user's route
 function ProtectedRoute() {
@@ -57,9 +58,9 @@ export default function useRouterHook() {
         {
           path: path.cart,
           element: (
-            <MainLayout>
+            <CartLayout>
               <Cart />
-            </MainLayout>
+            </CartLayout>
           )
         }
       ]
