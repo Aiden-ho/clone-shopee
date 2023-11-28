@@ -21,7 +21,7 @@ This project was created with the purpose of helping me review and apply new kno
 - Sort product
 - Search product
 - Product detail
-- Add to cart
+- Cart (add, delete, buy, buy-now)
 - (updateting...)
 
 ## Install Dependencies
@@ -29,6 +29,7 @@ This project was created with the purpose of helping me review and apply new kno
 ```bash
 yarn install
 ```
+
 ## Start Project
 
 ```bash
