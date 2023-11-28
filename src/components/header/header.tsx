@@ -9,6 +9,7 @@ import { purchaseStatusConst } from 'src/constants/purchase.constants'
 import NavHeader from '../NavHeader'
 import useSearchProducts from 'src/hooks/useSearchProducts'
 import { formatCurrency } from 'src/utils/utils'
+import noProduct from 'src/assets/images/no-product.png'
 
 export default function Header() {
   const { isAuthenticated, historySearch } = useContext(AppContext)
@@ -21,9 +22,8 @@ export default function Header() {
 
   const renderItemInMiniCart = () => {
     const quantityShowInMiniCart = 5
-
-    if (purchasesData) {
-      const purchases = purchasesData.data.data
+    const purchases = purchasesData?.data.data
+    if (purchases && purchases.length > 0) {
       const restQuantity = purchases.length - quantityShowInMiniCart
 
       return (
@@ -56,11 +56,7 @@ export default function Header() {
     } else {
       return (
         <div className='flex flex-col items-center justify-center w-[25rem] h-[300px]'>
-          <img
-            className='w-24 h-24'
-            src='https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/9bdd8040b334d31946f49e36beaf32db.png'
-            alt='empty cart'
-          />
+          <img className='w-24 h-24' src={noProduct} alt='empty cart' />
           <span className='text-gray-500'>Thêm hàng vào giỏ</span>
         </div>
       )

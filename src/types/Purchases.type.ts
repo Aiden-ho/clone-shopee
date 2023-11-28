@@ -22,3 +22,10 @@ export interface Purchase {
 export interface DeletePurchase {
   deleted_count: number
 }
+
+export interface PurchaseDataExtend extends Omit<Purchase, 'buy_count'> {
+  disabled: boolean
+  checked: boolean
+  buy_count: string
+  total_price: number
+}

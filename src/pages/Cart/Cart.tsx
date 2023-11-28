@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
-import { Fragment, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Fragment, useEffect, useState, useContext, useMemo } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import purchasesApi from 'src/apis/purchases.api'
 import Button from 'src/components/Button'
 import QuantityController from 'src/components/QuantityController'
@@ -12,17 +12,14 @@ import { formatCurrency, generateNameId } from 'src/utils/utils'
 import { produce } from 'immer'
 import { keyBy } from 'lodash'
 import classNames from 'classnames'
-
-interface PurchaseDataExtend extends Omit<Purchase, 'buy_count'> {
-  disabled: boolean
-  checked: boolean
-  buy_count: string
-  total_price: number
-}
+import { AppContext } from 'src/context/app.context'
+import noProduct from 'src/assets/images/no-product.png'
 
 export default function Cart() {
-  const [purchasesDataExtend, setPurchasesDataExtend] = useState<PurchaseDataExtend[]>([])
   const [isAllChecked, setIsAllChecked] = useState<boolean>(false)
+  const { purchasesDataExtend, setPurchasesDataExtend } = useContext(AppContext)
+  const location = useLocation()
+  const idPurchaseBuyNow = (location.state as { idPurchaseBuyNow: string | null })?.idPurchaseBuyNow
   const { data: purchasesData, refetch } = useQuery({
     queryKey: ['purchases', { status: purchaseStatusConst.inCart }],
     queryFn: () => purchasesApi.getPurchases({ status: purchaseStatusConst.inCart })
@@ -45,29 +42,40 @@ export default function Cart() {
   })
 
   const purchasesDataApi = purchasesData?.data.data
-  const checkedPurchases = purchasesDataExtend.filter((item) => item.checked)
+  const checkedPurchases = useMemo(() => purchasesDataExtend.filter((item) => item.checked), [purchasesDataExtend])
   const checkedPurchasesCount = checkedPurchases.length
-  const totalCheckedPurchasesPrice = checkedPurchases.reduce((total, item) => {
-    return total + item.price * Number(item.buy_count)
-  }, 0)
-  const totalCheckedPurchasesSaving = checkedPurchases.reduce((total, item) => {
-    return total + (item.price_before_discount - item.price) * Number(item.buy_count)
-  }, 0)
+  const totalCheckedPurchasesPrice = useMemo(
+    () =>
+      checkedPurchases.reduce((total, item) => {
+        return total + item.price * Number(item.buy_count)
+      }, 0),
+    [checkedPurchases]
+  )
+  const totalCheckedPurchasesSaving = useMemo(
+    () =>
+      checkedPurchases.reduce((total, item) => {
+        return total + (item.price_before_discount - item.price) * Number(item.buy_count)
+      }, 0),
+    [checkedPurchases]
+  )
 
   useEffect(() => {
     setPurchasesDataExtend((prev) => {
       const prevPurchase = keyBy(prev, '_id')
       return (
-        purchasesDataApi?.map((purchase) => ({
-          ...purchase,
-          buy_count: String(purchase.buy_count),
-          disabled: false,
-          checked: prevPurchase[purchase._id]?.checked || false,
-          total_price: prevPurchase[purchase._id]?.price * purchase.buy_count || 0
-        })) || []
+        purchasesDataApi?.map((purchase) => {
+          const isIdPurchaseBuyNow = idPurchaseBuyNow === purchase._id
+          return {
+            ...purchase,
+            buy_count: String(purchase.buy_count),
+            disabled: false,
+            checked: isIdPurchaseBuyNow || prevPurchase[purchase._id]?.checked || false,
+            total_price: prevPurchase[purchase._id]?.price * purchase.buy_count || 0
+          }
+        }) || []
       )
     })
-  }, [purchasesDataApi])
+  }, [idPurchaseBuyNow, purchasesDataApi, setPurchasesDataExtend])
 
   useEffect(() => {
     setIsAllChecked(purchasesDataExtend.every((purchase) => purchase.checked))
@@ -80,6 +88,12 @@ export default function Cart() {
       })
     )
   }
+
+  useEffect(() => {
+    return () => {
+      history.replaceState(null, '')
+    }
+  }, [])
 
   const handleCheckAll = () => {
     setPurchasesDataExtend(
@@ -133,7 +147,7 @@ export default function Cart() {
   return (
     <div className='bg-slate-50 py-5'>
       <div className='container'>
-        {purchasesData && purchasesData.data.data.length > 0 && (
+        {purchasesData && purchasesData.data.data.length > 0 ? (
           <Fragment>
             <div className='overflow-auto'>
               <div className='min-w-[1000px]'>
@@ -301,6 +315,21 @@ export default function Cart() {
               </div>
             </div>
           </Fragment>
+        ) : (
+          <div className='flex align-middle items-center justify-center min-h-[30rem] '>
+            <div className='text-center '>
+              <img src={noProduct} alt='no-purchase' className='w-24 h-24 mx-auto' />
+              <div className='font-medium text-gray-400 mt-5'>Giỏ hàng của bạn còn trống</div>
+              <div className=' mt-5 '>
+                <Link
+                  to={path.home}
+                  className='bg-orange hover:bg-orange/90 transition-all uppercase py-2 px-6 text-white rounded-sm'
+                >
+                  Mua Ngay
+                </Link>
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </div>

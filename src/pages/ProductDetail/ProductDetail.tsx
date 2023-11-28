@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 import DOMPurify from 'dompurify'
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import ProductApi from 'src/apis/product.api'
 import purchasesApi from 'src/apis/purchases.api'
 import Button from 'src/components/Button'
@@ -13,6 +13,7 @@ import { purchaseStatusConst } from 'src/constants/purchase.constants'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
 import { Product as ProductType } from 'src/types/Product.type'
 import { convertToCompactNum, formatCurrency, getIdFromNameId, rateSale } from 'src/utils/utils'
+import path from 'src/constants/path.constants'
 
 const rangeSlide = 5
 
@@ -35,6 +36,7 @@ export default function ProductDetail() {
   )
   const activeImgRef = useRef<HTMLImageElement>(null)
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
   useEffect(() => {
     if (product && product.images.length > 0) {
       setActiveImage(product.images[0])
@@ -54,16 +56,20 @@ export default function ProductDetail() {
   })
 
   const addToCartMutation = useMutation({
-    mutationFn: (body: { product_id: string; buy_count: number }) => purchasesApi.addToCart(body),
-    onSuccess: (data) => {
-      toast.success(data.data.message)
-      queryClient.invalidateQueries({ queryKey: ['purchases', { status: purchaseStatusConst.inCart }] })
-    }
+    mutationFn: (body: { product_id: string; buy_count: number }) => purchasesApi.addToCart(body)
   })
 
   const handleAddToCart = (product_id: string) => {
     const buy_count = Number(quantity)
-    addToCartMutation.mutate({ product_id, buy_count })
+    addToCartMutation.mutate(
+      { product_id, buy_count },
+      {
+        onSuccess: (data) => {
+          toast.success(data.data.message)
+          queryClient.invalidateQueries({ queryKey: ['purchases', { status: purchaseStatusConst.inCart }] })
+        }
+      }
+    )
   }
 
   const handleChangeActiveImage = (src: string) => {
@@ -103,6 +109,13 @@ export default function ProductDetail() {
 
   const handleZoomOutActiveImg = () => {
     activeImgRef.current?.removeAttribute('style')
+  }
+
+  const hanldeBuyNow = async (product_id: string) => {
+    const buy_count = Number(quantity)
+    const res = await addToCartMutation.mutateAsync({ product_id, buy_count })
+    const purchase = res.data.data
+    navigate(path.cart, { state: { idPurchaseBuyNow: purchase._id } })
   }
 
   return (
@@ -250,7 +263,12 @@ export default function ProductDetail() {
                     </svg>
                     <span className='text-orange'>Thêm vào giỏ hàng</span>
                   </Button>
-                  <Button className='bg-orange rounded-sm px-5 py-3 shadow-sm text-white'>Mua ngay</Button>
+                  <Button
+                    className='bg-orange rounded-sm px-5 py-3 shadow-sm text-white'
+                    onClick={() => hanldeBuyNow(product._id)}
+                  >
+                    Mua ngay
+                  </Button>
                 </div>
               </div>
             </div>
