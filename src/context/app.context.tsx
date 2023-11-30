@@ -13,6 +13,7 @@ interface AppContextInterface {
   setHistorySearch: React.Dispatch<React.SetStateAction<string[] | []>>
   purchasesDataExtend: PurchaseDataExtend[]
   setPurchasesDataExtend: React.Dispatch<React.SetStateAction<PurchaseDataExtend[] | []>>
+  reset: () => void
 }
 
 const initialAppContext: AppContextInterface = {
@@ -23,7 +24,8 @@ const initialAppContext: AppContextInterface = {
   historySearch: getSearchHistoryToLS(),
   setHistorySearch: () => null,
   purchasesDataExtend: [],
-  setPurchasesDataExtend: () => null
+  setPurchasesDataExtend: () => null,
+  reset: () => null
 }
 
 export const AppContext = createContext(initialAppContext)
@@ -37,6 +39,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   // Chỉ mất khi reload
   const [purchasesDataExtend, setPurchasesDataExtend] = useState<PurchaseDataExtend[]>([])
 
+  const reset = () => {
+    setIsAuthenticated(false)
+    setPurchasesDataExtend([])
+    setProfile(null)
+  }
+
   const contextValue = useMemo(
     () => ({
       isAuthenticated,
@@ -46,7 +54,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       historySearch,
       setHistorySearch,
       purchasesDataExtend,
-      setPurchasesDataExtend
+      setPurchasesDataExtend,
+      reset
     }),
     [
       isAuthenticated,
