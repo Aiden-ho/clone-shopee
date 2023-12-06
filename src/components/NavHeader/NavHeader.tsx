@@ -165,7 +165,7 @@ export default function NavHeader() {
             placement='bottom-end'
             renderPopover={
               <div className='flex flex-col bg-white min-w-[7rem] text-sm'>
-                <Link className='text-gray-800 hover:text-teal-400 hover:bg-gray-50 p-3 text-left' to='/'>
+                <Link className='text-gray-800 hover:text-teal-400 hover:bg-gray-50 p-3 text-left' to={path.profile}>
                   Tài Khoản Của Tôi
                 </Link>
                 <Link className='text-gray-800 hover:text-teal-400 hover:bg-gray-50 p-3 text-left' to='/'>
