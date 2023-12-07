@@ -87,12 +87,22 @@ export const schema = yup.object({
     .required('Vui lòng nhập password')
     .min(5, 'password tối thiểu 5 kí tự')
     .max(160, 'password tối đa 160 kí tự'),
+  new_password: yup
+    .string()
+    .required('Vui lòng nhập password')
+    .min(5, 'password tối thiểu 5 kí tự')
+    .max(160, 'password tối đa 160 kí tự'),
   confirm_password: yup
     .string()
     .required('Vui lòng nhập lại password')
     .min(5, 'password tối thiểu 5 kí tự')
     .max(160, 'password tối đa 160 kí tự')
     .oneOf([yup.ref('password')], 'Nhập lại Password không khớp'),
+  name: yup.string().max(160, 'Tên tối đa 160 kí tự'),
+  phone: yup.string().max(20, 'Số điện thoại tối đa 20 kí tự'),
+  address: yup.string().max(160, 'Địa chỉ tối đa 160 kí tự'),
+  date_of_birth: yup.date().max(new Date(), 'Hãy chọn ngày trong quá khứ'),
+  avatar: yup.string().max(160, 'Tên file có độ dài tối đa là 160'),
   price_min: yup.string().test({
     name: 'price_not_allowed',
     message: 'Giá không phù hợp',
@@ -111,10 +121,13 @@ type YupSchema = yup.InferType<typeof schema>
 export type RegisterFormDataType = Pick<YupSchema, 'email' | 'password' | 'confirm_password'>
 export type LoginFormDataType = Pick<YupSchema, 'email' | 'password'>
 export type PriceRangeFormDataType = Pick<YupSchema, 'price_min' | 'price_max'>
-export type ProductSearchFormDataType = Pick<YupSchema, 'product_name'>
+export type profileFormDataType = Pick<YupSchema, 'name' | 'phone' | 'address' | 'date_of_birth' | 'avatar'>
+export type passwordFormDataType = Pick<YupSchema, 'password' | 'new_password' | 'confirm_password'>
 
 //Schema
 export const registerSchema = schema.pick(['email', 'password', 'confirm_password'])
 export const loginSchema = schema.pick(['email', 'password'])
 export const priceRangeSchema = schema.pick(['price_min', 'price_max'])
 export const productSearchSchema = schema.pick(['product_name'])
+export const profileSchema = schema.pick(['name', 'phone', 'address', 'date_of_birth', 'avatar'])
+export const passwordSchema = schema.pick(['password', 'new_password', 'confirm_password'])
