@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import AuthApi from 'src/apis/auth.api'
 import { AppContext } from 'src/context/app.context'
 import { purchaseStatusConst } from 'src/constants/purchase.constants'
+import { getAvatarURL } from 'src/utils/utils'
 
 export default function NavHeader() {
   const { isAuthenticated, setIsAuthenticated, setProfile, profile } = useContext(AppContext)
@@ -181,11 +182,7 @@ export default function NavHeader() {
             }
           >
             <div className='w-5 h-5 flex-shrink-0'>
-              <img
-                src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png'
-                alt='avatar'
-                className='w-full h-full rounded'
-              />
+              <img src={getAvatarURL(profile?.avatar)} alt='avatar' className='w-full h-full rounded-full' />
             </div>
             <span>{profile?.email}</span>
           </Popover>

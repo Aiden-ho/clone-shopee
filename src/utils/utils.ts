@@ -1,3 +1,5 @@
+import config from 'src/constants/config.contants'
+
 //Chuyển đổi tiền tệ
 export function formatCurrency(currency: number) {
   return new Intl.NumberFormat('vi-VN', { maximumFractionDigits: 0 }).format(Number(currency))
@@ -32,7 +34,19 @@ export const getIdFromNameId = (nameId: string) => {
   return arr[1]
 }
 
+//loại bỏ các khoảng trống liên tiếp
 export const beautySearchString = (search: string) => {
   const beauty_string = removeSpecialCharacter(search).replace(/ +(?= )/g, '')
   return beauty_string.toLowerCase()
 }
+
+//hide Email
+export const hideEmail = (email?: string) => {
+  if (email) {
+    return email.replace(/(?<=^[A-Za-z0-9]{2}).*?(?=@)/gm, '*')
+  }
+}
+
+//nối url cho avatar
+export const getAvatarURL = (avatarName?: string) =>
+  avatarName ? `${config.BaseURL}/images/${avatarName}` : 'https://cdn-icons-png.flaticon.com/512/1053/1053244.png'

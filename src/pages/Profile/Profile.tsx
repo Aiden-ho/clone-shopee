@@ -1,25 +1,42 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import UserAPi from 'src/apis/user.api'
 import Button from 'src/components/Button'
 import DateSelect from 'src/components/DateSelect'
 import Input from 'src/components/Input'
+import InputFile from 'src/components/InputFile'
 import InputNumber from 'src/components/InputNumber'
 import { AppContext } from 'src/context/app.context'
+import { ErrorRespone } from 'src/types/Util.type'
 import { profileFormDataType, profileSchema } from 'src/utils/ValidateRule'
 import { setProfileToLS } from 'src/utils/auth'
+import { isUnprocessableEntityError } from 'src/utils/axiosErrorChecker'
+import { getAvatarURL, hideEmail } from 'src/utils/utils'
 
 type FormData = profileFormDataType
 
+type FormDataError = {
+  [key in keyof FormData]: string
+}
+
 export default function Profile() {
+  const [fileImg, setFileImg] = useState<File>()
+  const previewImg = useMemo(() => {
+    if (fileImg) {
+      return URL.createObjectURL(fileImg)
+    }
+  }, [fileImg])
+  const { setProfile } = useContext(AppContext)
   const {
     register,
     control,
     handleSubmit,
+    watch,
     setValue,
+    setError,
     formState: { errors }
   } = useForm<FormData>({
     defaultValues: {
@@ -30,30 +47,68 @@ export default function Profile() {
     },
     resolver: yupResolver<FormData>(profileSchema)
   })
-  const { setProfile } = useContext(AppContext)
+
   const { data: dataProfile, refetch } = useQuery({ queryKey: ['profile'], queryFn: () => UserAPi.getProfile() })
   const profile = dataProfile?.data.data
-
   const profileMutation = useMutation({
     mutationFn: UserAPi.uploadProfile
   })
-
+  const uploadAvatarMutation = useMutation({
+    mutationFn: UserAPi.uploadAvatar
+  })
   useEffect(() => {
     if (profile) {
       setValue('name', profile.name)
       setValue('address', profile.address)
       setValue('phone', profile.phone)
+      setValue('avatar', profile.avatar)
       setValue('date_of_birth', profile.date_of_birth ? new Date(profile.date_of_birth) : new Date(1990, 0, 1))
     }
   }, [profile, setValue])
+  const avatar = watch('avatar')
 
   const hanldeOnSubmit = handleSubmit(async (data) => {
-    const res = await profileMutation.mutateAsync({ ...data, date_of_birth: data.date_of_birth?.toISOString() })
-    refetch()
-    setProfile(res.data.data)
-    setProfileToLS(res.data.data)
-    toast.success(res.data.message)
+    try {
+      let avatarName = avatar
+      if (fileImg) {
+        const formData = new FormData()
+        formData.append('image', fileImg)
+        const resAvatar = await uploadAvatarMutation.mutateAsync(formData)
+        avatarName = resAvatar.data.data
+        // đồng bộ form với giá trị mới của avatar
+        setValue('avatar', avatarName)
+      }
+      const res = await profileMutation.mutateAsync({
+        ...data,
+        date_of_birth: data.date_of_birth?.toISOString(),
+        avatar: avatarName
+      })
+      refetch()
+      setProfile(res.data.data)
+      setProfileToLS(res.data.data)
+      toast.success(res.data.message)
+    } catch (error) {
+      // Vì error avatr có thể là 413 , có thể là 422 nên cần phải kiểm tra để quăn lỗi
+      if (isUnprocessableEntityError<ErrorRespone<FormDataError>>(error)) {
+        const errorFrom = error.response?.data.data
+
+        if (errorFrom) {
+          // Nếu là lỗi cụ thể từ server thì set lại error cho field tương ứng
+          Object.keys(errorFrom).forEach((key) => {
+            setError(key as keyof FormDataError, {
+              message: errorFrom[key as keyof FormDataError],
+              // Type để nhận biết nguồn lỗi
+              type: 'server'
+            })
+          })
+        }
+      }
+    }
   })
+
+  const handleOnFileChange = (file: File) => {
+    setFileImg(file)
+  }
 
   return (
     <div className='bg-white shadow-sm rounded-sm px-8 pb-3'>
@@ -65,7 +120,7 @@ export default function Profile() {
         <div className='py-7 flex-grow'>
           <div className='flex items-center flex-wrap pb-7 justify-center'>
             <div className='w-[20%] text-sm text-gray-500 text-right px-6 capitalize'>Email</div>
-            <div className='w-[80%] text-sm'>ho*************@gmail.com</div>
+            <div className='w-[80%] text-sm'>{hideEmail(profile?.email)}</div>
           </div>
           <div className='flex flex-wrap pb-3'>
             <div className='w-[20%] text-sm text-gray-500 text-right px-6 pt-2 capitalize'>
@@ -138,22 +193,12 @@ export default function Profile() {
         </div>
         <div className='md:w-80 py-7'>
           <div className='border-l-[1px] w-full flex flex-col justify-center items-center gap-3'>
-            <div className='h-24 w-24 mb-3'>
-              <img
-                src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png'
-                alt='avatar'
-                className='w-full h-full rounded'
-              />
+            <div className='h-24 w-24  mb-3'>
+              <img src={previewImg || getAvatarURL(avatar)} alt='avatar' className='w-full h-full rounded-full' />
             </div>
-            <input type='file' name='avatar' className='hidden' accept='.jpg, .jpeg, .png' />
-            <Button
-              type='button'
-              className='border border-gray-300 hover:bg-gray-100 px-4 py-2 text-sm text-gray-500 rounded-sm'
-            >
-              Chọn Ảnh
-            </Button>
+            <InputFile onChange={handleOnFileChange} />
             <div className='flex flex-col items-start'>
-              <span className='text-sm text-gray-400'>Dụng lượng file tối đa 1 MB</span>
+              <span className='text-sm text-gray-400'>Dung lượng file tối đa 1 MB</span>
               <span className='text-sm text-gray-400'>Định dạng:.JPEG, .PNG</span>
             </div>
           </div>

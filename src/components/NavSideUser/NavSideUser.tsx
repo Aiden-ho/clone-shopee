@@ -1,17 +1,18 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import classNames from 'classnames'
+import React, { useContext } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import path from 'src/constants/path.constants'
+import { AppContext } from 'src/context/app.context'
+import { getAvatarURL } from 'src/utils/utils'
 
 export default function NavSideUser() {
+  const { profile } = useContext(AppContext)
+
   return (
     <div>
       <div className='flex items-center gap-3 border-b-[1px] min-h-[81px] py-4'>
         <div className='h-12 w-12 flex-shrink-0'>
-          <img
-            src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png'
-            alt='avatar'
-            className='w-full h-full rounded'
-          />
+          <img src={getAvatarURL(profile?.avatar)} alt='avatar' className='w-full h-full rounded-full' />
         </div>
         <div className='flex-grow'>
           <div className='text-sm font-semibold text-gray-800 mb-1'>Kiet Ho</div>
@@ -29,8 +30,16 @@ export default function NavSideUser() {
         </div>
       </div>
       <div className='flex flex-col gap-3 py-4'>
-        <Link to={path.profile}>
-          <div className='flex align-middle items-center hover:text-orange'>
+        <NavLink
+          to={path.profile}
+          className={({ isActive }) =>
+            classNames('', {
+              'text-orange': isActive,
+              ' hover:text-orange': !isActive
+            })
+          }
+        >
+          <div className='flex align-middle items-center'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               fill='none'
@@ -47,9 +56,17 @@ export default function NavSideUser() {
             </svg>
             <span className='text-sm capitalize'>Tài khoản của tôi</span>
           </div>
-        </Link>
-        <Link to={path.passwords}>
-          <div className='flex align-middle items-center hover:text-orange'>
+        </NavLink>
+        <NavLink
+          to={path.passwords}
+          className={({ isActive }) =>
+            classNames('', {
+              'text-orange': isActive,
+              ' hover:text-orange': !isActive
+            })
+          }
+        >
+          <div className='flex align-middle items-center'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               fill='none'
@@ -66,9 +83,17 @@ export default function NavSideUser() {
             </svg>
             <span className='text-sm capitalize'>Thay đổi mật khẩu</span>
           </div>
-        </Link>
-        <Link to={path.purchases}>
-          <div className='flex align-middle items-center hover:text-orange'>
+        </NavLink>
+        <NavLink
+          to={path.purchases}
+          className={({ isActive }) =>
+            classNames('', {
+              'text-orange': isActive,
+              ' hover:text-orange': !isActive
+            })
+          }
+        >
+          <div className='flex align-middle items-center'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               fill='none'
@@ -85,7 +110,7 @@ export default function NavSideUser() {
             </svg>
             <span className='text-sm capitalize'>Đơn mua</span>
           </div>
-        </Link>
+        </NavLink>
       </div>
     </div>
   )
