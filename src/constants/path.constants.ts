@@ -8,7 +8,8 @@ const path = {
   user: '/user',
   profile: '/user/profile',
   passwords: '/user/passwords',
-  purchases: '/user/purchases'
+  purchases: '/user/purchases',
+  notFound: 'errors/404'
 }
 
 export default path
