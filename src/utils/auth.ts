@@ -11,6 +11,14 @@ export const getAccessTokenToLS = () => {
   return localStorage.getItem('access_token') || ''
 }
 
+export const setRefreshTokenToLS = (refresh_token: string) => {
+  localStorage.setItem('refresh_token', refresh_token)
+}
+
+export const getRefreshTokenToLS = () => {
+  return localStorage.getItem('refresh_token') || ''
+}
+
 export const setProfileToLS = (profile: User) => {
   const stringProfile = JSON.stringify(profile)
   localStorage.setItem('profile', stringProfile)
@@ -23,6 +31,7 @@ export const getProfileToLS = () => {
 
 export const clearLS = () => {
   localStorage.removeItem('access_token')
+  localStorage.removeItem('refresh_token')
   localStorage.removeItem('profile')
   // Tạo event mới, với type là string dùng để định danh
   const eventClearLS = new Event('clearLS')
