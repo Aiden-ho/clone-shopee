@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import path from 'src/constants/path.constants'
 import { AppContext } from 'src/context/app.context'

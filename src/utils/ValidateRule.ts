@@ -126,6 +126,7 @@ type YupSchema = yup.InferType<typeof schema>
 export type RegisterFormDataType = Pick<YupSchema, 'email' | 'password' | 'confirm_password'>
 export type LoginFormDataType = Pick<YupSchema, 'email' | 'password'>
 export type PriceRangeFormDataType = Pick<YupSchema, 'price_min' | 'price_max'>
+export type ProductSearchFormDataType = Pick<YupSchema, 'product_name'>
 export type profileFormDataType = Pick<YupSchema, 'name' | 'phone' | 'address' | 'date_of_birth' | 'avatar'>
 export type changePasswordFormDataType = Pick<YupSchema, 'password' | 'new_password' | 'confirm_new_password'>
 

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import classNames from 'classnames'
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { Link, createSearchParams } from 'react-router-dom'
 import purchasesApi from 'src/apis/purchases.api'
 import path from 'src/constants/path.constants'

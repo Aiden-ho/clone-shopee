@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import Popover from '../Popover'
 import { Link } from 'react-router-dom'
 import path from 'src/constants/path.constants'
