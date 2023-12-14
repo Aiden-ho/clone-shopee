@@ -8,7 +8,7 @@ import { ErrorRespone } from 'src/types/Util.type'
 import Button from 'src/components/Button'
 import UserAPi from 'src/apis/user.api'
 import { useMutation } from '@tanstack/react-query'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
 
 type FormData = changePasswordFormDataType
 

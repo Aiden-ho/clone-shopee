@@ -10,7 +10,7 @@ import useQueryParams from 'src/hooks/useQueryParams'
 import { PurchasesListStatus } from 'src/types/Purchases.type'
 import { formatCurrency, generateNameId } from 'src/utils/utils'
 import noProduct from 'src/assets/images/no-product.png'
-import { find } from 'lodash'
+import find from 'lodash/find'
 
 const purchaseTabs = [
   { status: purchaseStatusConst.all, name: 'Tất cả' },

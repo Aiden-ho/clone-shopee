@@ -1,4 +1,4 @@
-import { uniq } from 'lodash'
+import uniq from 'lodash/uniq'
 
 export const getSearchHistoryToLS = () => {
   const result = localStorage.getItem('searchHistory')

@@ -1,7 +1,7 @@
 import { Link, createSearchParams, useNavigate } from 'react-router-dom'
 import { useForm, Controller } from 'react-hook-form'
 import classNames from 'classnames'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
 import Button from 'src/components/Button'
 import { Category } from 'src/types/Category.type'
 import path from 'src/constants/path.constants'

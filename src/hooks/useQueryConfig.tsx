@@ -1,5 +1,6 @@
 import { ProductParams } from 'src/types/Product.type'
-import { omitBy, isUndefined } from 'lodash'
+import isUndefined from 'lodash/isUndefined'
+import omitBy from 'lodash/omitBy'
 import useQueryParams from 'src/hooks/useQueryParams'
 
 // Do useQueryParams chỉ trả về giá trị string và createSearchParams chỉ làm việc với string

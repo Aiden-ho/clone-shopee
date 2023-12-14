@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
 import { registerSchema, type RegisterFormDataType } from 'src/utils/ValidateRule'

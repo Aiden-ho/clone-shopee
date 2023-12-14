@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import { Link, createSearchParams, useNavigate } from 'react-router-dom'
 import path from 'src/constants/path.constants'
 import { useState } from 'react'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
 interface SortProductProps {
   queryConfig: QueryConfig
