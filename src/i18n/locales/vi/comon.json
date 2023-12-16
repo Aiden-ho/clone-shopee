@@ -67,5 +67,10 @@
       "tax": " Mã số doanh nghiệp: 0106773786 do Sở Kế hoạch & Đầu tư TP Hà Nội cấp lần đầu ngày 10/02/2015",
       "copy_right": "© 2015 - Bản quyền thuộc về Công ty TNHH Shopee"
     }
+  },
+  "NotFound": {
+    "title": "Trang không tồn tại.",
+    "decribe": "Xin lỗi, chúng tôi không tìm thấy trang. Bạn sẽ tìm thấy nhiều thứ thú vị hơn ở trang chủ.",
+    "nav_button": "Quay trở về trang chủ"
   }
 }

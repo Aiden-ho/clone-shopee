@@ -67,5 +67,10 @@
       "tax": "Business Registration Certificate No: 0106773786",
       "copy_right": "© 2015 - Copyright belongs to Shopee Company Limited"
     }
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "decribe": "Sorry, we can't find that page. You'll find lots to explore on the home page.",
+    "nav_button": "Back to homepage"
   }
 }
