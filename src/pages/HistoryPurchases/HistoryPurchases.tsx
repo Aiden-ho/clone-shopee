@@ -12,6 +12,7 @@ import { formatCurrency, generateNameId } from 'src/utils/utils'
 import noProduct from 'src/assets/images/no-product.png'
 import find from 'lodash/find'
 import { useTranslation } from 'react-i18next'
+import { Helmet } from 'react-helmet-async'
 
 export default function HistoryPurchases() {
   const queryParams: { status?: string } = useQueryParams()
@@ -46,6 +47,10 @@ export default function HistoryPurchases() {
 
   return (
     <div>
+      <Helmet>
+        <title>Trang Đơn hàng | Shopee Clone</title>
+        <meta name='description' content='Trang đơn hàng shopee clone' />
+      </Helmet>
       <div className='sticky top-0 flex rounded-t-sm shadow-sm'>
         {purchaseTabs.map((item, index) => (
           <Link

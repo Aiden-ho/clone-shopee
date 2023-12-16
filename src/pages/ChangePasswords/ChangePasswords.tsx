@@ -10,6 +10,7 @@ import UserAPi from 'src/apis/user.api'
 import { useMutation } from '@tanstack/react-query'
 import omit from 'lodash/omit'
 import { useTranslation } from 'react-i18next'
+import { Helmet } from 'react-helmet-async'
 
 type FormData = changePasswordFormDataType
 
@@ -59,6 +60,10 @@ export default function ChangePasswords() {
 
   return (
     <div className='bg-white shadow-sm rounded-sm px-8 pb-3' onSubmit={hanldeOnSubmit}>
+      <Helmet>
+        <title>Trang đổi mật khẩu | Shopee Clone</title>
+        <meta name='description' content='Trang đổi mật khẩu shopee clone' />
+      </Helmet>
       <div className='min-h-[81px] py-4 border-b-[1px] flex flex-col items-start justify-center'>
         <p className='text-gray-800 capitalize text-lg font-medium'>{t('password.title')}</p>
         <p className='text-gray-500 text-sm'>{t('password.sub_title')}</p>

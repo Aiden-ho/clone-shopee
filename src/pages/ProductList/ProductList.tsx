@@ -8,6 +8,7 @@ import { ProductParams } from 'src/types/Product.type'
 import categoryApi from 'src/apis/categories.api'
 import useQueryConfig from 'src/hooks/useQueryConfig'
 import NoProductNotice from './components/NoProductNotice'
+import { Helmet } from 'react-helmet-async'
 
 export default function ProductList() {
   const queryConfig = useQueryConfig()
@@ -26,6 +27,10 @@ export default function ProductList() {
 
   return (
     <div className='bg-slate-50 py-5'>
+      <Helmet>
+        <title>Trang chủ | Shopee Clone</title>
+        <meta name='description' content='Trang chủ shopee clone' />
+      </Helmet>
       <div className='container'>
         {productsData && productsData.data.data.products.length > 0 ? (
           <div className='grid grid-cols-12 gap-6'>

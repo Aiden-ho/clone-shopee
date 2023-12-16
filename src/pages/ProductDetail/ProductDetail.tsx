@@ -15,6 +15,8 @@ import { Product as ProductType } from 'src/types/Product.type'
 import { convertToCompactNum, formatCurrency, getIdFromNameId, rateSale } from 'src/utils/utils'
 import path from 'src/constants/path.constants'
 import { useTranslation } from 'react-i18next'
+import { Helmet } from 'react-helmet-async'
+import { convert } from 'html-to-text'
 
 const rangeSlide = 5
 
@@ -124,6 +126,17 @@ export default function ProductDetail() {
     <div className='bg-slate-50 py-5'>
       {product && (
         <Fragment>
+          <Helmet>
+            <title>Chi tiết sản phẩm | Shopee Clone</title>
+            <meta
+              name='description'
+              content={convert(product.description, {
+                limits: {
+                  maxInputLength: 150
+                }
+              })}
+            />
+          </Helmet>
           <div className='container bg-white p-4'>
             <div className='grid grid-cols-12 gap-10'>
               <div className='col-span-5'>

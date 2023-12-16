@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { Fragment, useContext, useEffect, useMemo, useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { Controller, FormProvider, useForm, useFormContext } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -174,6 +175,10 @@ export default function Profile() {
 
   return (
     <div className='bg-white shadow-sm rounded-sm px-8 pb-3'>
+      <Helmet>
+        <title>Trang hồ sơ | Shopee Clone</title>
+        <meta name='description' content='Thay hồ sơ shopee clone' />
+      </Helmet>
       <div className='min-h-[81px] py-4 border-b-[1px] flex flex-col items-start justify-center'>
         <p className='text-gray-800 capitalize text-lg font-medium'>{t('profile.title')}</p>
         <p className='text-gray-500 text-sm'>{t('profile.sub_title')}</p>

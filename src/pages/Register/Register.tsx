@@ -13,6 +13,7 @@ import { AppContext } from 'src/context/app.context'
 import Button from 'src/components/Button'
 import path from 'src/constants/path.constants'
 import { useTranslation } from 'react-i18next'
+import { Helmet } from 'react-helmet-async'
 
 type FormData = RegisterFormDataType
 
@@ -62,6 +63,10 @@ export default function Register() {
 
   return (
     <div className='bg-orange'>
+      <Helmet>
+        <title>Trang đăng ký | Shopee Clone</title>
+        <meta name='description' content='Trang đăng ký shopee clone' />
+      </Helmet>
       <div className='container lg:bg-register_bg lg:bg-no-repeat lg:bg-cover'>
         <div className='grid grids-cols-1 lg:grid-cols-5 lg:py-24 py-10'>
           <div className='lg:col-span-2 lg:col-start-4'>

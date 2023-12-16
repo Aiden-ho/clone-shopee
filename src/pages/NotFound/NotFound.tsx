@@ -1,9 +1,14 @@
+import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import path from 'src/constants/path.constants'
 
 export default function NotFound() {
   return (
     <section className='bg-white'>
+      <Helmet>
+        <title>404 | Shopee Clone</title>
+        <meta name='description' content='Thay 404 shopee clone' />
+      </Helmet>
       <div className='mx-auto py-16 px-6'>
         <div className='mx-auto text-center'>
           <h1 className='text-gray-500 mb-4 text-7xl tracking-tight font-bold lg:text-9xl'>404</h1>

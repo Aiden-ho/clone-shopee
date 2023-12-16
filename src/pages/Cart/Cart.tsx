@@ -15,6 +15,7 @@ import classNames from 'classnames'
 import { AppContext } from 'src/context/app.context'
 import noProduct from 'src/assets/images/no-product.png'
 import { useTranslation } from 'react-i18next'
+import { Helmet } from 'react-helmet-async'
 
 export default function Cart() {
   const [isAllChecked, setIsAllChecked] = useState<boolean>(false)
@@ -148,6 +149,10 @@ export default function Cart() {
 
   return (
     <div className='bg-slate-50 py-5'>
+      <Helmet>
+        <title>Giỏ hàng | Shopee Clone</title>
+        <meta name='description' content='Giỏ hàng shopee clone' />
+      </Helmet>
       <div className='container'>
         {purchasesData && purchasesData.data.data.length > 0 ? (
           <Fragment>
