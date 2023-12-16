@@ -1,0 +1,45 @@
+{
+  "sideNav": {
+    "edit_profile_btn": "Edit profile",
+    "profile": "My profile",
+    "password": "Change Password",
+    "purchases": "My purchases"
+  },
+  "profile": {
+    "title": "My Profile",
+    "sub_title": "Manage and protect your account",
+    "email": "Email",
+    "name": "Name",
+    "name_holder": "User name",
+    "phone": "Phone",
+    "phone_holder": "User phone",
+    "address": "Address",
+    "address_holder": "User address",
+    "DOB": "Date of birth",
+    "save_btn": "Save",
+    "select_img_btn": "Select Image",
+    "warning_img_size": "File size: maximum 1 MB",
+    "warning_img_exten": "File extension: .JPEG, .PNG"
+  },
+  "password": {
+    "title": "Change Password",
+    "sub_title": "Manage and protect your password",
+    "current_pass": "Current password",
+    "current_pass_holder": "Enter current password",
+    "new_pass": "New password",
+    "new_pass_holder": "Enter new password",
+    "confirm_new_pass": "confirm new password",
+    "confirm_new_pass_holder": "Re-enter new Password",
+    "save_btn": "Save"
+  },
+  "purchase": {
+    "all": "All",
+    "confirm": "To confirm",
+    "ship": "To ship",
+    "receive": "To Receive",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "total": "Order total",
+    "empty_note": "No orders yet"
+  }
+}

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import classNames from 'classnames'
-import { useContext } from 'react'
+import { useContext, useMemo } from 'react'
 import { Link, createSearchParams } from 'react-router-dom'
 import purchasesApi from 'src/apis/purchases.api'
 import path from 'src/constants/path.constants'
@@ -11,20 +11,25 @@ import { PurchasesListStatus } from 'src/types/Purchases.type'
 import { formatCurrency, generateNameId } from 'src/utils/utils'
 import noProduct from 'src/assets/images/no-product.png'
 import find from 'lodash/find'
-
-const purchaseTabs = [
-  { status: purchaseStatusConst.all, name: 'Tất cả' },
-  { status: purchaseStatusConst.waitForComfirmation, name: 'Chờ xác nhận' },
-  { status: purchaseStatusConst.readyToPick, name: 'Chờ lấy hàng' },
-  { status: purchaseStatusConst.delivering, name: 'Đang giao' },
-  { status: purchaseStatusConst.delivered, name: 'Đã giao' },
-  { status: purchaseStatusConst.cancled, name: 'Đã hủy' }
-]
+import { useTranslation } from 'react-i18next'
 
 export default function HistoryPurchases() {
   const queryParams: { status?: string } = useQueryParams()
   const statusNumber = Number(queryParams.status) || purchaseStatusConst.all
   const { isAuthenticated } = useContext(AppContext)
+  const { t } = useTranslation('user')
+
+  const purchaseTabs = useMemo(
+    () => [
+      { status: purchaseStatusConst.all, name: t('purchase.all') },
+      { status: purchaseStatusConst.waitForComfirmation, name: t('purchase.confirm') },
+      { status: purchaseStatusConst.readyToPick, name: t('purchase.ship') },
+      { status: purchaseStatusConst.delivering, name: t('purchase.receive') },
+      { status: purchaseStatusConst.delivered, name: t('purchase.completed') },
+      { status: purchaseStatusConst.cancled, name: t('purchase.cancelled') }
+    ],
+    [t]
+  )
 
   const { data: purchasesData } = useQuery({
     queryKey: ['purchases', { status: statusNumber }],
@@ -89,7 +94,7 @@ export default function HistoryPurchases() {
                     </div>
                   </div>
                   <div className='flex justify-end gap-1'>
-                    <span>Tổng Tiền: </span>
+                    <span>{t('purchase.total')}: </span>
                     <div className='text-orange'>
                       <span className='text-xs'>₫</span>
                       <span>{formatCurrency(product.price * buy_count)}</span>
@@ -103,7 +108,7 @@ export default function HistoryPurchases() {
           <div className='flex flex-col items-center justify-center  h-[300px]'>
             <img className='w-24 h-24 pb-2' src={noProduct} alt='empty cart' />
             <span className='text-gray-500'>
-              Chưa có đơn <span className='font-semibold'>&quot;{getNameStatus()}&quot;</span>
+              {t('purchase.empty_note')} <span className='font-semibold'>&quot;{getNameStatus()}&quot;</span>
             </span>
           </div>
         )}

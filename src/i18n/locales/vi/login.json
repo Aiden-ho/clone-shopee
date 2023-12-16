@@ -1,0 +1,19 @@
+{
+  "header": {
+    "login_title": "Đăng Nhập",
+    "register_title": "Đăng ký",
+    "need_help": "Bạn cần giúp đỡ ?"
+  },
+  "login_form": {
+    "title": "Đăng nhập",
+    "button": "Đăng nhập",
+    "register_nav": "Đăng ký",
+    "register_invite": "Bạn chưa có tài khoản?"
+  },
+  "register_form": {
+    "title": "Đăng nhập",
+    "button": "Đăng nhập",
+    "login_nav": "Đăng nhập",
+    "login_invite": "Bạn đã có tài khoản?"
+  }
+}

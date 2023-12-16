@@ -12,12 +12,14 @@ import { useContext } from 'react'
 import { AppContext } from 'src/context/app.context'
 import Button from 'src/components/Button'
 import path from 'src/constants/path.constants'
+import { useTranslation } from 'react-i18next'
 
 type FormData = RegisterFormDataType
 
 export default function Register() {
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
   const navigate = useNavigate()
+  const { t } = useTranslation('login')
   const {
     register,
     handleSubmit,
@@ -64,7 +66,7 @@ export default function Register() {
         <div className='grid grids-cols-1 lg:grid-cols-5 lg:py-24 py-10'>
           <div className='lg:col-span-2 lg:col-start-4'>
             <form onSubmit={handleSubmitForm} className='p-8 rounded bg-white shadow-sm' noValidate>
-              <div className='text-xl'>Đăng ký</div>
+              <div className='text-xl'>{t('register_form.title')}</div>
               {/* email */}
               <Input
                 className='mt-8'
@@ -100,15 +102,15 @@ export default function Register() {
                   disabled={registerMutation.isPending}
                   className='w-full text-center py-4 px-2 uppercase bg-orange text-white text-sm hover:bg-red-500 flex justify-center items-center align-middle'
                 >
-                  Đăng ký
+                  {t('register_form.button')}
                 </Button>
               </div>
               {/* to login */}
               <div className='mt-8'>
                 <div className='flex items-center justify-center gap-1'>
-                  <span className='text-neutral-300'>Bạn đã có tài khoản?</span>
+                  <span className='text-neutral-300'>{t('register_form.login_invite')}</span>
                   <Link className='text-orange' to={path.login}>
-                    Đăng nhập
+                    {t('register_form.login_nav')}
                   </Link>
                 </div>
               </div>

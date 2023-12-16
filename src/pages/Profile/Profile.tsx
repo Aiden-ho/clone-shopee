@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { Fragment, useContext, useEffect, useMemo, useState } from 'react'
 import { Controller, FormProvider, useForm, useFormContext } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import UserAPi from 'src/apis/user.api'
 import Button from 'src/components/Button'
@@ -22,8 +23,16 @@ type FormDataError = {
   [key in keyof FormData]: string
 }
 
+type infoProps = {
+  name_label?: string
+  name_holder?: string
+  phone_label?: string
+  phone_holder?: string
+}
+
 // tách form để áp dụng useFormContext
-function Info() {
+function Info(props: infoProps) {
+  const { name_label, name_holder, phone_holder, phone_label } = props
   const {
     register,
     control,
@@ -33,7 +42,7 @@ function Info() {
     <Fragment>
       <div className='flex flex-wrap pb-3'>
         <div className='w-[20%] text-sm text-gray-500 text-right px-6 pt-2 capitalize'>
-          <label htmlFor='name'>Tên</label>
+          <label htmlFor='name'>{name_label}</label>
         </div>
         <div className='w-[80%] text-sm'>
           <Input
@@ -41,14 +50,14 @@ function Info() {
             name='name'
             classNameInput='w-full rounded-sm outline-none border border-gray-300 px-3 py-2 focus:border-gray-500 focus:shadow-sm'
             register={register}
-            placeholder='Tên người dùng'
+            placeholder={name_holder}
             errorMessage={errors.name?.message}
           />
         </div>
       </div>
       <div className='flex flex-wrap pb-3'>
         <div className='w-[20%] text-sm text-gray-500 text-right px-6 pt-2 capitalize'>
-          <label htmlFor='phone'>Số điện thoại</label>
+          <label htmlFor='phone'>{phone_label}</label>
         </div>
         <div className='w-[80%] text-sm'>
           <Controller
@@ -58,7 +67,7 @@ function Info() {
               <InputNumber
                 id='phone'
                 classNameInput='w-full rounded-sm outline-none border border-gray-300 px-3 py-2 focus:border-gray-500 focus:shadow-sm'
-                placeholder='Số điện thoại'
+                placeholder={phone_holder}
                 {...field}
                 onChange={field.onChange}
                 value={field.value}
@@ -80,6 +89,7 @@ export default function Profile() {
     }
   }, [fileImg])
   const { setProfile } = useContext(AppContext)
+  const { t } = useTranslation('user')
   const formMethod = useForm<FormData>({
     defaultValues: {
       name: '',
@@ -165,20 +175,25 @@ export default function Profile() {
   return (
     <div className='bg-white shadow-sm rounded-sm px-8 pb-3'>
       <div className='min-h-[81px] py-4 border-b-[1px] flex flex-col items-start justify-center'>
-        <p className='text-gray-800 capitalize text-lg font-medium'>Hồ sơ của tôi</p>
-        <p className='text-gray-500 text-sm'>Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
+        <p className='text-gray-800 capitalize text-lg font-medium'>{t('profile.title')}</p>
+        <p className='text-gray-500 text-sm'>{t('profile.sub_title')}</p>
       </div>
       <FormProvider {...formMethod}>
         <form className='flex flex-col-reverse md:flex-row md:items-start gap-8' onSubmit={hanldeOnSubmit}>
           <div className='py-7 flex-grow'>
             <div className='flex items-center flex-wrap pb-7 justify-center'>
-              <div className='w-[20%] text-sm text-gray-500 text-right px-6 capitalize'>Email</div>
+              <div className='w-[20%] text-sm text-gray-500 text-right px-6 capitalize'>{t('profile.email')}</div>
               <div className='w-[80%] text-sm'>{hideEmail(profile?.email)}</div>
             </div>
-            <Info />
+            <Info
+              name_label={t('profile.name')}
+              name_holder={t('profile.name_holder')}
+              phone_label={t('profile.phone')}
+              phone_holder={t('profile.phone_holder')}
+            />
             <div className='flex flex-wrap pb-3'>
               <div className='w-[20%] text-sm text-gray-500 text-right px-6 pt-2 capitalize'>
-                <label htmlFor='phone'>Địa chỉ</label>
+                <label htmlFor='address'>{t('profile.address')}</label>
               </div>
               <div className='w-[80%] text-sm'>
                 <Input
@@ -186,7 +201,7 @@ export default function Profile() {
                   name='address'
                   classNameInput='w-full rounded-sm outline-none border border-gray-300 px-3 py-2 focus:border-gray-500 focus:shadow-sm'
                   register={register}
-                  placeholder='Địa chỉ'
+                  placeholder={t('profile.address_holder')}
                   errorMessage={errors.address?.message}
                 />
               </div>
@@ -207,7 +222,7 @@ export default function Profile() {
               <div className='w-[20%]'></div>
               <div className='w-[80%]'>
                 <Button type='submit' className='bg-orange px-6 py-3 text-white rounded-sm hover:bg-orange/90'>
-                  Lưu
+                  {t('profile.save_btn')}
                 </Button>
               </div>
             </div>
@@ -219,8 +234,8 @@ export default function Profile() {
               </div>
               <InputFile onChange={handleOnFileChange} />
               <div className='flex flex-col items-start'>
-                <span className='text-sm text-gray-400'>Dung lượng file tối đa 1 MB</span>
-                <span className='text-sm text-gray-400'>Định dạng:.JPEG, .PNG</span>
+                <span className='text-sm text-gray-400'>{t('profile.warning_img_size')}</span>
+                <span className='text-sm text-gray-400'>{t('profile.warningmg_exten')}</span>
               </div>
             </div>
           </div>

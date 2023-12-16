@@ -1,0 +1,27 @@
+{
+  "mini_cart": {
+    "empty_notice": "Not products Yet",
+    "title": "Recently added products",
+    "rest_item_text": "More product in carts",
+    "Button": "View my shopping cart"
+  },
+  "cart": {
+    "empty_notice": "Your shopping cart is empty",
+    "empty_nav_button": "Buy now",
+    "table_head": {
+      "product": "Product",
+      "price": "Unit price",
+      "quantity": "Quantity",
+      "amount": "Total price",
+      "action": "Actions"
+    },
+    "delete_button": "Delete",
+    "summarize": {
+      "all": "Select All",
+      "product": "items",
+      "Total_price": "Total",
+      "save": "Save",
+      "buy_button": "Check out"
+    }
+  }
+}

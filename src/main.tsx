@@ -7,6 +7,9 @@ import App from './App.tsx'
 import './index.css'
 import { AppProvider } from './context/app.context.tsx'
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.tsx'
+//Import vào mới chạy được i18n
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import './i18n'
 
 // Create a client for react query
 const queryClient = new QueryClient({

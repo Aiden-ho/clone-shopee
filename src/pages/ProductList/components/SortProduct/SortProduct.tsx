@@ -7,6 +7,7 @@ import path from 'src/constants/path.constants'
 import { useState } from 'react'
 import omit from 'lodash/omit'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
+import { useTranslation } from 'react-i18next'
 interface SortProductProps {
   queryConfig: QueryConfig
   pageSize: number
@@ -17,7 +18,7 @@ export default function SortProduct({ queryConfig, pageSize }: SortProductProps)
   const { sort_by = sortBy.createdAt, page, order } = queryConfig
   const currentPage = Number(page)
   const sortNavigate = useNavigate()
-
+  const { t } = useTranslation('home')
   const isActivedSortBy = (sortbyValue: Exclude<ProductParams['sort_by'], undefined>) => {
     return sort_by === sortbyValue
   }
@@ -45,7 +46,7 @@ export default function SortProduct({ queryConfig, pageSize }: SortProductProps)
     <div className='bg-gray-200 py-3 px-5 mb-2 text-sm'>
       <div className='flex justify-between items-center'>
         <div className='flex items-center flex-row gap-3'>
-          <span className='text-gray-600 mr-2'>Sắp xếp theo</span>
+          <span className='text-gray-600 mr-2'>{t('sortProduct.sort_title')}</span>
           <Button
             onClick={() => hanldeSortAction(sortBy.view)}
             className={classNames('rounded-sm shadow-sm px-5 h-9', {
@@ -53,7 +54,7 @@ export default function SortProduct({ queryConfig, pageSize }: SortProductProps)
               'bg-white text-gray-600 hover:bg-gray-50': !isActivedSortBy(sortBy.view)
             })}
           >
-            Phổ Biến
+            {t('sortProduct.relevance')}
           </Button>
           <Button
             onClick={() => hanldeSortAction(sortBy.createdAt)}
@@ -62,7 +63,7 @@ export default function SortProduct({ queryConfig, pageSize }: SortProductProps)
               'bg-white text-gray-600 hover:bg-gray-50': !isActivedSortBy(sortBy.createdAt)
             })}
           >
-            Mới Nhất
+            {t('sortProduct.latest')}
           </Button>
           <Button
             onClick={() => hanldeSortAction(sortBy.sold)}
@@ -71,7 +72,7 @@ export default function SortProduct({ queryConfig, pageSize }: SortProductProps)
               'bg-white text-gray-600 hover:bg-gray-50': !isActivedSortBy(sortBy.sold)
             })}
           >
-            Bán chạy
+            {t('sortProduct.top')}
           </Button>
           <div
             onMouseEnter={() => setIsPriceSort(true)}
@@ -79,9 +80,9 @@ export default function SortProduct({ queryConfig, pageSize }: SortProductProps)
             className='flex justify-between items-center bg-white text-sm rounded-sm pl-5 pr-3 h-9 min-w-[12.5rem] cursor-pointer relative'
           >
             <span className='text-gray-600'>
-              {order && order === orderBy.asc && 'Giá: Thấp đến cao'}
-              {order && order === orderBy.desc && 'Giá: Cao đến thấp'}
-              {!order && 'Giá'}
+              {order && order === orderBy.asc && t('sortProduct.price_sort.low_to_high')}
+              {order && order === orderBy.desc && t('sortProduct.price_sort.high_to_low')}
+              {!order && t('sortProduct.price_sort.price_sort_holder')}
             </span>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -103,7 +104,7 @@ export default function SortProduct({ queryConfig, pageSize }: SortProductProps)
                   onClick={() => hanldePriceOrderAction(orderBy.asc)}
                   classChild='flex justify-between items-center'
                 >
-                  Giá: Thấp đến cao
+                  {t('sortProduct.price_sort.low_to_high')}
                   {isActivedOrder(orderBy.asc) && (
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
@@ -125,7 +126,7 @@ export default function SortProduct({ queryConfig, pageSize }: SortProductProps)
                   classChild='flex justify-between items-center'
                   onClick={() => hanldePriceOrderAction(orderBy.desc)}
                 >
-                  Giá: Cao đến thấp
+                  {t('sortProduct.price_sort.high_to_low')}
                   {isActivedOrder(orderBy.desc) && (
                     <svg
                       xmlns='http://www.w3.org/2000/svg'

@@ -9,10 +9,12 @@ import Button from 'src/components/Button'
 import UserAPi from 'src/apis/user.api'
 import { useMutation } from '@tanstack/react-query'
 import omit from 'lodash/omit'
+import { useTranslation } from 'react-i18next'
 
 type FormData = changePasswordFormDataType
 
 export default function ChangePasswords() {
+  const { t } = useTranslation('user')
   const profileMutation = useMutation({
     mutationFn: UserAPi.uploadProfile
   })
@@ -58,14 +60,14 @@ export default function ChangePasswords() {
   return (
     <div className='bg-white shadow-sm rounded-sm px-8 pb-3' onSubmit={hanldeOnSubmit}>
       <div className='min-h-[81px] py-4 border-b-[1px] flex flex-col items-start justify-center'>
-        <p className='text-gray-800 capitalize text-lg font-medium'>Thay đổi mật khẩu</p>
-        <p className='text-gray-500 text-sm'>Quản lý mật khẩu để bảo mật tài khoản</p>
+        <p className='text-gray-800 capitalize text-lg font-medium'>{t('password.title')}</p>
+        <p className='text-gray-500 text-sm'>{t('password.sub_title')}</p>
       </div>
       <form className='flex flex-col-reverse md:flex-row md:items-start gap-8'>
         <div className='py-7 flex-grow'>
           <div className='flex flex-wrap pb-3'>
             <div className='w-[20%] text-sm text-gray-500 text-right px-6 pt-2 capitalize'>
-              <label htmlFor='password'>Mật khẩu hiện tại</label>
+              <label htmlFor='password'>{t('password.current_pass')}</label>
             </div>
             <div className='w-[80%] text-sm'>
               <Input
@@ -74,14 +76,14 @@ export default function ChangePasswords() {
                 type='password'
                 classNameInput='w-full rounded-sm outline-none border border-gray-300 px-3 py-2 focus:border-gray-500 focus:shadow-sm'
                 register={register}
-                placeholder='Nhập mật khẩu hiện tại'
+                placeholder={t('password.current_pass_holder')}
                 errorMessage={errors.password?.message}
               />
             </div>
           </div>
           <div className='flex flex-wrap pb-3'>
             <div className='w-[20%] text-sm text-gray-500 text-right px-6 pt-2 capitalize'>
-              <label htmlFor='new_password'>Mật khẩu mới</label>
+              <label htmlFor='new_password'>{t('password.new_pass')}</label>
             </div>
             <div className='w-[80%] text-sm'>
               <Input
@@ -90,14 +92,14 @@ export default function ChangePasswords() {
                 type='password'
                 classNameInput='w-full rounded-sm outline-none border border-gray-300 px-3 py-2 focus:border-gray-500 focus:shadow-sm'
                 register={register}
-                placeholder='Nhập mật khẩu mới'
+                placeholder={t('password.new_pass_holder')}
                 errorMessage={errors.new_password?.message}
               />
             </div>
           </div>
           <div className='flex flex-wrap pb-3'>
             <div className='w-[20%] text-sm text-gray-500 text-right px-6 pt-2 capitalize'>
-              <label htmlFor='confirm_new_password'>Nhập lại mật khẩu</label>
+              <label htmlFor='confirm_new_password'>{t('password.confirm_new_pass')}</label>
             </div>
             <div className='w-[80%] text-sm'>
               <Input
@@ -106,7 +108,7 @@ export default function ChangePasswords() {
                 type='password'
                 classNameInput='w-full rounded-sm outline-none border border-gray-300 px-3 py-2 focus:border-gray-500 focus:shadow-sm'
                 register={register}
-                placeholder='Nhập lại mật khẩu mới'
+                placeholder={t('password.confirm_new_pass_holder')}
                 errorMessage={errors.confirm_new_password?.message}
               />
             </div>
@@ -115,7 +117,7 @@ export default function ChangePasswords() {
             <div className='w-[20%]'></div>
             <div className='w-[80%]'>
               <Button type='submit' className='bg-orange px-6 py-3 text-white rounded-sm hover:bg-orange/90'>
-                Lưu
+                {t('password.save_btn')}
               </Button>
             </div>
           </div>

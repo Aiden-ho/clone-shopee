@@ -1,0 +1,19 @@
+{
+  "header": {
+    "login_title": "Login",
+    "register_title": "Register",
+    "need_help": "Need help?"
+  },
+  "login_form": {
+    "title": "Login",
+    "button": "Login",
+    "register_nav": "Register",
+    "register_invite": "New to Shopee?"
+  },
+  "register_form": {
+    "title": "Register",
+    "button": "Register",
+    "login_nav": "Login",
+    "login_invite": "Have an account?"
+  }
+}

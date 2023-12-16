@@ -2,12 +2,14 @@ import { Link, createSearchParams } from 'react-router-dom'
 import path from 'src/constants/path.constants'
 import classNames from 'classnames'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
+import { useTranslation } from 'react-i18next'
 
 interface RatingStarsFilterProps {
   queryConfig: QueryConfig
 }
 
 export default function RatingStarsfilter({ queryConfig }: RatingStarsFilterProps) {
+  const { t } = useTranslation('home')
   const renderStars = (row_index: number) => {
     const stars = 5
 
@@ -85,7 +87,7 @@ export default function RatingStarsfilter({ queryConfig }: RatingStarsFilterProp
             key={row_index}
           >
             <div className='flex gap-1'>{renderStars(row_index)}</div>
-            {row_index >= 1 && <span>trở lên</span>}
+            {row_index >= 1 && <span>{t('asidefilter.filter.rating.rating_range')}</span>}
           </Link>
         ))}
     </div>

@@ -1,0 +1,71 @@
+{
+  "nav_header": {
+    "seller": "Kênh người bán",
+    "application": "Tải ứng dụng",
+    "social": "Kết nối",
+    "noti": "Thông báo",
+    "help": "Hỗ trợ",
+    "login": "Đăng nhập",
+    "register": "Đăng ký"
+  },
+  "user": {
+    "account": "Tài khoản của tôi",
+    "order": "Đơn mua",
+    "logout": "Đăng xuất"
+  },
+  "footer": {
+    "nav": {
+      "customer": {
+        "title": "Chăm sóc khác hàng",
+        "items": {
+          "help": "Trung Tâm Trợ Giúp",
+          "blog": "Shopee Blog",
+          "mall": "Shopee Mall",
+          "how_buy": "Hướng Dẫn Mua Hàng",
+          "how_sell": "Hướng Dẫn Bán Hàng",
+          "payment": "Thanh Toán",
+          "coin": "Shopee Xu",
+          "ship": "Vận Chuyển",
+          "refund": "Trả Hàng & Hoàn Tiền",
+          "contact": "Chăm Sóc Khách Hàng",
+          "warranty": "Chính Sách Bảo Hành"
+        }
+      },
+      "about": {
+        "title": "Về shopee",
+        "items": {
+          "about": "Giới Thiệu Về Shopee Việt Nam",
+          "career": "Tuyển Dụng",
+          "policies": "Điều Khoản Shopee",
+          "privacy": "Chính Sách Bảo Mật",
+          "genuine": "Chính Hãng",
+          "seller": "Kênh Người Bán",
+          "deals": "Flash Sales",
+          "ambassador": "Chương Trình Tiếp Thị Liên Kết Shopee",
+          "Media": "Liên Hệ Với Truyền Thông"
+        }
+      },
+      "payment": {
+        "title": "Thanh toán"
+      },
+      "logistics": {
+        "title": "Vận chuyển"
+      },
+      "follow": {
+        "title": "theo dõi chúng tôi trên"
+      },
+      "app": {
+        "title": "tải ứng dụng shopee ngay thôi"
+      }
+    },
+    "info": {
+      "reserved": "© 2023 Shopee. Tất cả các quyền được bảo lưu.",
+      "countries": "Quốc gia & Khu vực: Singapore Indonesia Đài Loan Thái Lan Malaysia Việt Nam Philippines Brazil México Colombia Chile",
+      "company": "Công ty TNHH Shopee",
+      "address": "Địa chỉ: Tầng 4-5-6, Tòa nhà Capital Place, số 29 đường Liễu Giai, Phường Ngọc Khánh, Quận Ba Đình, Thành phố Hà Nội, Việt Nam. Tổng đài hỗ trợ: 19001221 - Email: cskh@hotro.shopee.vn",
+      "manager": "Chịu Trách Nhiệm Quản Lý Nội Dung: Nguyễn Đức Trí - Điện thoại liên hệ: 024 73081221 (ext 4678)",
+      "tax": " Mã số doanh nghiệp: 0106773786 do Sở Kế hoạch & Đầu tư TP Hà Nội cấp lần đầu ngày 10/02/2015",
+      "copy_right": "© 2015 - Bản quyền thuộc về Công ty TNHH Shopee"
+    }
+  }
+}

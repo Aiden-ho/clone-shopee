@@ -1,0 +1,42 @@
+{
+  "all_categories": "All categories",
+  "asidefilter": {
+    "categories": {
+      "all_categories": "All categories",
+      "all_products": "All products",
+      "shirt": "Shirt",
+      "watch": "Watch",
+      "phone": "Phone"
+    },
+    "filter": {
+      "filter_title": "Search filter",
+      "price_range": {
+        "price_range_title": "Price Range",
+        "holder_from": "Min",
+        "holder_to": "Max"
+      },
+      "rating": {
+        "rating_title": "Rating",
+        "rating_range": "& Up"
+      },
+      "apply_button": "Apply",
+      "reset_button": "Clear all"
+    }
+  },
+  "sortProduct": {
+    "sort_title": "Sort by",
+    "relevance": "Relevance",
+    "latest": "Latest",
+    "top": "top sales",
+    "price_sort": {
+      "price_sort_holder": "Price",
+      "low_to_high": "Price: low to high",
+      "high_to_low": "Price: high to low"
+    }
+  },
+  "search": {
+    "empty_notice": "No result is found",
+    "empty_guide": "Try using accented and more specific keywords",
+    "empty_action": "Back to home"
+  }
+}

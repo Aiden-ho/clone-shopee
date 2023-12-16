@@ -1,0 +1,71 @@
+{
+  "nav_header": {
+    "seller": "Seller center",
+    "application": "Download",
+    "social": "Follow us on",
+    "noti": "Notifications",
+    "help": "Help",
+    "login": "Login",
+    "register": "Register"
+  },
+  "user": {
+    "account": "My profile",
+    "order": "My orders",
+    "logout": "Logout"
+  },
+  "footer": {
+    "nav": {
+      "customer": {
+        "title": "Customer service",
+        "items": {
+          "help": "Help Centre",
+          "blog": "Shopee Blog",
+          "mall": "Shopee Mall",
+          "how_buy": "How To Buy",
+          "how_sell": "How To Sell",
+          "payment": "Payment",
+          "coin": "Shopee Coins",
+          "ship": "Shipping",
+          "refund": "Return & Refund",
+          "contact": "Contact Us",
+          "warranty": "Warranty Policy"
+        }
+      },
+      "about": {
+        "title": "About shopee",
+        "items": {
+          "about": "About Us",
+          "career": "Shopee Careers",
+          "policies": "Shopee Policies",
+          "privacy": "Privacy Policy",
+          "genuine": "Shopee Mall",
+          "seller": "Seller Centre",
+          "deals": "Flash Deals",
+          "ambassador": "Shopee Ambassador Programme",
+          "Media": "Media Contact"
+        }
+      },
+      "payment": {
+        "title": "Payment"
+      },
+      "logistics": {
+        "title": "Logistics"
+      },
+      "follow": {
+        "title": "Follow us"
+      },
+      "app": {
+        "title": "Shopee app download"
+      }
+    },
+    "info": {
+      "reserved": "© 2023 Shopee. All Rights Reserved .",
+      "countries": "Country & Region: Singapore Indonesia Thailand Malaysia Vietnam Philippines Brazil México Colombia Chile Taiwan",
+      "company": "Shopee Company Limited",
+      "address": "Floors 4-5-6, Capital Place Building, No. 29, Lieu Giai Street, Ngoc Khanh ward, Ba Dinh District, Hanoi, Vietnam",
+      "manager": "Person in charge of information management: Nguyen Duc Tri",
+      "tax": "Business Registration Certificate No: 0106773786",
+      "copy_right": "© 2015 - Copyright belongs to Shopee Company Limited"
+    }
+  }
+}

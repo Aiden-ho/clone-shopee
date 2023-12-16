@@ -10,10 +10,12 @@ import NavHeader from '../NavHeader'
 import useSearchProducts from 'src/hooks/useSearchProducts'
 import { formatCurrency } from 'src/utils/utils'
 import noProduct from 'src/assets/images/no-product.png'
+import { useTranslation } from 'react-i18next'
 
 export default function Header() {
   const { isAuthenticated, historySearch } = useContext(AppContext)
   const { register, handleSubmitSearch, handleOnClickHistorySearch, btnSubmitSearchRef } = useSearchProducts()
+  const { t } = useTranslation('cart')
   const { data: purchasesData } = useQuery({
     queryKey: ['purchases', { status: purchaseStatusConst.inCart }],
     queryFn: () => purchasesApi.getPurchases({ status: purchaseStatusConst.inCart }),
@@ -28,7 +30,7 @@ export default function Header() {
 
       return (
         <Fragment>
-          <div className='text-gray-300 pl-3 pb-1 pt-2 capitalize'>Sản Phẩm Mới thêm</div>
+          <div className='text-gray-300 pl-3 pb-1 pt-2 capitalize'>{t('mini_cart.title')}</div>
           <div className='flex flex-col'>
             {/* items */}
             {purchases.slice(0, quantityShowInMiniCart).map((item, index) => {
@@ -46,9 +48,11 @@ export default function Header() {
             })}
           </div>
           <div className='flex justify-between p-3 items-center'>
-            <div className='text-xs capitalize'>{restQuantity > 0 ? `${restQuantity} thêm hàng vào giỏ` : ''}</div>
+            <div className='text-xs capitalize'>
+              {restQuantity > 0 ? `${restQuantity} ${t('mini_cart.rest_item_text')}` : ''}
+            </div>
             <Link to={path.cart} className='bg-orange hover:bg-opacity-90 capitalize px-4 py-2 rounded-sm text-white'>
-              Xem Giỏ Hàng
+              {t('mini_cart.Button')}
             </Link>
           </div>
         </Fragment>
@@ -57,7 +61,7 @@ export default function Header() {
       return (
         <div className='flex flex-col items-center justify-center w-[25rem] h-[300px]'>
           <img className='w-24 h-24' src={noProduct} alt='empty cart' />
-          <span className='text-gray-500'>Thêm hàng vào giỏ</span>
+          <span className='text-gray-500'>{t('mini_cart.empty_notice')}</span>
         </div>
       )
     }

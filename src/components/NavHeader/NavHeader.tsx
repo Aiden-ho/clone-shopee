@@ -7,10 +7,15 @@ import AuthApi from 'src/apis/auth.api'
 import { AppContext } from 'src/context/app.context'
 import { purchaseStatusConst } from 'src/constants/purchase.constants'
 import { getAvatarURL } from 'src/utils/utils'
+import { useTranslation } from 'react-i18next'
+import { language } from 'src/types/i18n.type'
+import { locales } from 'src/i18n/i18n'
 
 export default function NavHeader() {
   const { isAuthenticated, setIsAuthenticated, setProfile, profile } = useContext(AppContext)
   const queryClient = useQueryClient()
+  const { i18n, t } = useTranslation('comon')
+  const currentLang = locales[i18n.language as language]
   const LogoutMutation = useMutation({
     mutationFn: AuthApi.logoutApi,
     onSuccess: () => {
@@ -20,6 +25,10 @@ export default function NavHeader() {
     }
   })
 
+  const handleChangeLang = (lang: language) => {
+    i18n.changeLanguage(lang)
+  }
+
   const handleLogOut = () => {
     LogoutMutation.mutate()
   }
@@ -28,13 +37,13 @@ export default function NavHeader() {
     <div className='grid grid-cols-1 md:grid-cols-2'>
       <div className='col-span-1 flex items-center'>
         <div className='pr-2 text-white hover:text-gray-200 text-sm cursor-pointer border-r-2 border-gray-200 border-opacity-30'>
-          Kênh Người bán
+          {t('nav_header.seller')}
         </div>
         <div className='pl-2 pr-2 text-white hover:text-gray-200 text-sm cursor-pointer border-r-2 border-gray-200 border-opacity-30'>
-          Tải ứng dụng
+          {t('nav_header.application')}
         </div>
         <div className='pl-2 pr-2 text-white text-sm flex items-center gap-2'>
-          <span>Kết nối</span>
+          <span>{t('nav_header.social')}</span>
           <div className='flex items-center gap-3'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -102,7 +111,7 @@ export default function NavHeader() {
               d='M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0'
             />
           </svg>
-          <span>Thông báo</span>
+          <span>{t('nav_header.noti')}</span>
         </div>
         {/*Help*/}
         <div className='text-white hover:text-gray-200 text-sm cursor-pointer flex items-center gap-1'>
@@ -120,7 +129,7 @@ export default function NavHeader() {
               d='M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z'
             />
           </svg>
-          <span>Hỗ trợ</span>
+          <span>{t('nav_header.help')}</span>
         </div>
         {/*Language*/}
         <Popover
@@ -128,8 +137,12 @@ export default function NavHeader() {
           placement='bottom-end'
           renderPopover={
             <div className='flex flex-col bg-white min-w-[10rem] text-sm'>
-              <button className='text-gray-800 hover:text-orange p-3 text-left'>Tiếng Việt</button>
-              <button className='text-gray-800 hover:text-orange p-3 text-left'>English</button>
+              <button className='text-gray-800 hover:text-orange p-3 text-left' onClick={() => handleChangeLang('vi')}>
+                Tiếng Việt
+              </button>
+              <button className='text-gray-800 hover:text-orange p-3 text-left' onClick={() => handleChangeLang('en')}>
+                English
+              </button>
             </div>
           }
         >
@@ -147,7 +160,7 @@ export default function NavHeader() {
               d='M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418'
             />
           </svg>
-          <span>Tiếng việt</span>
+          <span>{currentLang}</span>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
@@ -167,16 +180,16 @@ export default function NavHeader() {
             renderPopover={
               <div className='flex flex-col bg-white min-w-[7rem] text-sm'>
                 <Link className='text-gray-800 hover:text-teal-400 hover:bg-gray-50 p-3 text-left' to={path.profile}>
-                  Tài Khoản Của Tôi
+                  {t('user.account')}
                 </Link>
                 <Link className='text-gray-800 hover:text-teal-400 hover:bg-gray-50 p-3 text-left' to={path.purchases}>
-                  Đơn Mua
+                  {t('user.order')}
                 </Link>
                 <button
                   onClick={handleLogOut}
                   className='text-gray-800 hover:text-teal-400 hover:bg-gray-50 p-3 text-left'
                 >
-                  Đăng xuất
+                  {t('user.logout')}
                 </button>
               </div>
             }
@@ -189,11 +202,11 @@ export default function NavHeader() {
         ) : (
           <div className='text-white text-sm cursor-pointer flex items-center gap-3'>
             <Link className='hover:text-gray-200' to={path.register}>
-              Đăng ký
+              {t('nav_header.register')}
             </Link>
             <span className='border-l-2 border-white border-opacity-80 w-1 h-3'></span>
             <Link className='hover:text-gray-200' to={path.login}>
-              Đăng nhập
+              {t('nav_header.login')}
             </Link>
           </div>
         )}

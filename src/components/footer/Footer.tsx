@@ -1,30 +1,8 @@
+import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 const subMenuItems = {
-  customerService: [
-    `Trung Tâm Trợ Giúp`,
-    `Shopee Blog`,
-    `Shopee Mall`,
-    `Hướng Dẫn Mua Hàng`,
-    `Hướng Dẫn Bán Hàng`,
-    `Thanh Toán`,
-    `Shopee Xu`,
-    'Vận Chuyển',
-    'Trả Hàng & Hoàn Tiền',
-    'Chăm Sóc Khách Hàng',
-    'Chính Sách Bảo Hành'
-  ],
-  about: [
-    ' Giới Thiệu Về Shopee Việt Nam',
-    'Tuyển Dụng',
-    'Điều Khoản Shopee',
-    'Chính Sách Bảo Mật',
-    'Chính Hãng',
-    'Kênh Người Bán',
-    'Flash Sales',
-    'Chương Trình Tiếp Thị Liên Kết Shopee',
-    'Liên Hệ Với Truyền Thông'
-  ],
   payment: [
     'https://down-vn.img.susercontent.com/file/d4bbea4570b93bfd5fc652ca82a262a8',
     'https://down-vn.img.susercontent.com/file/a0a9062ebe19b45c1ae0506f16af5c16',
@@ -49,15 +27,48 @@ const subMenuItems = {
   ]
 }
 export default function Footer() {
+  const { t } = useTranslation('comon')
+
+  const customerService = useMemo(
+    () => [
+      t('footer.nav.customer.items.help'),
+      t('footer.nav.customer.items.blog'),
+      t('footer.nav.customer.items.mall'),
+      t('footer.nav.customer.items.how_buy'),
+      t('footer.nav.customer.items.how_sell'),
+      t('footer.nav.customer.items.payment'),
+      t('footer.nav.customer.items.ship'),
+      t('footer.nav.customer.items.refund'),
+      t('footer.nav.customer.items.contact'),
+      t('footer.nav.customer.items.warranty')
+    ],
+    [t]
+  )
+
+  const about = useMemo(
+    () => [
+      t('footer.nav.about.items.about'),
+      t('footer.nav.about.items.career'),
+      t('footer.nav.about.items.policies'),
+      t('footer.nav.about.items.privacy'),
+      t('footer.nav.about.items.genuine'),
+      t('footer.nav.about.items.seller'),
+      t('footer.nav.about.items.deals'),
+      t('footer.nav.about.items.ambassador'),
+      t('footer.nav.about.items.Media')
+    ],
+    [t]
+  )
+
   return (
     <footer className='py-16 bg-neutral-100'>
       <div className='max-w-7xl mx-auto px-4'>
         <div className='pb-5 mb-8 grid grid-cols-2 md:grid-cols-5 gap-16 border-b-2'>
           {/* Chăm sóc khách hàng */}
           <div>
-            <div className='text-xs font-semibold uppercase mb-4'>Chăm sóc khách hàng</div>
+            <div className='text-xs font-semibold uppercase mb-4'>{t('footer.nav.customer.title')}</div>
             <ul className='list-none text-xs tracking-wide'>
-              {subMenuItems.customerService.map((item, index) => (
+              {customerService.map((item, index) => (
                 <li key={index} className='mb-2'>
                   <Link className='hover:text-orange text-neutral-700' to='#'>
                     {item}
@@ -68,9 +79,9 @@ export default function Footer() {
           </div>
           {/* Về Shopee */}
           <div>
-            <div className='text-xs font-semibold uppercase mb-4'>Vế SHOPEE</div>
+            <div className='text-xs font-semibold uppercase mb-4'>{t('footer.nav.about.title')}</div>
             <ul className='list-none text-xs tracking-wide'>
-              {subMenuItems.about.map((item, index) => (
+              {about.map((item, index) => (
                 <li key={index} className='mb-2'>
                   <Link className='hover:text-orange text-neutral-700' to='#'>
                     {item}
@@ -81,7 +92,7 @@ export default function Footer() {
           </div>
           {/* Thanh toán và vận chuyển */}
           <div className='col-span-2 md:col-span-1'>
-            <div className='text-xs font-semibold uppercase mb-4'>Thanh toán</div>
+            <div className='text-xs font-semibold uppercase mb-4'>{t('footer.nav.payment.title')}</div>
             <ul className='list-none text-xs tracking-wide grid grid-cols-3 gap-2'>
               {subMenuItems.payment.map((item, index) => (
                 <li key={index} className='mb-2 bg-white p-1 shadow-md rounded-sm'>
@@ -91,7 +102,7 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-            <div className='text-xs font-semibold uppercase my-4'>Vận chuyển</div>
+            <div className='text-xs font-semibold uppercase my-4'>{t('footer.nav.logistics.title')}</div>
             <ul className='list-none text-xs tracking-wide grid grid-cols-3 gap-2'>
               {subMenuItems.carrier.map((item, index) => (
                 <li key={index} className='mb-2 bg-white p-1 shadow-md rounded-sm'>
@@ -104,7 +115,7 @@ export default function Footer() {
           </div>
           {/* Theo dõi chúng tôi*/}
           <div>
-            <div className='text-xs font-semibold uppercase mb-4'>Theo dõi chúng tôi trên</div>
+            <div className='text-xs font-semibold uppercase mb-4'>{t('footer.nav.follow.title')}</div>
             <ul className='list-none text-xs tracking-wide'>
               <li className='flex items-start gap-2 mb-3'>
                 <img src='https://down-vn.img.susercontent.com/file/2277b37437aa470fd1c71127c6ff8eb5' alt='fb' />
@@ -128,7 +139,7 @@ export default function Footer() {
           </div>
           {/* Tải ứng dụng chúng tôi*/}
           <div className='col-sp'>
-            <div className='text-xs font-semibold uppercase mb-4'>TẢI ỨNG DỤNG SHOPEE NGAY THÔI</div>
+            <div className='text-xs font-semibold uppercase mb-4'>{t('footer.nav.app.title')}</div>
             <div className='flex gap-2'>
               <div>
                 <Link to='#' className='inline-block'>
@@ -166,25 +177,15 @@ export default function Footer() {
           </div>
         </div>
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 text-sm text-neutral-700'>
-          <div className='lg:col-span-1'>© 2023 Shopee. Tất cả các quyền được bảo lưu.</div>
-          <div className='lg:col-span-2'>
-            Quốc gia & Khu vực: Singapore Indonesia Đài Loan Thái Lan Malaysia Việt Nam Philippines Brazil México
-            Colombia Chile
-          </div>
+          <div className='lg:col-span-1'>{t('footer.info.reserved')}</div>
+          <div className='lg:col-span-2'>{t('footer.info.countries')}</div>
         </div>
         <div className='text-center text-sm mt-10 text-neutral-700'>
-          <div>Công ty TNHH Shopee</div>
-          <div className='mt-2'>
-            Địa chỉ: Tầng 4-5-6, Tòa nhà Capital Place, số 29 đường Liễu Giai, Phường Ngọc Khánh, Quận Ba Đình, Thành
-            phố Hà Nội, Việt Nam. Tổng đài hỗ trợ: 19001221 - Email: cskh@hotro.shopee.vn
-          </div>
-          <div className='mt-2'>
-            Chịu Trách Nhiệm Quản Lý Nội Dung: Nguyễn Đức Trí - Điện thoại liên hệ: 024 73081221 (ext 4678)
-          </div>
-          <div className='mt-2'>
-            Mã số doanh nghiệp: 0106773786 do Sở Kế hoạch & Đầu tư TP Hà Nội cấp lần đầu ngày 10/02/2015
-          </div>
-          <div className='mt-2'>© 2015 - Bản quyền thuộc về Công ty TNHH Shopee</div>
+          <div>{t('footer.info.company')}</div>
+          <div className='mt-2'>{t('footer.info.address')}</div>
+          <div className='mt-2'>{t('footer.info.manager')}</div>
+          <div className='mt-2'>{t('footer.info.tax')}</div>
+          <div className='mt-2'>{t('footer.info.copy_right')}</div>
         </div>
       </div>
     </footer>

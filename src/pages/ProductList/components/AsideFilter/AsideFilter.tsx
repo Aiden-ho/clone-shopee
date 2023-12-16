@@ -13,6 +13,7 @@ import { NoUndefinedFiled } from 'src/types/Util.type'
 import { ObjectSchema } from 'yup'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface AsideFilterProps {
   categories: Category[]
@@ -23,7 +24,7 @@ type FormData = NoUndefinedFiled<PriceRangeFormDataType>
 
 export default function AsideFilter(props: AsideFilterProps) {
   const { categories, queryConfig } = props
-
+  const { t } = useTranslation('home')
   const {
     control,
     handleSubmit,
@@ -84,7 +85,7 @@ export default function AsideFilter(props: AsideFilterProps) {
             d='M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z'
           />
         </svg>
-        <span>Tất cả danh mục</span>
+        <span>{t('asidefilter.categories.all_categories')}</span>
       </div>
       <div className='bg-gray-200 h-[1px] w-full my-2'></div>
       <ul className='text-sm'>
@@ -99,7 +100,7 @@ export default function AsideFilter(props: AsideFilterProps) {
               search: createSearchParams(omit({ ...queryConfig, page: '1' }, ['category'])).toString()
             }}
           >
-            Tất cả sản phẩm
+            <span>{t('asidefilter.categories.all_products')}</span>
             {!queryConfig.category && (
               <svg
                 viewBox='0 0 4 7'
@@ -150,10 +151,10 @@ export default function AsideFilter(props: AsideFilterProps) {
             d='M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z'
           />
         </svg>
-        Bộ Lọc Tìm Kiếm
+        <span>{t('asidefilter.filter.filter_title')}</span>
       </div>
       <div className='text-sm capitalize'>
-        <span>Khoảng giá</span>
+        <span>{t('asidefilter.filter.price_range.price_range_title')}</span>
         <form className='mt-5' onSubmit={handleOnSubmit}>
           <div className='flex flex-row items-start gap-3 '>
             <Controller
@@ -165,7 +166,7 @@ export default function AsideFilter(props: AsideFilterProps) {
                   type='text'
                   classNameInput='p-1 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm'
                   classNameError='hidden'
-                  placeholder='₫ TỪ'
+                  placeholder={`₫ ${t('asidefilter.filter.price_range.holder_to')}`}
                   onChange={(event) => {
                     field.onChange(event)
                     //trigger validate lại max nếu sửa min
@@ -198,7 +199,7 @@ export default function AsideFilter(props: AsideFilterProps) {
                   className='grow'
                   classNameInput='p-1 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm appearance-none'
                   classNameError='hidden'
-                  placeholder='₫ ĐẾN'
+                  placeholder={`₫ ${t('asidefilter.filter.price_range.holder_from')}`}
                   onChange={(event) => {
                     field.onChange(event)
                     //trigger validate lại min nếu sửa max
@@ -211,12 +212,14 @@ export default function AsideFilter(props: AsideFilterProps) {
             />
           </div>
           <div className='mt-1 mb-2 text-red-600 min-h-[1rem] text-xs text-center'>{errors.price_min?.message}</div>
-          <Button className='uppercase w-full text-white bg-orange hover:opacity-90 py-[5px]'>Áp dụng</Button>
+          <Button className='uppercase w-full text-white bg-orange hover:opacity-90 py-[5px]'>
+            {t('asidefilter.filter.apply_button')}
+          </Button>
         </form>
       </div>
       <div className='bg-gray-200 h-[1px] w-full my-6'></div>
       <div className='text-sm'>
-        <span>Đánh giá</span>
+        <span>{t('asidefilter.filter.rating.rating_title')}</span>
         <div className='mt-5'>
           <RatingStarsfilter queryConfig={queryConfig} />
         </div>
@@ -226,7 +229,7 @@ export default function AsideFilter(props: AsideFilterProps) {
         className='uppercase w-full text-white bg-orange hover:opacity-90 py-[5px] text-sm'
         onClick={removeAllFilter}
       >
-        Xóa tất cả
+        {t('asidefilter.filter.reset_button')}
       </Button>
     </div>
   )

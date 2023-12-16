@@ -1,0 +1,45 @@
+{
+  "sideNav": {
+    "edit_profile_btn": "Sửa hồ sơ",
+    "profile": "Tài khoản của tôi",
+    "password": "Thay đổi mật khẩu",
+    "purchases": "Đơn mua"
+  },
+  "profile": {
+    "title": "Hồ sơ của tôi",
+    "sub_title": "Quản lý thông tin hồ sơ để bảo mật tài khoản",
+    "email": "Email",
+    "name": "Tên",
+    "name_holder": "Tên người dùng",
+    "phone": "Số điện thoại",
+    "phone_holder": "Số điện thoại",
+    "address": "Địa chỉ",
+    "address_holder": "Địa chỉ",
+    "DOB": "Ngày Sinh",
+    "save_btn": "Lưu",
+    "select_img_btn": "Chọn ảnh",
+    "warning_img_size": "Dung lượng file tối đa 1 MB",
+    "warning_img_exten": "Định dạng:.JPEG, .PNG"
+  },
+  "password": {
+    "title": "Thay đổi mật khẩu",
+    "sub_title": "Quản lý mật khẩu để bảo mật tài khoản",
+    "current_pass": "Mật Khẩu Hiện Tại",
+    "current_pass_holder": "Nhập mật Khẩu Hiện Tại",
+    "new_pass": "Mật Khẩu Mới",
+    "new_pass_holder": "Nhập mật Khẩu Mới",
+    "confirm_new_pass": "Nhập Lại Mật Khẩu",
+    "confirm_new_pass_holder": "Nhập Lại Mật Khẩu Mới",
+    "save_btn": "Lưu"
+  },
+  "purchase": {
+    "all": "Tất cả",
+    "confirm": "Chờ xác nhận",
+    "ship": "Chờ lấy hàng",
+    "receive": "Đang giao",
+    "completed": "Đã giao",
+    "cancelled": "Đã hủy",
+    "total": "Tổng tiền",
+    "empty_note": "Chưa có đơn hàng"
+  }
+}
