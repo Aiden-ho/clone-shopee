@@ -16,7 +16,7 @@ import { URL_LOGIN, URL_REFRESH_TOKEN, URL_REGISTER } from 'src/apis/auth.api'
 import { isTokenExpireError, isUnauthorizedError } from './axiosErrorChecker'
 import { ErrorRespone } from 'src/types/Util.type'
 
-class Http {
+export class Http {
   instance: AxiosInstance
   // Khai báo access_token trong này để tăng tốc độ truy xuất
   private access_token: string
@@ -30,7 +30,7 @@ class Http {
     this.refreshTokenRquest = null
     this.instance = axios.create({
       baseURL: config.BaseURL,
-      timeout: 1000,
+      timeout: 2000,
       headers: {
         'Content-Type': 'application/json',
         'expire-access-token': config.expireAccessToken,
@@ -116,10 +116,10 @@ class Http {
                     this.refreshTokenRquest = null
                   }, 10000)
                 )
-            return this.refreshTokenRquest.then((access_token) => {
+            return this.refreshTokenRquest.then((access_token) =>
               // Khi lỗi và chạy lại thì phải return kết quả chạy lại , không thì các nơi gọi api sẽ không get được dù có respone
               this.instance({ ...config, headers: { ...config.headers, Authorization: access_token } })
-            })
+            )
           }
           clearLS()
           this.access_token = ''
