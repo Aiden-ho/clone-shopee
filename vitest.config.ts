@@ -4,7 +4,8 @@ import path from 'path'
 
 export default defineConfig({
   test: {
-    environment: 'jsdom' // or 'happy-dom', 'node'
+    environment: 'jsdom', // or 'happy-dom', 'node',
+    setupFiles: ['vitest-setup.ts']
   },
   resolve: {
     alias: {
