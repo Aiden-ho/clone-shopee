@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import { Http } from '../http'
 import HttpStatusCode from 'src/constants/httpStatusCode.enum'
 import { setAccessTokenToLS, setRefreshTokenToLS } from '../auth'
+import { access_token_10s, refresh_token_1000day } from 'src/msw/Auth.msw'
 
 // Như đã nói thì test nên sử dụng độp lập tài nguyên
 // Nên nếu được thì nên có account mới để test
@@ -13,10 +14,6 @@ describe('axios', () => {
     localStorage.clear()
     http = new Http().instance
   })
-  const access_token_10s =
-    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NDlmMjY0YjExNDAwODkzZGY2Zjk4ZSIsImVtYWlsIjoiazAzQGdtYWlsLmNvbSIsInJvbGVzIjpbIlVzZXIiXSwiY3JlYXRlZF9hdCI6IjIwMjMtMTItMThUMTU6MDU6MTkuOTUwWiIsImlhdCI6MTcwMjkxMTkxOSwiZXhwIjoxNzAyOTExOTI5fQ.KqvS3d2XfbeQ0Ht-9c4wpZAp-dLaBPVEcuhcgRM3qIw'
-  const refresh_token_1000day =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NDlmMjY0YjExNDAwODkzZGY2Zjk4ZSIsImVtYWlsIjoiazAzQGdtYWlsLmNvbSIsInJvbGVzIjpbIlVzZXIiXSwiY3JlYXRlZF9hdCI6IjIwMjMtMTItMThUMTU6MDU6MTkuOTUwWiIsImlhdCI6MTcwMjkxMTkxOSwiZXhwIjoxNzExNTUxOTE5fQ.5ZZWXnfZTUhP-oxk8KZmbxsp7G1pATGqGI9PBuYpqRw'
 
   it('get api', async () => {
     const res = await http.get('/products')

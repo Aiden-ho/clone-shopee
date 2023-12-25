@@ -2,6 +2,10 @@ import { User } from 'src/types/User.type'
 import { SuccessRespone } from 'src/types/Util.type'
 import http from 'src/utils/http'
 
+export const URL_PROFILE = '/me'
+export const URL_UPDATE_PROFILE = '/user'
+export const URL_UPLOAD_AVATAR = '/user/upload-avatar'
+
 interface bodyUpdateUser extends Omit<User, '_id' | 'roles' | 'createdAt' | 'updatedAt' | 'email'> {
   password?: string
   new_password?: string
