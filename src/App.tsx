@@ -1,5 +1,4 @@
 import useRouterHook from './useRouterHook'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -12,15 +11,6 @@ import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.tsx'
 //Cải thiện seo
 import { HelmetProvider } from 'react-helmet-async'
 
-// Create a client for react query
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      retry: 0
-    }
-  }
-})
 function App() {
   const routerElements = useRouterHook()
   const { reset } = useContext(AppContext)
@@ -37,18 +27,16 @@ function App() {
 
   return (
     <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <AppProvider>
-          <ErrorBoundary>
-            <div>
-              <AutoScrollToTop />
-              {routerElements}
-              <ToastContainer />
-            </div>
-          </ErrorBoundary>
-        </AppProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
+      <AppProvider>
+        <ErrorBoundary>
+          <div>
+            <AutoScrollToTop />
+            {routerElements}
+            <ToastContainer />
+          </div>
+        </ErrorBoundary>
+      </AppProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </HelmetProvider>
   )
 }

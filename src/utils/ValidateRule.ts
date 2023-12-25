@@ -84,6 +84,16 @@ const generateRuleConfirmPass = (targetRef: string, mess: string) => {
     .oneOf([yup.ref(targetRef)], mess)
 }
 
+//Sửa email regex của yup vì build-in ko chính xác
+// VD: build-in cho rằng "test@gmail" là 1 case pass
+yup.addMethod(yup.string, 'email', function validateEmail(message) {
+  return this.matches(/^\S+@\S+\.\S+$/, {
+    message,
+    name: 'email',
+    excludeEmptyString: true
+  })
+})
+
 export const schema = yup.object({
   email: yup
     .string()

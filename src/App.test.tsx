@@ -1,8 +1,6 @@
 import { describe, test, expect } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
-import App from './App'
-import { MemoryRouter } from 'react-router-dom'
-import { logScreen, renderWithRouter } from './utils/utilsTest'
+import { screen, waitFor } from '@testing-library/react'
+import { renderWithRouter } from './utils/utilsTest'
 import path from './constants/path.constants'
 
 describe('APP test', () => {
@@ -35,11 +33,8 @@ describe('APP test', () => {
   test('404 page', async () => {
     const bad_url = '/bad/url'
 
-    render(
-      <MemoryRouter initialEntries={[bad_url]}>
-        <App />
-      </MemoryRouter>
-    )
+    //dùng util thay vì gọi thủ công
+    renderWithRouter({ route: bad_url })
 
     // await waitFor(() => {
     //   expect(screen.getByText(/Trang không tồn tại./i)).toBeInTheDocument()
