@@ -1,4 +1,4 @@
-import { createContext, useMemo, useState } from 'react'
+import { createContext, useEffect, useMemo, useState } from 'react'
 import { PurchaseDataExtend } from 'src/types/Purchases.type'
 import { User } from 'src/types/User.type'
 import { getAccessTokenToLS, getProfileToLS } from 'src/utils/auth'
@@ -16,7 +16,7 @@ interface AppContextInterface {
   reset: () => void
 }
 
-const initialAppContext: AppContextInterface = {
+export const getInitialAppContext: () => AppContextInterface = () => ({
   isAuthenticated: Boolean(getAccessTokenToLS()),
   setIsAuthenticated: () => null,
   profile: getProfileToLS(),
@@ -26,18 +26,31 @@ const initialAppContext: AppContextInterface = {
   purchasesDataExtend: [],
   setPurchasesDataExtend: () => null,
   reset: () => null
-}
+})
 
-export const AppContext = createContext(initialAppContext)
+const initialAppContext = getInitialAppContext()
 
-export function AppProvider({ children }: { children: React.ReactNode }) {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(initialAppContext.isAuthenticated)
-  const [profile, setProfile] = useState<User | null>(initialAppContext.profile)
+export const AppContext = createContext<AppContextInterface>(initialAppContext)
+
+export function AppProvider({
+  children,
+  defaultValue = initialAppContext
+}: {
+  children: React.ReactNode
+  defaultValue?: AppContextInterface
+}) {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(defaultValue.isAuthenticated)
+  const [profile, setProfile] = useState<User | null>(defaultValue.profile)
   // Dùng để lưu history dù search ở cart
-  const [historySearch, setHistorySearch] = useState<string[] | []>(initialAppContext.historySearch)
+  const [historySearch, setHistorySearch] = useState<string[] | []>(defaultValue.historySearch)
   //Chuyển purchaseEstend qua đây để có không mấy checked khi chuyển trang
   // Chỉ mất khi reload
-  const [purchasesDataExtend, setPurchasesDataExtend] = useState<PurchaseDataExtend[]>([])
+  const [purchasesDataExtend, setPurchasesDataExtend] = useState<PurchaseDataExtend[]>(defaultValue.purchasesDataExtend)
+
+  useEffect(() => {
+    console.log(getAccessTokenToLS())
+    console.log(isAuthenticated)
+  }, [isAuthenticated])
 
   const reset = () => {
     setIsAuthenticated(false)

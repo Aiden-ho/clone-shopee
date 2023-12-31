@@ -13,6 +13,7 @@ const profile = {
       email: 'k03@gmail.com',
       createdAt: '2023-11-07T08:16:36.697Z',
       updatedAt: '2023-11-07T08:16:36.697Z',
+      name: 'Kiet Ho',
       __v: 0
     }
   }

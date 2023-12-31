@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import AutoScrollToTop from './components/AutoScrollToTop'
 import { useContext, useEffect } from 'react'
-import { AppContext, AppProvider } from './context/app.context'
+import { AppContext } from './context/app.context'
 import { localStorageEvenTarget } from 'src/utils/auth'
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.tsx'
 
@@ -27,15 +27,13 @@ function App() {
 
   return (
     <HelmetProvider>
-      <AppProvider>
-        <ErrorBoundary>
-          <div>
-            <AutoScrollToTop />
-            {routerElements}
-            <ToastContainer />
-          </div>
-        </ErrorBoundary>
-      </AppProvider>
+      <ErrorBoundary>
+        <div>
+          <AutoScrollToTop />
+          {routerElements}
+          <ToastContainer />
+        </div>
+      </ErrorBoundary>
       <ReactQueryDevtools initialIsOpen={false} />
     </HelmetProvider>
   )

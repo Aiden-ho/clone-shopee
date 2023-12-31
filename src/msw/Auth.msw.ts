@@ -8,7 +8,7 @@ export const access_token_10s =
 export const refresh_token_1000day =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NDlmMjY0YjExNDAwODkzZGY2Zjk4ZSIsImVtYWlsIjoiazAzQGdtYWlsLmNvbSIsInJvbGVzIjpbIlVzZXIiXSwiY3JlYXRlZF9hdCI6IjIwMjMtMTItMThUMTU6MDU6MTkuOTUwWiIsImlhdCI6MTcwMjkxMTkxOSwiZXhwIjoxNzExNTUxOTE5fQ.5ZZWXnfZTUhP-oxk8KZmbxsp7G1pATGqGI9PBuYpqRw'
 
-const access_token =
+export const access_token =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NDlmMjY0YjExNDAwODkzZGY2Zjk4ZSIsImVtYWlsIjoiazAzQGdtYWlsLmNvbSIsInJvbGVzIjpbIlVzZXIiXSwiY3JlYXRlZF9hdCI6IjIwMjMtMTItMjRUMDQ6NTA6MTkuMDc0WiIsImlhdCI6MTcwMzM5MzQxOSwiZXhwIjoxODAzMzkzNDE4fQ.g_cEi40Qaz2NQih5_ue7JAJvlibChbhSDecBDXKxhzw'
 
 const loginRes = {
@@ -26,6 +26,7 @@ const loginRes = {
       email: 'k03@gmail.com',
       createdAt: '2023-11-07T08:16:36.697Z',
       updatedAt: '2023-11-07T08:16:36.697Z',
+      name: 'Kiet Ho',
       __v: 0
     }
   }

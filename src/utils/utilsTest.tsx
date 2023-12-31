@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import App from 'src/App'
 import { expect } from 'vitest'
 import config from 'src/constants/config.contants'
+import { AppProvider, getInitialAppContext } from 'src/context/app.context'
 
 //Tạo 1 hàm delay với promise và time out
 export const delay = (timeout: number) =>
@@ -71,11 +72,16 @@ export const renderWithRouter = ({ route = '/' } = {}) => {
   const user = userEvent.setup()
   // Thay vì dùng MemoryRouter thì dùng BrowserRouter để matcher với nhiều case hơn
   // Trả về 1 object gồm những attr mà render trả về và userEvent
+
+  const defaultValueContext = getInitialAppContext()
+  console.log(defaultValueContext)
   return {
     ...render(
       // cấu hình queryClient cho App
       <CustomeQueryClientProvider>
-        <App />
+        <AppProvider defaultValue={defaultValueContext}>
+          <App />
+        </AppProvider>
       </CustomeQueryClientProvider>,
       { wrapper: BrowserRouter }
     ),
