@@ -74,7 +74,6 @@ export const renderWithRouter = ({ route = '/' } = {}) => {
   // Trả về 1 object gồm những attr mà render trả về và userEvent
 
   const defaultValueContext = getInitialAppContext()
-  console.log(defaultValueContext)
   return {
     ...render(
       // cấu hình queryClient cho App

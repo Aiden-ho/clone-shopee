@@ -15,7 +15,6 @@ const handleUniqueValue = (array: string[]) => {
 }
 
 export const HandleSearchHistory = (keyWord: string, currentHistory: string[]) => {
-  console.log(currentHistory)
   if (currentHistory.length > 0) {
     currentHistory.push(keyWord)
     currentHistory = handleUniqueValue(currentHistory)

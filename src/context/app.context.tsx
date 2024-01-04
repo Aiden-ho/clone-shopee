@@ -1,4 +1,4 @@
-import { createContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useMemo, useState } from 'react'
 import { PurchaseDataExtend } from 'src/types/Purchases.type'
 import { User } from 'src/types/User.type'
 import { getAccessTokenToLS, getProfileToLS } from 'src/utils/auth'
@@ -46,11 +46,6 @@ export function AppProvider({
   //Chuyển purchaseEstend qua đây để có không mấy checked khi chuyển trang
   // Chỉ mất khi reload
   const [purchasesDataExtend, setPurchasesDataExtend] = useState<PurchaseDataExtend[]>(defaultValue.purchasesDataExtend)
-
-  useEffect(() => {
-    console.log(getAccessTokenToLS())
-    console.log(isAuthenticated)
-  }, [isAuthenticated])
 
   const reset = () => {
     setIsAuthenticated(false)

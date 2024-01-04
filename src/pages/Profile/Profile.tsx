@@ -110,7 +110,6 @@ export default function Profile() {
     setError,
     formState: { errors }
   } = formMethod
-  console.log(errors)
   const { data: dataProfile, refetch } = useQuery({ queryKey: ['profile'], queryFn: () => UserAPi.getProfile() })
   const profile = dataProfile?.data.data
   const profileMutation = useMutation({
