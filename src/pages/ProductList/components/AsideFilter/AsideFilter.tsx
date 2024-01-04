@@ -14,6 +14,7 @@ import { ObjectSchema } from 'yup'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import ErrorMessage from 'src/components/ErrorMessage'
 
 interface AsideFilterProps {
   categories: Category[]
@@ -211,7 +212,10 @@ export default function AsideFilter(props: AsideFilterProps) {
               )}
             />
           </div>
-          <div className='mt-1 mb-2 text-red-600 min-h-[1rem] text-xs text-center'>{errors.price_min?.message}</div>
+          <ErrorMessage
+            classNameError='mt-1 mb-2 text-red-600 min-h-[1rem] text-xs text-center'
+            errorMessage={errors.price_min?.message}
+          />
           <Button className='uppercase w-full text-white bg-orange hover:opacity-90 py-[5px]'>
             {t('asidefilter.filter.apply_button')}
           </Button>

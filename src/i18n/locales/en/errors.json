@@ -1,0 +1,54 @@
+{
+  "email": {
+    "required": "Please enter your email",
+    "wrong_format": "Email is invalid",
+    "too_long": "Email limited is {{max}} characters",
+    "too_short": "Email must has at least {{min}} characters"
+  },
+  "password": {
+    "required": "Please enter your password",
+    "too_long": "Password limited is {{max}} characters",
+    "too_short": "Password must has at least {{min}} characters"
+  },
+  "confirm_password": {
+    "required": "Please enter your confirm password",
+    "too_long": "Confirm password limited is {{max}} characters",
+    "too_short": "Confirm password must has at least {{min}} characters",
+    "not_match": "Confirm password not match"
+  },
+  "new_password": {
+    "required": "Please enter your new password",
+    "too_long": "New password limited is {{max}} characters",
+    "too_short": "New password must has at least {{min}} characters"
+  },
+  "confirm_new_password": {
+    "required": "Please enter your confirm new password",
+    "too_long": "Confirm new password limited is {{max}} characters",
+    "too_short": "Confirm new password must has at least {{min}} characters",
+    "not_match": "Confirm new password not match"
+  },
+  "name": {
+    "too_long": "Name limited is {{max}} characters"
+  },
+  "phone": {
+    "too_long": "Phone limited is {{max}} characters"
+  },
+  "address": {
+    "too_long": "Address limited is {{max}} characters"
+  },
+  "avatar": {
+    "too_long": "File name limited is {{max}} characters"
+  },
+  "date_of_birth": {
+    "wrong_date": "DOB should be in the past"
+  },
+  "product_name": {
+    "required": "Please enter product name"
+  },
+  "price_min": {
+    "not_allow": "Price is invalid"
+  },
+  "price_max": {
+    "not_allow": "Price is invalid"
+  }
+}

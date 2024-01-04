@@ -110,7 +110,7 @@ export default function Profile() {
     setError,
     formState: { errors }
   } = formMethod
-
+  console.log(errors)
   const { data: dataProfile, refetch } = useQuery({ queryKey: ['profile'], queryFn: () => UserAPi.getProfile() })
   const profile = dataProfile?.data.data
   const profileMutation = useMutation({
@@ -237,7 +237,7 @@ export default function Profile() {
               <div className='h-24 w-24  mb-3'>
                 <img src={previewImg || getAvatarURL(avatar)} alt='avatar' className='w-full h-full rounded-full' />
               </div>
-              <InputFile onChange={handleOnFileChange} />
+              <InputFile onChange={handleOnFileChange} errorMessage={errors.avatar?.message} />
               <div className='flex flex-col items-start'>
                 <span className='text-sm text-gray-400'>{t('profile.warning_img_size')}</span>
                 <span className='text-sm text-gray-400'>{t('profile.warningmg_exten')}</span>

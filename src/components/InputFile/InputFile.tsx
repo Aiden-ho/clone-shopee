@@ -2,12 +2,15 @@ import React, { useRef } from 'react'
 import Button from '../Button'
 import config from 'src/constants/config.contants'
 import { toast } from 'react-toastify'
+import { YupValidationError } from 'src/types/YupValidationError.type'
+import ErrorMessage from '../ErrorMessage'
 
 interface InputFileProps {
   onChange?: (file: File) => void
+  errorMessage?: string | YupValidationError
 }
 
-export default function InputFile({ onChange }: InputFileProps) {
+export default function InputFile({ onChange, errorMessage }: InputFileProps) {
   const fileRef = useRef<HTMLInputElement>(null)
 
   const triggerChangeFile = () => {
@@ -34,7 +37,7 @@ export default function InputFile({ onChange }: InputFileProps) {
   }
 
   return (
-    <div>
+    <div className='text-center'>
       <input
         type='file'
         name='avatar'
@@ -44,6 +47,7 @@ export default function InputFile({ onChange }: InputFileProps) {
         onChange={onFileChange}
         onClick={onResetValueFileInput}
       />
+      <ErrorMessage classNameError='mt-1 text-red-600 min-h-[1rem] text-xs mb-2' errorMessage={errorMessage} />
       <Button
         type='button'
         className='border border-gray-300 hover:bg-gray-100 px-4 py-2 text-sm text-gray-500 rounded-sm'

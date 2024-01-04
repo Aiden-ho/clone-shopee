@@ -1,8 +1,10 @@
 import { InputHTMLAttributes, forwardRef, useState } from 'react'
 import type {} from 'react-hook-form'
+import ErrorMessage from '../ErrorMessage'
+import { YupValidationError } from 'src/types/YupValidationError.type'
 
 export interface InputNumberProps extends InputHTMLAttributes<HTMLInputElement> {
-  errorMessage?: string
+  errorMessage?: string | YupValidationError
   classNameInput?: string
   classNameError?: string
 }
@@ -34,7 +36,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(function Inpu
   return (
     <div className={className}>
       <input className={classNameInput} onChange={handleChange} {...rest} value={value || localValue} ref={ref} />
-      <div className={classNameError}>{errorMessage}</div>
+      <ErrorMessage classNameError={classNameError} errorMessage={errorMessage} />
     </div>
   )
 })

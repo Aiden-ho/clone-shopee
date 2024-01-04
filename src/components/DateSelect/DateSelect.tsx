@@ -1,10 +1,12 @@
 import range from 'lodash/range'
 import { useEffect, useState } from 'react'
+import ErrorMessage from '../ErrorMessage'
+import { YupValidationError } from 'src/types/YupValidationError.type'
 
 type DateSelectProps = {
   onChange?: (value: Date) => void
   value?: Date
-  errorMessage?: string
+  errorMessage?: string | YupValidationError
 }
 
 export default function DateSelect({ onChange, value, errorMessage }: DateSelectProps) {
@@ -78,7 +80,7 @@ export default function DateSelect({ onChange, value, errorMessage }: DateSelect
             ))}
           </select>
         </div>
-        <div className='mt-1 text-red-600 min-h-[1rem] text-xs'>{errorMessage}</div>
+        <ErrorMessage classNameError={'mt-1 text-red-600 min-h-[1rem] text-xs'} errorMessage={errorMessage} />
       </div>
     </div>
   )

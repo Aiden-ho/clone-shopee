@@ -65,70 +65,76 @@ export const getRule = (getValues?: UseFormGetValues<any>): Rules => ({
 })
 
 function testPriceMinMax(this: yup.TestContext<yup.AnyObject>) {
-  const { price_min, price_max } = this.parent as { price_min: string; price_max: string }
+  const { path, parent } = this
+  const { price_min, price_max } = parent as { price_min: string; price_max: string }
   // Nếu có cả hai min và max
   if (price_max !== '' && price_min !== '') {
-    //thì max phải lớn hơn hoặc bằng min
-    return Number(price_max) >= Number(price_min)
+    //thì max nhỏ hơn min thì sẽ lỗi
+    if (Number(price_max) < Number(price_min)) {
+      return this.createError({ message: { key: `${path}.not_allow`, values: '' } })
+    }
+  } else if (price_max === '' && price_min === '') {
+    return this.createError({ message: { key: `${path}.not_allow`, values: '' } })
   }
-  //Nếu không thì phải có 1 trong 2 khi submit
-  return price_max !== '' || price_min !== ''
+
+  return true
 }
 
-const generateRuleConfirmPass = (targetRef: string, mess: string) => {
+const generateRuleConfirmPass = (targetRef: string) => {
   return yup
     .string()
-    .required('Vui lòng nhập lại password')
-    .min(5, 'password tối thiểu 5 kí tự')
-    .max(160, 'password tối đa 160 kí tự')
-    .oneOf([yup.ref(targetRef)], mess)
+    .required()
+    .min(5)
+    .max(160)
+    .oneOf([yup.ref(targetRef)])
 }
 
-//Sửa email regex của yup vì build-in ko chính xác
-// VD: build-in cho rằng "test@gmail" là 1 case pass
-yup.addMethod(yup.string, 'email', function validateEmail(message) {
-  return this.matches(/^\S+@\S+\.\S+$/, {
-    message,
-    name: 'email',
-    excludeEmptyString: true
-  })
+yup.setLocale({
+  mixed: {
+    required(params) {
+      const { path } = params
+      return { key: `${path}.required`, values: '' }
+    },
+    oneOf: ({ path }) => ({ key: `${path}.not_match`, values: '' })
+  },
+  string: {
+    matches: ({ path }) => ({ key: `${path}.wrong_format`, values: '' }),
+    min: ({ min, path }) => ({ key: `${path}.too_short`, values: { min } }),
+    max: ({ max, path }) => ({ key: `${path}.too_long`, values: { max } })
+  },
+  date: {
+    max: ({ path }) => ({ key: `${path}.wrong_date`, values: '' })
+  }
 })
 
 export const schema = yup.object({
   email: yup
     .string()
-    .required('Vui lòng nhập email')
-    .email('Email không đúng định dạng')
-    .min(5, 'Email tối thiểu 5 kí tự')
-    .max(160, 'Email tối đa 160 kí tự'),
-  password: yup
-    .string()
-    .required('Vui lòng nhập mật khẩu')
-    .min(5, 'Mật khẩu tối thiểu 5 kí tự')
-    .max(160, 'Mật khẩu tối đa 160 kí tự'),
-  new_password: yup
-    .string()
-    .required('Vui lòng nhập mật khẩu')
-    .min(5, 'Mật khẩu tối thiểu 5 kí tự')
-    .max(160, 'Mật khẩu tối đa 160 kí tự'),
-  confirm_password: generateRuleConfirmPass('password', 'Nhập lại mật khẩu không khớp'),
-  confirm_new_password: generateRuleConfirmPass('new_password', 'Nhập lại mật khẩu mới không khớp'),
-  name: yup.string().max(160, 'Tên tối đa 160 kí tự'),
-  phone: yup.string().max(20, 'Số điện thoại tối đa 20 kí tự'),
-  address: yup.string().max(160, 'Địa chỉ tối đa 160 kí tự'),
-  date_of_birth: yup.date().max(new Date(), 'Hãy chọn ngày trong quá khứ'),
-  avatar: yup.string().max(160, 'Tên file có độ dài tối đa là 160'),
+    .required()
+    .min(5)
+    .max(160)
+    // Dùng matches để check email regex vì validate của yup vì build-in ko chính xác
+    // Ngoài ra matches còn có thể dùng với setLocale
+    // VD: build-in cho rằng "test@gmail" là 1 case pass
+    .matches(/^\S+@\S+\.\S+$/),
+  password: yup.string().required().min(5).max(160),
+  new_password: yup.string().required().min(5).max(160),
+  confirm_password: generateRuleConfirmPass('password'),
+  confirm_new_password: generateRuleConfirmPass('new_password'),
+  name: yup.string().max(160),
+  phone: yup.string().max(20),
+  address: yup.string().max(160),
+  date_of_birth: yup.date().max(new Date()),
+  avatar: yup.string().max(160),
   price_min: yup.string().test({
     name: 'price_not_allowed',
-    message: 'Giá không phù hợp',
     test: testPriceMinMax
   }),
   price_max: yup.string().test({
     name: 'price_not_allowed',
-    message: 'Giá không phù hợp',
     test: testPriceMinMax
   }),
-  product_name: yup.string().trim().required('Vui lòng nhập tên sản phẩm')
+  product_name: yup.string().trim().required()
 })
 
 //Type from shcema

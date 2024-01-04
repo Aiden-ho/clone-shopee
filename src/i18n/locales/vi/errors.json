@@ -1,0 +1,55 @@
+{
+  "email": {
+    "required": "Vui lòng nhập email",
+    "wrong_format": "Email không đúng định dạng",
+    "too_long": "Email tối đa {{max}} kí tự",
+    "too_short": "Email tối thiểu {{min}} kí tự"
+  },
+  "password": {
+    "required": "Vui lòng nhập mật khẩu",
+    "too_long": "Mật khẩu tối đa {{max}} kí tự",
+    "too_short": "Mật khẩu tối thiểu {{min}} kí tự"
+  },
+  "confirm_password": {
+    "required": "Vui lòng nhập lại mật khẩu",
+    "too_long": "Mật khẩu tối đa {{max}} kí tự",
+    "too_short": "Mật khẩu tối thiểu {{min}} kí tự",
+    "not_match": "Nhập lại mật khẩu không khớp"
+  },
+  "new_password": {
+    "required": "Vui lòng nhập mật khẩu mới",
+    "too_long": "Mật khẩu mới tối đa {{max}} kí tự",
+    "too_short": "Mật khẩu mới tối thiểu {{min}} kí tự"
+  },
+  "confirm_new_password": {
+    "required": "Vui lòng nhập mật khẩu mới",
+    "too_long": "Mật khẩu mới tối đa {{max}} kí tự",
+    "too_short": "Mật khẩu mới tối thiểu {{min}} kí tự",
+    "not_match": "Nhập lại mật khẩu mới không khớp"
+  },
+  "name": {
+    "too_long": "Tên tối đa {{max}} kí tự"
+  },
+  "phone": {
+    "too_long": "Số điện thoại mới tối đa {{max}} kí tự"
+  },
+  "address": {
+    "too_long": "Địa chỉ tối đa {{max}} kí tự"
+  },
+  "avatar": {
+    "too_long": "Tên file có độ dài tối đa là {{max}}"
+  },
+  "date_of_birth": {
+    "wrong_date": "Hãy chọn ngày trong quá khứ"
+  },
+  "product_name": {
+    "required": "Vui lòng nhập tên sản phẩm"
+  },
+  "price_min": {
+    "not_allow": "Giá không phù hợp"
+  },
+  "price_max": {
+    "not_allow": "Giá không phù hợp"
+  },
+  "test": 123
+}

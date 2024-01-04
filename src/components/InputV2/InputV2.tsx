@@ -1,5 +1,6 @@
 import { InputHTMLAttributes } from 'react'
 import { FieldPath, FieldValues, useController, type UseControllerProps } from 'react-hook-form'
+import ErrorMessage from '../ErrorMessage'
 
 export interface InputV2Props extends InputHTMLAttributes<HTMLInputElement> {
   classNameInput?: string
@@ -47,7 +48,7 @@ function InputV2<
     <div className={className}>
       {/* vì rest và field đều có onChange, value... nên nếu muốn ghi đè thì phải để sau hai thằng này */}
       <input className={classNameInput} {...rest} {...field} onChange={handleChange} />
-      <div className={classNameError}>{fieldState.error?.message}</div>
+      <ErrorMessage classNameError={classNameError} errorMessage={fieldState.error?.message} />
     </div>
   )
 }

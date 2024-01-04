@@ -20,7 +20,7 @@ type FormData = RegisterFormDataType
 export default function Register() {
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
   const navigate = useNavigate()
-  const { t } = useTranslation('login')
+  const { t } = useTranslation(['login', 'error'])
   const {
     register,
     handleSubmit,
@@ -29,7 +29,7 @@ export default function Register() {
   } = useForm<FormData>({
     resolver: yupResolver(registerSchema)
   })
-
+  console.log(errors)
   const registerMutation = useMutation({
     mutationFn: (body: Omit<FormData, 'confirm_password'>) => AuthApi.registerApi(body),
     onSuccess: (res) => {

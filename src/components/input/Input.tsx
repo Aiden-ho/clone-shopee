@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { InputHTMLAttributes, useState } from 'react'
 import type { UseFormRegister, RegisterOptions } from 'react-hook-form'
+import ErrorMessage from '../ErrorMessage'
+import { YupValidationError } from 'src/types/YupValidationError.type'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   register?: UseFormRegister<any>
-  errorMessage?: string
+  errorMessage?: string | YupValidationError
   rule?: RegisterOptions
   classNameInput?: string
   classNameError?: string
@@ -73,7 +75,7 @@ export default function Input({
         </svg>
       )}
       <input className={classNameInput} {...registerRusult} {...rest} type={handleTypeInput()} />
-      <div className={classNameError}>{errorMessage}</div>
+      <ErrorMessage classNameError={classNameError} errorMessage={errorMessage} />
     </div>
   )
 }
