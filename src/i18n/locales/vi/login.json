@@ -11,8 +11,8 @@
     "register_invite": "Bạn chưa có tài khoản?"
   },
   "register_form": {
-    "title": "Đăng nhập",
-    "button": "Đăng nhập",
+    "title": "Đăng ký",
+    "button": "Đăng ký",
     "login_nav": "Đăng nhập",
     "login_invite": "Bạn đã có tài khoản?"
   }

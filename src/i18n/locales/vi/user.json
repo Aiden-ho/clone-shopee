@@ -3,7 +3,8 @@
     "edit_profile_btn": "Sửa hồ sơ",
     "profile": "Tài khoản của tôi",
     "password": "Thay đổi mật khẩu",
-    "purchases": "Đơn mua"
+    "purchases": "Đơn mua",
+    "logout": "Đăng xuất"
   },
   "profile": {
     "title": "Hồ sơ của tôi",

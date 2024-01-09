@@ -1,6 +1,7 @@
 {
   "all_categories": "Tất cả danh mục",
   "asidefilter": {
+    "title_mobile": "Bộ lọc",
     "categories": {
       "all_categories": "Tất cả danh mục",
       "all_products": "Tất cả sản phẩm",
@@ -24,7 +25,7 @@
     }
   },
   "sortProduct": {
-    "sort_title": "Sắp xếp theo",
+    "sort_title": "Sắp xếp",
     "relevance": "Phổ biến",
     "latest": "Mới nhất",
     "top": "Bán chạy",

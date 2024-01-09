@@ -3,7 +3,8 @@
     "edit_profile_btn": "Edit profile",
     "profile": "My profile",
     "password": "Change Password",
-    "purchases": "My purchases"
+    "purchases": "My purchases",
+    "logout": "Logout"
   },
   "profile": {
     "title": "My Profile",
