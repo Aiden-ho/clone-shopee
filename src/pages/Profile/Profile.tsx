@@ -41,11 +41,11 @@ function Info(props: infoProps) {
   } = useFormContext<FormData>()
   return (
     <Fragment>
-      <div className='flex flex-wrap pb-3'>
-        <div className='w-[20%] text-sm text-gray-500 text-right px-6 pt-2 capitalize'>
+      <div className='flex flex-col lg:flex-row flex-wrap pb-3'>
+        <div className='lg:w-[20%] text-sm text-gray-500 lg:text-right mb-1 lg:mb-0 lg:px-6 pt-2 capitalize'>
           <label htmlFor='name'>{name_label}</label>
         </div>
-        <div className='w-[80%] text-sm'>
+        <div className='lg:w-[80%] text-sm'>
           <Input
             id='name'
             name='name'
@@ -56,11 +56,11 @@ function Info(props: infoProps) {
           />
         </div>
       </div>
-      <div className='flex flex-wrap pb-3'>
-        <div className='w-[20%] text-sm text-gray-500 text-right px-6 pt-2 capitalize'>
+      <div className='flex flex-col lg:flex-row flex-wrap pb-3'>
+        <div className='lg:w-[20%] text-sm text-gray-500 lg:text-right mb-1 lg:mb-0 lg:px-6 pt-2 capitalize'>
           <label htmlFor='phone'>{phone_label}</label>
         </div>
-        <div className='w-[80%] text-sm'>
+        <div className='lg:w-[80%] text-sm'>
           <Controller
             control={control}
             name='phone'
@@ -183,11 +183,16 @@ export default function Profile() {
         <p className='text-gray-500 text-sm'>{t('profile.sub_title')}</p>
       </div>
       <FormProvider {...formMethod}>
-        <form className='flex flex-col-reverse md:flex-row md:items-start gap-8' onSubmit={hanldeOnSubmit}>
+        <form
+          className='flex flex-col-reverse md:flex-row lg:items-start gap-8 items-stretch'
+          onSubmit={hanldeOnSubmit}
+        >
           <div className='py-7 flex-grow'>
-            <div className='flex items-center flex-wrap pb-7 justify-center'>
-              <div className='w-[20%] text-sm text-gray-500 text-right px-6 capitalize'>{t('profile.email')}</div>
-              <div className='w-[80%] text-sm'>{hideEmail(profile?.email)}</div>
+            <div className='flex flex-col lg:flex-row flex-wrap items-start pb-7 justify-center'>
+              <div className='lg:w-[20%] text-sm text-gray-500 lg:text-right mb-1 lg:mb-0 lg:px-6 capitalize'>
+                {t('profile.email')}
+              </div>
+              <div className='lg:w-[80%] text-sm'>{hideEmail(profile?.email)}</div>
             </div>
             <Info
               name_label={t('profile.name')}
@@ -195,11 +200,11 @@ export default function Profile() {
               phone_label={t('profile.phone')}
               phone_holder={t('profile.phone_holder')}
             />
-            <div className='flex flex-wrap pb-3'>
-              <div className='w-[20%] text-sm text-gray-500 text-right px-6 pt-2 capitalize'>
+            <div className='flex flex-col lg:flex-row  flex-wrap pb-3'>
+              <div className='lg:w-[20%] text-sm text-gray-500 lg:text-right mb-1 lg:mb-0 lg:px-6 pt-2 capitalize'>
                 <label htmlFor='address'>{t('profile.address')}</label>
               </div>
-              <div className='w-[80%] text-sm'>
+              <div className='lg:w-[80%] text-sm'>
                 <Input
                   id='address'
                   name='address'
@@ -222,17 +227,18 @@ export default function Profile() {
               )}
             />
 
-            <div className='flex items-center flex-wrap justify-center'>
-              <div className='w-[20%]'></div>
-              <div className='w-[80%]'>
+            <div className='flex items-center flex-wrap lg:justify-center'>
+              <div className='w-[20%] hidden lg:block'></div>
+              <div className='lg:w-[80%]'>
                 <Button type='submit' className='bg-orange px-6 py-3 text-white rounded-sm hover:bg-orange/90'>
                   {t('profile.save_btn')}
                 </Button>
               </div>
             </div>
           </div>
+          <div className='lg:hidden border-b-[1px]'></div>
           <div className='md:w-80 py-7'>
-            <div className='border-l-[1px] w-full flex flex-col justify-center items-center gap-3'>
+            <div className='md:border-l-[1px] w-full h-full flex flex-col justify-center items-center gap-3'>
               <div className='h-24 w-24  mb-3'>
                 <img src={previewImg || getAvatarURL(avatar)} alt='avatar' className='w-full h-full rounded-full' />
               </div>

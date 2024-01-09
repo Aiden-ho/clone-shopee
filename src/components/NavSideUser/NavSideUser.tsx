@@ -1,14 +1,31 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import classNames from 'classnames'
 import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, NavLink } from 'react-router-dom'
+import AuthApi from 'src/apis/auth.api'
 import path from 'src/constants/path.constants'
+import { purchaseStatusConst } from 'src/constants/purchase.constants'
 import { AppContext } from 'src/context/app.context'
 import { getAvatarURL } from 'src/utils/utils'
 
 export default function NavSideUser() {
-  const { profile } = useContext(AppContext)
+  const { setIsAuthenticated, setProfile, profile } = useContext(AppContext)
   const { t } = useTranslation('user')
+  const queryClient = useQueryClient()
+
+  const LogoutMutation = useMutation({
+    mutationFn: AuthApi.logoutApi,
+    onSuccess: () => {
+      setIsAuthenticated(false)
+      setProfile(null)
+      queryClient.removeQueries({ queryKey: ['purchases', { status: purchaseStatusConst.inCart }] })
+    }
+  })
+
+  const handleLogOut = () => {
+    LogoutMutation.mutate()
+  }
 
   return (
     <div>
@@ -113,6 +130,20 @@ export default function NavSideUser() {
             <span className='text-sm capitalize'>{t('sideNav.purchases')}</span>
           </div>
         </NavLink>
+        <button onClick={handleLogOut} className='hover:text-orange flex align-middle items-center'>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            fill='none'
+            viewBox='0 0 24 24'
+            strokeWidth={1.5}
+            stroke='currentColor'
+            className='w-5 h-5 stroke-blue-800 mr-3'
+          >
+            <path strokeLinecap='round' strokeLinejoin='round' d='M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3' />
+          </svg>
+
+          <span className='text-sm capitalize'>{t('sideNav.logout')}</span>
+        </button>
       </div>
     </div>
   )

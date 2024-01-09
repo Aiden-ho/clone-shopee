@@ -16,6 +16,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 interface Props {
   children: React.ReactNode
   renderPopover: React.ReactNode
+  hiddenPopover?: boolean
   className?: string
   as?: ElementType
   initialOpen?: boolean
@@ -73,7 +74,7 @@ export default function Popover({
               transition={{ duration: 0.2 }}
               ref={refs.setFloating}
               {...getFloatingProps()}
-              className='rounded-sm border border-gray-200 shadow-sm'
+              className='rounded-sm border border-gray-200 shadow-sm hidden md:block'
             >
               {renderPopover}
               <FloatingArrow ref={arrowRef} context={context} width={16} className='fill-white' />

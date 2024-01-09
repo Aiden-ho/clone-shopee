@@ -138,8 +138,8 @@ export default function ProductDetail() {
             />
           </Helmet>
           <div className='container bg-white p-4'>
-            <div className='grid grid-cols-12 gap-10'>
-              <div className='col-span-5'>
+            <div className='grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-10'>
+              <div className='col-span-4 md:col-span-4 lg:col-span-5'>
                 <div
                   className='w-full relative pt-[100%] bg-gray-50 overflow-hidden cursor-zoom-in'
                   onMouseMove={handleZoomInActiveImg}
@@ -209,7 +209,7 @@ export default function ProductDetail() {
                   </div>
                 </div>
               </div>
-              <div className='col-span-7'>
+              <div className='col-span-4 md:col-span-4 lg:col-span-7'>
                 <h1 className='text-xl font-medium'>{product.name}</h1>
                 <div className='flex pt-3'>
                   <div className='flex gap-1 items-center pr-4'>
@@ -220,13 +220,13 @@ export default function ProductDetail() {
                       classNameNoFilled='w-4 h-4 text-orange'
                     />
                   </div>
-                  <div className='flex gap-1 items-center px-4 border-l border-gray-300'>
+                  <div className='flex md:flex-col lg:flex-row gap-1 items-center px-4 border-l border-gray-300'>
                     <span className='border-b border-gray-900'>{convertToCompactNum(product.sold)}</span>
-                    <span className='text-gray-500 font-normal text-sm'>{t('sold')}</span>
+                    <span className='text-gray-500 font-normal text-xs md:text-sm'>{t('sold')}</span>
                   </div>
-                  <div className='flex gap-1 items-center px-4 border-l border-gray-300'>
+                  <div className='flex md:flex-col lg:flex-row gap-1 items-center px-4 border-l border-gray-300'>
                     <span className='border-b border-gray-900'>{convertToCompactNum(product.view)}</span>
-                    <span className='text-gray-500 font-normal text-sm'>{t('view')}</span>
+                    <span className='text-gray-500 font-normal text-xs md:text-sm'>{t('view')}</span>
                   </div>
                 </div>
                 <div className='mt-8 bg-gray-100 w-full flex items-center rounded-sm py-7 px-4'>
@@ -260,8 +260,8 @@ export default function ProductDetail() {
                 </div>
                 <div className='mt-8 flex gap-4'>
                   <Button
-                    className='border border-orange bg-orange/10 rounded-sm px-5 py-3 shadow-sm'
-                    classChild='flex items-center gap-2'
+                    className='flex-1 md:flex-initial lg:flex-initial border border-orange bg-orange/10 rounded-sm px-5 py-3 shadow-sm'
+                    classChild='flex items-center justify-center gap-2'
                     onClick={() => handleAddToCart(product._id)}
                   >
                     <svg
@@ -302,7 +302,7 @@ export default function ProductDetail() {
             ></div>
           </div>
           {productListData && (
-            <div className='mt-4 container px-0'>
+            <div className='mt-4 container px-4 lg:px-0'>
               <div className=' flex items-center rounded-sm py-3 text-lg uppercase text-gray-600'>
                 {t('similar_products')}
               </div>

@@ -68,7 +68,7 @@ export default function QuantityController({
   return (
     <form className={`${classNameWraper} flex items-center`} onSubmit={turnOfSubmit}>
       <Button
-        className='border w-8 h-8 flex items-center justify-center rounded-sm border-gray-300'
+        className='border w-6 h-6 md:w-8 md:h-8 flex items-center justify-center rounded-sm border-gray-300'
         onClick={hanldeOnDecrease}
         disabled={disabled}
       >
@@ -84,7 +84,7 @@ export default function QuantityController({
         </svg>
       </Button>
       <InputNumber
-        classNameInput='h-8 w-14 px-2 border-y border-gray-300 text-center'
+        classNameInput='w-8 h-6 md:w-14 md:h-8 px-2 border-y border-gray-300 text-center'
         classNameError='hidden'
         onChange={handleChange}
         onBlur={handleBlur}
@@ -93,7 +93,7 @@ export default function QuantityController({
         {...rest}
       />
       <Button
-        className='border w-8 h-8 flex items-center justify-center rounded-sm border-gray-300'
+        className='border w-6 h-6 md:w-8 md:h-8  flex items-center justify-center rounded-sm border-gray-300'
         onClick={hanldeOnIncrease}
         disabled={disabled}
       >

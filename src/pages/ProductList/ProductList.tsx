@@ -9,6 +9,7 @@ import categoryApi from 'src/apis/categories.api'
 import useQueryConfig from 'src/hooks/useQueryConfig'
 import NoProductNotice from './components/NoProductNotice'
 import { Helmet } from 'react-helmet-async'
+import ExpandFilter from './components/ExpandFilter'
 
 export default function ProductList() {
   const queryConfig = useQueryConfig()
@@ -33,11 +34,14 @@ export default function ProductList() {
       </Helmet>
       <div className='container'>
         {productsData && productsData.data.data.products.length > 0 ? (
-          <div className='grid grid-cols-12 gap-6'>
-            <div className='col-span-2'>
-              {CategoriesData && <AsideFilter categories={CategoriesData.data.data} queryConfig={queryConfig} />}
+          <div className='grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-2 lg:gap-6'>
+            <div className='col-span-12 lg:col-span-2'>
+              <div className='hidden lg:block'>
+                {CategoriesData && <AsideFilter categories={CategoriesData.data.data} queryConfig={queryConfig} />}
+              </div>
+              {CategoriesData && <ExpandFilter categories={CategoriesData.data.data} queryConfig={queryConfig} />}
             </div>
-            <div className='col-span-10'>
+            <div className='col-span-12 lg:col-span-10'>
               <SortProduct queryConfig={queryConfig} pageSize={productsData.data.data.pagination.page_size} />
               <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3'>
                 {productsData.data.data.products.map((product) => (

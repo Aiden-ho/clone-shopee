@@ -20,7 +20,7 @@ export default function RatingStarsfilter({ queryConfig }: RatingStarsFilterProp
           return (
             <svg key={star_index} viewBox='0 0 9.5 8' className='w-4 h-4'>
               <defs>
-                <linearGradient id='ratingStarGradient' x1='50%' x2='50%' y1='0%' y2='100%'>
+                <linearGradient id={`ratingStarGradient`} x1='50%' x2='50%' y1='0%' y2='100%'>
                   <stop offset={0} stopColor='#ffca11' />
                   <stop offset={1} stopColor='#ffad27' />
                 </linearGradient>

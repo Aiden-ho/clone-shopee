@@ -70,11 +70,11 @@ export default function ChangePasswords() {
       </div>
       <form className='flex flex-col-reverse md:flex-row md:items-start gap-8'>
         <div className='py-7 flex-grow'>
-          <div className='flex flex-wrap pb-3'>
-            <div className='w-[20%] text-sm text-gray-500 text-right px-6 pt-2 capitalize'>
+          <div className='flex flex-col lg:flex-row flex-wrap pb-3'>
+            <div className='lg:w-[20%] text-sm text-gray-500 lg:text-right mb-1 lg:mb-0 lg:px-6 pt-2 capitalize'>
               <label htmlFor='password'>{t('password.current_pass')}</label>
             </div>
-            <div className='w-[80%] text-sm'>
+            <div className='lg:w-[80%] text-sm'>
               <Input
                 id='password'
                 name='password'
@@ -86,11 +86,11 @@ export default function ChangePasswords() {
               />
             </div>
           </div>
-          <div className='flex flex-wrap pb-3'>
-            <div className='w-[20%] text-sm text-gray-500 text-right px-6 pt-2 capitalize'>
+          <div className='flex flex-col lg:flex-row flex-wrap pb-3'>
+            <div className='lg:w-[20%] text-sm text-gray-500 lg:text-right mb-1 lg:mb-0 lg:px-6 pt-2 capitalize'>
               <label htmlFor='new_password'>{t('password.new_pass')}</label>
             </div>
-            <div className='w-[80%] text-sm'>
+            <div className='lg:w-[80%] text-sm'>
               <Input
                 id='new_password'
                 name='new_password'
@@ -102,11 +102,11 @@ export default function ChangePasswords() {
               />
             </div>
           </div>
-          <div className='flex flex-wrap pb-3'>
-            <div className='w-[20%] text-sm text-gray-500 text-right px-6 pt-2 capitalize'>
+          <div className='flex flex-col lg:flex-row flex-wrap pb-3'>
+            <div className='lg:w-[20%] text-sm text-gray-500 lg:text-right mb-1 lg:mb-0 lg:px-6 pt-2 capitalize'>
               <label htmlFor='confirm_new_password'>{t('password.confirm_new_pass')}</label>
             </div>
-            <div className='w-[80%] text-sm'>
+            <div className='lg:w-[80%] text-sm'>
               <Input
                 id='confirm_new_password'
                 name='confirm_new_password'
@@ -118,9 +118,9 @@ export default function ChangePasswords() {
               />
             </div>
           </div>
-          <div className='flex items-center flex-wrap justify-center'>
-            <div className='w-[20%]'></div>
-            <div className='w-[80%]'>
+          <div className='flex items-center flex-wrap lg:justify-center'>
+            <div className='w-[20%] hidden lg:block'></div>
+            <div className='lg:w-[80%]'>
               <Button type='submit' className='bg-orange px-6 py-3 text-white rounded-sm hover:bg-orange/90'>
                 {t('password.save_btn')}
               </Button>

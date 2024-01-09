@@ -180,7 +180,7 @@ export default function Footer() {
           <div className='lg:col-span-1'>{t('footer.info.reserved')}</div>
           <div className='lg:col-span-2'>{t('footer.info.countries')}</div>
         </div>
-        <div className='text-center text-sm mt-10 text-neutral-700'>
+        <div className='text-left md:text-center lg:text-center text-sm mt-10 text-neutral-700'>
           <div>{t('footer.info.company')}</div>
           <div className='mt-2'>{t('footer.info.address')}</div>
           <div className='mt-2'>{t('footer.info.manager')}</div>

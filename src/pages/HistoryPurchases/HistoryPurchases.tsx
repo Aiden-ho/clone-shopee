@@ -51,23 +51,26 @@ export default function HistoryPurchases() {
         <title>Trang Đơn hàng | Shopee Clone</title>
         <meta name='description' content='Trang đơn hàng shopee clone' />
       </Helmet>
-      <div className='sticky top-0 flex rounded-t-sm shadow-sm'>
-        {purchaseTabs.map((item, index) => (
-          <Link
-            to={{
-              pathname: path.purchases,
-              search: createSearchParams({ status: String(item.status) }).toString()
-            }}
-            key={index}
-            className={classNames('flex-grow text-center bg-white p-4', {
-              'text-gray-500': statusNumber !== item.status,
-              'text-orange border-b-2 border-orange': statusNumber === item.status
-            })}
-          >
-            {item.name}
-          </Link>
-        ))}
+      <div className='overflow-auto sticky top-0'>
+        <div className=' flex rounded-t-sm shadow-sm min-w-[1100px]'>
+          {purchaseTabs.map((item, index) => (
+            <Link
+              to={{
+                pathname: path.purchases,
+                search: createSearchParams({ status: String(item.status) }).toString()
+              }}
+              key={index}
+              className={classNames('flex-grow text-center bg-white p-4', {
+                'text-gray-500': statusNumber !== item.status,
+                'text-orange border-b-2 border-orange': statusNumber === item.status
+              })}
+            >
+              {item.name}
+            </Link>
+          ))}
+        </div>
       </div>
+
       <div className='bg-white shadow-sm rounded-sm px-4 py-3 mt-3'>
         {purchases && purchases.length ? (
           purchases.map((item) => {
@@ -77,17 +80,30 @@ export default function HistoryPurchases() {
                 <div className='border-t-[1px] py-3'>
                   <div className='flex'>
                     {/* img */}
-                    <div className='w-20 h-20 border-[1px]'>
+                    <div className='w-20 h-20 border-[1px] flex-shrink-0'>
                       <img src={product.image} alt={product.name} className=' w-full h-full' />
                     </div>
                     {/* info */}
                     <div className='pl-3 flex-grow'>
-                      <p>{product.name}</p>
-                      <p className='text-sm text-gray-500'>{product.category.name}</p>
-                      <p className='text-sm'>x{buy_count}</p>
+                      <p className='text-sm md:text-base'>{product.name}</p>
+                      <p className='text-xs md:text-sm text-gray-500 my-1 md:my-0'>{product.category.name}</p>
+                      <div className='text-xs md:text-sm flex justify-between items-center'>
+                        <div>x{buy_count}</div>
+                        {/* price mobile */}
+                        <div className='text-sm gap-1 flex-shrink-0 flex md:hidden'>
+                          <div className='text-gray-500 line-through'>
+                            <span className='text-xs'>₫</span>
+                            <span>{formatCurrency(product.price_before_discount)}</span>
+                          </div>
+                          <div className='text-orange'>
+                            <span className='text-xs'>₫</span>
+                            <span>{formatCurrency(product.price)}</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     {/* price */}
-                    <div className='text-sm flex gap-1 flex-shrink-0'>
+                    <div className='text-sm gap-1 flex-shrink-0 hidden md:flex'>
                       <div className='text-gray-500 line-through'>
                         <span className='text-xs'>₫</span>
                         <span>{formatCurrency(product.price_before_discount)}</span>
@@ -98,11 +114,12 @@ export default function HistoryPurchases() {
                       </div>
                     </div>
                   </div>
-                  <div className='flex justify-end gap-1'>
-                    <span>{t('purchase.total')}: </span>
+                  {/* total price */}
+                  <div className='flex justify-end gap-1 mt-4'>
+                    <span className='text-sm md:text-base font-bold md:font-normal'>{t('purchase.total')}: </span>
                     <div className='text-orange'>
                       <span className='text-xs'>₫</span>
-                      <span>{formatCurrency(product.price * buy_count)}</span>
+                      <span className='text-sm md:text-base'>{formatCurrency(product.price * buy_count)}</span>
                     </div>
                   </div>
                 </div>

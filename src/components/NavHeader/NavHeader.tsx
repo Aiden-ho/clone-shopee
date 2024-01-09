@@ -10,6 +10,7 @@ import { getAvatarURL } from 'src/utils/utils'
 import { useTranslation } from 'react-i18next'
 import { language } from 'src/types/i18n.type'
 import { locales } from 'src/i18n/i18n'
+import classNames from 'classnames'
 
 export default function NavHeader() {
   const { isAuthenticated, setIsAuthenticated, setProfile, profile } = useContext(AppContext)
@@ -34,8 +35,8 @@ export default function NavHeader() {
   }
 
   return (
-    <div className='grid grid-cols-1 md:grid-cols-2'>
-      <div className='col-span-1 flex items-center'>
+    <div className='grid grid-cols-1 lg:grid-cols-2'>
+      <div className='col-span-1 items-center hidden'>
         <div className='pr-2 text-white hover:text-gray-200 text-sm cursor-pointer border-r-2 border-gray-200 border-opacity-30'>
           {t('nav_header.seller')}
         </div>
@@ -94,9 +95,9 @@ export default function NavHeader() {
           </div>
         </div>
       </div>
-      <div className='col-span-1 flex justify-end gap-5'>
-        {/*Notice*/}
-        <div className='text-white hover:text-gray-200 text-sm cursor-pointer flex items-center  gap-1'>
+      <div className='col-span-1 flex md:justify-end gap-5 md:col-start-2 justify-between'>
+        {/*Notice flex*/}
+        <div className='text-white hover:text-gray-200 text-sm cursor-pointer items-center gap-1 hidden'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
@@ -113,8 +114,8 @@ export default function NavHeader() {
           </svg>
           <span>{t('nav_header.noti')}</span>
         </div>
-        {/*Help*/}
-        <div className='text-white hover:text-gray-200 text-sm cursor-pointer flex items-center gap-1'>
+        {/*Help flex*/}
+        <div className='text-white hover:text-gray-200 text-sm cursor-pointer items-center gap-1 hidden'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
@@ -132,8 +133,43 @@ export default function NavHeader() {
           <span>{t('nav_header.help')}</span>
         </div>
         {/*Language*/}
+        <div className='flex items-center md:hidden text-white'>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            fill='none'
+            viewBox='0 0 24 24'
+            strokeWidth={1.5}
+            stroke='currentColor'
+            className='w-5 h-5 mr-1'
+          >
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              d='M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418'
+            />
+          </svg>
+          <div className='flex items-center text-sm gap-2 text-gray-200'>
+            <button
+              className={classNames('', {
+                'bg-white px-1 rounded-md text-orange': i18n.language === 'vi'
+              })}
+              onClick={() => handleChangeLang('vi')}
+            >
+              VN
+            </button>
+            <span className='border-l-2 border-white border-opacity-80 w-1 h-3'></span>
+            <button
+              className={classNames('', {
+                'bg-white px-1 rounded-md text-orange': i18n.language === 'en'
+              })}
+              onClick={() => handleChangeLang('en')}
+            >
+              EN
+            </button>
+          </div>
+        </div>
         <Popover
-          className='text-white hover:text-gray-200 text-sm cursor-pointer flex items-center gap-1'
+          className='text-white hover:text-gray-200 text-sm cursor-pointer md:flex items-center gap-1 hidden'
           placement='bottom-end'
           renderPopover={
             <div className='flex flex-col bg-white min-w-[10rem] text-sm'>
@@ -175,10 +211,10 @@ export default function NavHeader() {
         {/*User info*/}
         {isAuthenticated ? (
           <Popover
-            className='text-white hover:text-gray-200 text-sm cursor-pointer flex items-center gap-1'
+            className='text-white hover:text-gray-200 text-sm cursor-pointer'
             placement='bottom-end'
             renderPopover={
-              <div className='flex flex-col bg-white min-w-[7rem] text-sm'>
+              <div className='flex flex-col bg-white min-w-[7rem] text-sm '>
                 <Link className='text-gray-800 hover:text-teal-400 hover:bg-gray-50 p-3 text-left' to={path.profile}>
                   {t('user.account')}
                 </Link>
@@ -194,10 +230,12 @@ export default function NavHeader() {
               </div>
             }
           >
-            <div className='w-5 h-5 flex-shrink-0'>
-              <img src={getAvatarURL(profile?.avatar)} alt='avatar' className='w-full h-full rounded-full' />
-            </div>
-            <span>{profile?.email}</span>
+            <Link to={path.profile} className=' flex items-center gap-1'>
+              <div className='w-5 h-5 flex-shrink-0'>
+                <img src={getAvatarURL(profile?.avatar)} alt='avatar' className='w-full h-full rounded-full' />
+              </div>
+              <span>{profile?.email}</span>
+            </Link>
           </Popover>
         ) : (
           <div className='text-white text-sm cursor-pointer flex items-center gap-3'>

@@ -37,11 +37,11 @@ export default function DateSelect({ onChange, value, errorMessage }: DateSelect
   }
 
   return (
-    <div className='flex flex-wrap pb-7'>
-      <div className='w-[20%] text-sm text-gray-500 text-right px-6 pt-2 capitalize'>
+    <div className='flex flex-col lg:flex-row flex-wrap pb-7'>
+      <div className='lg:w-[20%] text-sm text-gray-500 lg:text-right mb-1 lg:mb-0 lg:px-6 capitalize'>
         <label htmlFor='dayOfBirth'>Ngày sinh</label>
       </div>
-      <div className='w-[80%] text-sm'>
+      <div className='lg:w-[80%] text-sm'>
         <div className='flex gap-7'>
           <select
             name='date'
