@@ -95,37 +95,43 @@ export default function useRouterHook() {
     },
     {
       path: path.user,
-      element: (
-        <MainLayout>
-          <UserLayout>
-            <ProtectedRoute />
-          </UserLayout>
-        </MainLayout>
-      ),
+      element: <ProtectedRoute />,
       children: [
         {
-          path: path.profile,
-          element: (
-            <Suspense fallback={<LoadingSpiner />}>
-              <Profile />
-            </Suspense>
-          )
-        },
-        {
-          path: path.purchases,
-          element: (
-            <Suspense fallback={<LoadingSpiner />}>
-              <HistoryPurchases />
-            </Suspense>
-          )
-        },
-        {
-          path: path.passwords,
-          element: (
-            <Suspense fallback={<LoadingSpiner />}>
-              <ChangePasswords />
-            </Suspense>
-          )
+          path: '',
+          element: <MainLayout />,
+          children: [
+            {
+              path: '',
+              element: <UserLayout />,
+              children: [
+                {
+                  path: path.profile,
+                  element: (
+                    <Suspense fallback={<LoadingSpiner />}>
+                      <Profile />
+                    </Suspense>
+                  )
+                },
+                {
+                  path: path.purchases,
+                  element: (
+                    <Suspense fallback={<LoadingSpiner />}>
+                      <HistoryPurchases />
+                    </Suspense>
+                  )
+                },
+                {
+                  path: path.passwords,
+                  element: (
+                    <Suspense fallback={<LoadingSpiner />}>
+                      <ChangePasswords />
+                    </Suspense>
+                  )
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -134,24 +140,26 @@ export default function useRouterHook() {
       element: <RejectedRoute />,
       children: [
         {
-          path: path.login,
-          element: (
-            <RegisterLayout>
-              <Suspense fallback={<LoadingSpiner />}>
-                <Login />
-              </Suspense>
-            </RegisterLayout>
-          )
-        },
-        {
-          path: path.register,
-          element: (
-            <RegisterLayout>
-              <Suspense fallback={<LoadingSpiner />}>
-                <Register />
-              </Suspense>
-            </RegisterLayout>
-          )
+          path: '',
+          element: <RegisterLayout />,
+          children: [
+            {
+              path: path.login,
+              element: (
+                <Suspense fallback={<LoadingSpiner />}>
+                  <Login />
+                </Suspense>
+              )
+            },
+            {
+              path: path.register,
+              element: (
+                <Suspense fallback={<LoadingSpiner />}>
+                  <Register />
+                </Suspense>
+              )
+            }
+          ]
         }
       ]
     },

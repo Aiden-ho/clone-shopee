@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { memo } from 'react'
+import { Outlet } from 'react-router-dom'
 import NavSideUser from 'src/components/NavSideUser'
 
 interface Props {
   children?: React.ReactNode
 }
 
-export default function UserLayout({ children }: Props) {
+function UserLayoutInner({ children }: Props) {
   return (
     <div className='bg-slate-50 py-5'>
       <div className='container'>
@@ -13,9 +14,16 @@ export default function UserLayout({ children }: Props) {
           <div className='col-span-4 md:col-span-8 lg:col-span-2'>
             <NavSideUser />
           </div>
-          <div className='col-span-4 md:col-span-8 lg:col-span-10'>{children}</div>
+          <div className='col-span-4 md:col-span-8 lg:col-span-10'>
+            {children}
+            <Outlet />
+          </div>
         </div>
       </div>
     </div>
   )
 }
+
+const UserLayout = memo(UserLayoutInner)
+
+export default UserLayout
