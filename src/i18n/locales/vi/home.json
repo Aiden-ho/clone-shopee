@@ -39,5 +39,9 @@
     "empty_notice": "Không tìm thấy kết quả nào",
     "empty_guide": "Hãy thử sử dụng các từ khóa có dấu và cụ thể hơn",
     "empty_action": "Trở về trang chủ"
+  },
+  "fetch": {
+    "empty_notice": "Không tìm thấy sản phẩm nào",
+    "empty_guide": "Hệ thống bị lỗi vui lòng quay lại sau"
   }
 }

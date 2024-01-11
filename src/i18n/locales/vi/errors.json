@@ -50,6 +50,5 @@
   },
   "price_max": {
     "not_allow": "Giá không phù hợp"
-  },
-  "test": 123
+  }
 }

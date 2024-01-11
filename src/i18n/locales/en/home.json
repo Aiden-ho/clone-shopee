@@ -39,5 +39,9 @@
     "empty_notice": "No result is found",
     "empty_guide": "Try using accented and more specific keywords",
     "empty_action": "Back to home"
+  },
+  "fetch": {
+    "empty_notice": "No product is found",
+    "empty_guide": "The system has an error. Please come back later "
   }
 }

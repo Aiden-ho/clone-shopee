@@ -16,6 +16,7 @@ import CartLayout from './layouts/CartLayout'
 import UserLayout from './layouts/UserLayout'
 // import NotFound from './pages/NotFound/NotFound'
 import { getIdFromNameId } from './utils/utils'
+import LoadingSpiner from './components/LoadingSpiner'
 
 //Lazy load
 const Login = lazy(() => import('./pages/Login'))
@@ -54,7 +55,7 @@ export default function useRouterHook() {
       index: true,
       element: (
         <MainLayout>
-          <Suspense>
+          <Suspense fallback={<LoadingSpiner />}>
             <ProductList />
           </Suspense>
         </MainLayout>
@@ -68,7 +69,7 @@ export default function useRouterHook() {
           path: path.productDetail,
           element: (
             <MainLayout>
-              <Suspense>
+              <Suspense fallback={<LoadingSpiner />}>
                 <ProductDetail />
               </Suspense>
             </MainLayout>
@@ -84,7 +85,7 @@ export default function useRouterHook() {
           path: path.cart,
           element: (
             <CartLayout>
-              <Suspense>
+              <Suspense fallback={<LoadingSpiner />}>
                 <Cart />
               </Suspense>
             </CartLayout>
@@ -105,7 +106,7 @@ export default function useRouterHook() {
         {
           path: path.profile,
           element: (
-            <Suspense>
+            <Suspense fallback={<LoadingSpiner />}>
               <Profile />
             </Suspense>
           )
@@ -113,7 +114,7 @@ export default function useRouterHook() {
         {
           path: path.purchases,
           element: (
-            <Suspense>
+            <Suspense fallback={<LoadingSpiner />}>
               <HistoryPurchases />
             </Suspense>
           )
@@ -121,7 +122,7 @@ export default function useRouterHook() {
         {
           path: path.passwords,
           element: (
-            <Suspense>
+            <Suspense fallback={<LoadingSpiner />}>
               <ChangePasswords />
             </Suspense>
           )
@@ -136,7 +137,7 @@ export default function useRouterHook() {
           path: path.login,
           element: (
             <RegisterLayout>
-              <Suspense>
+              <Suspense fallback={<LoadingSpiner />}>
                 <Login />
               </Suspense>
             </RegisterLayout>
@@ -146,7 +147,7 @@ export default function useRouterHook() {
           path: path.register,
           element: (
             <RegisterLayout>
-              <Suspense>
+              <Suspense fallback={<LoadingSpiner />}>
                 <Register />
               </Suspense>
             </RegisterLayout>
