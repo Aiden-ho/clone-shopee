@@ -1,5 +1,6 @@
 import axios, { type AxiosInstance, AxiosError, InternalAxiosRequestConfig } from 'axios'
 import { toast } from 'react-toastify'
+import { redirect } from 'react-router-dom'
 import HttpStatusCode from 'src/constants/httpStatusCode.enum'
 import {
   getAccessTokenToLS,
@@ -13,7 +14,7 @@ import { AuthResponse, RefreshTokenResponse } from 'src/types/Auth.type'
 import path from 'src/constants/path.constants'
 import config from 'src/constants/config.contants'
 import { URL_LOGIN, URL_REFRESH_TOKEN, URL_REGISTER } from 'src/apis/auth.api'
-import { isTokenExpireError, isUnauthorizedError } from './axiosErrorChecker'
+import { isLoggedOutError, isTokenExpireError, isUnauthorizedError } from './axiosErrorChecker'
 import { ErrorRespone } from 'src/types/Util.type'
 
 export class Http {
@@ -82,7 +83,7 @@ export class Http {
 
         // Lỗi Unauthorized (401) có rất nhiều trường hợp
         // - Token không đúng
-        // - Không truyền token
+        // - Không truyền token (có thể thiếu hoặc đã logout)
         // - Token hết hạn*
 
         // Nếu là lỗi 401
@@ -120,6 +121,10 @@ export class Http {
               // Khi lỗi và chạy lại thì phải return kết quả chạy lại , không thì các nơi gọi api sẽ không get được dù có respone
               this.instance({ ...config, headers: { ...config.headers, Authorization: access_token } })
             )
+          }
+          //Kiểm tra xem có phải đã logout không
+          if (isLoggedOutError(error) && url !== URL_LOGIN) {
+            window.location.href = URL_LOGIN
           }
           clearLS()
           this.access_token = ''

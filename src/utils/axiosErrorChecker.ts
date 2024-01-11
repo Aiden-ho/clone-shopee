@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios'
 import HttpStatusCode from 'src/constants/httpStatusCode.enum'
 import { ErrorRespone } from 'src/types/Util.type'
+import { getProfileToLS } from './auth'
 
 //check xem phải lỗi axios không và ráng lại type cho error
 // Nếu dùng  type predicated  thủ công thì không cần isAxiosError cũng được
@@ -25,4 +26,9 @@ export function isTokenExpireError<ErrorUnauthorized>(error: unknown): error is 
     isUnauthorizedError<ErrorRespone<{ message: string; name: string }>>(error) &&
     error.response?.data.data?.name === 'EXPIRED_TOKEN'
   )
+}
+
+//Check xem 401 có phải đã logout hay không
+export function isLoggedOutError<ErrorUnauthorized>(error: unknown): error is AxiosError<ErrorUnauthorized> {
+  return isUnauthorizedError<ErrorRespone<{ message: string; name: string }>>(error) && getProfileToLS() === null
 }
