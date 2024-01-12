@@ -3,12 +3,14 @@ import path from 'src/constants/path.constants'
 import classNames from 'classnames'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
 import { useTranslation } from 'react-i18next'
+import { useId } from 'react'
 
 interface RatingStarsFilterProps {
   queryConfig: QueryConfig
 }
 
 export default function RatingStarsfilter({ queryConfig }: RatingStarsFilterProps) {
+  const id = useId()
   const { t } = useTranslation('home')
   const renderStars = (row_index: number) => {
     const stars = 5
@@ -20,7 +22,7 @@ export default function RatingStarsfilter({ queryConfig }: RatingStarsFilterProp
           return (
             <svg key={star_index} viewBox='0 0 9.5 8' className='w-4 h-4'>
               <defs>
-                <linearGradient id={`ratingStarGradient`} x1='50%' x2='50%' y1='0%' y2='100%'>
+                <linearGradient id={`star_${id}`} x1='50%' x2='50%' y1='0%' y2='100%'>
                   <stop offset={0} stopColor='#ffca11' />
                   <stop offset={1} stopColor='#ffad27' />
                 </linearGradient>
@@ -29,7 +31,7 @@ export default function RatingStarsfilter({ queryConfig }: RatingStarsFilterProp
                   points='14.910357 6.35294118 12.4209136 7.66171903 12.896355 4.88968305 10.8823529 2.92651626 13.6656353 2.52208166 14.910357 0 16.1550787 2.52208166 18.9383611 2.92651626 16.924359 4.88968305 17.3998004 7.66171903'
                 />
               </defs>
-              <g fill='url(#ratingStarGradient)' fillRule='evenodd' stroke='none' strokeWidth={1}>
+              <g fill={`url(#star_${id})`} fillRule='evenodd' stroke='none' strokeWidth={1}>
                 <g transform='translate(-876 -1270)'>
                   <g transform='translate(155 992)'>
                     <g transform='translate(600 29)'>
@@ -48,7 +50,7 @@ export default function RatingStarsfilter({ queryConfig }: RatingStarsFilterProp
           return (
             <svg viewBox='0 0 30 30' className='w-4 h-4' key={star_index}>
               <defs>
-                <linearGradient id='star__hollow' x1='50%' x2='50%' y1='0%' y2='99.0177926%'>
+                <linearGradient id={`star__hollow_${id}`} x1='50%' x2='50%' y1='0%' y2='99.0177926%'>
                   <stop offset='0%' stopColor='#FFD211' />
                   <stop offset='100%' stopColor='#FFAD27' />
                 </linearGradient>
@@ -56,7 +58,7 @@ export default function RatingStarsfilter({ queryConfig }: RatingStarsFilterProp
               <path
                 fill='none'
                 fillRule='evenodd'
-                stroke='url(#star__hollow)'
+                stroke={`url(#star__hollow_${id})`}
                 strokeWidth={2}
                 d='M23.226809 28.390899l-1.543364-9.5505903 6.600997-6.8291523-9.116272-1.4059447-4.01304-8.63019038-4.013041 8.63019038-9.116271 1.4059447 6.600997 6.8291523-1.543364 9.5505903 8.071679-4.5038874 8.071679 4.5038874z'
               />
