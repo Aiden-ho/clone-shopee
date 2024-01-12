@@ -138,7 +138,7 @@ export default function Header() {
               </form>
             </div>
             {/* cart */}
-            <div className='col-span-1'>
+            <div className='col-span-1 flex items-center justify-center lg:block'>
               <Popover
                 className='text-white float-right relative'
                 placement='bottom-end'

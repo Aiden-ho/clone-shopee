@@ -1,4 +1,4 @@
-function ProductSkeleton() {
+export function ProductSkeleton() {
   return (
     <div className='bg-white rounded-sm'>
       <div className='w-full pt-[100%] relative animate-pulse'>
