@@ -1,5 +1,3 @@
-import React from 'react'
-
 function ProductSkeleton() {
   return (
     <div className='bg-white rounded-sm'>

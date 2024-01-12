@@ -1,6 +1,5 @@
 import axios, { type AxiosInstance, AxiosError, InternalAxiosRequestConfig } from 'axios'
 import { toast } from 'react-toastify'
-import { redirect } from 'react-router-dom'
 import HttpStatusCode from 'src/constants/httpStatusCode.enum'
 import {
   getAccessTokenToLS,
